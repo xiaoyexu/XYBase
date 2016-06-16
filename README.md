@@ -108,8 +108,10 @@ In such case, to create a table view with limited cells is quite convenient, lik
     [super viewDidLoad];
     inputField = [XYTableCellFactory cellOfInputField:@"input3" label:@"Input3" ratio:0.3 placeHolder:@"Keyboard numpad" keyboardType:UIKeyboardTypeDecimalPad];
     [self.tableDelegate.container addXYTableCell:inputField];
+    
     inputField = [XYTableCellFactory cellOfTextViewField:@"textView" label:@"Text View" ratio:0.3 placeHolder:@"with heigh changing" keyboardType:UIKeyboardTypeAlphabet minHeight:100 maxHeigh:300];
     [self.tableDelegate.container addXYTableCell:inputField];
+    
     inputField = [XYTableCellFactory cellOfPicker:@"picker1" label:@"Pick" ratio:0.3 options:@"Option 1",@"value1",@"Option 2",@"value2",nil];
     [self.tableDelegate.container addXYTableCell:inputField];
    ...
@@ -128,10 +130,14 @@ Each item should has the same identifier name as the one you defined in storyboa
 
 ```
 -(void)viewDidLoad {
-    [super viewDidLoad];    
-    BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT]
+    [super viewDidLoad]; 
+       
+    BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    
     BaseTvcItem* passwordItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    
     BaseTvcItem* buttonItem = [[BaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
+    
     sections = @[
       @[usernameItem, passwordItem, buttonItem]
     ];
@@ -145,7 +151,6 @@ As you may guess, the item itself has a block to fulfill the logic which usually
 item.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
 	return baseCell;
 }
-
 ```
 You should render the cell here, one reason of such design is I put logic of creating cell and rendering cell in one place so that no need to seeking some other place in the context.
 
@@ -153,7 +158,8 @@ The complete version of above sample would be:
 
 ```
 -(void)viewDidLoad {
-    [super viewDidLoad];    
+    [super viewDidLoad]; 
+       
     BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT]
     usernameItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         InputTvc* cell = (InputTvc*)baseCell;
