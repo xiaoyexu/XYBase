@@ -316,6 +316,7 @@
 }
 
 -(void)setEnableRefresh:(BOOL)enableRefresh{
+    /* enable refresh here */
     _enableRefresh = enableRefresh;
     if (self.enableRefresh){
 //        self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{

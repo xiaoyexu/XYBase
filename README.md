@@ -105,6 +105,7 @@ Or use third party classes like:
 ```
 
 ### BaseTableVc
+#### Table data
 To add different style of table view cell in a table is not so convenient sometimes.
 You have to implement common method like ``numberOfSectionsInTableView:(UITableView *)tableView``, 
 ``tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section`` and 
@@ -155,8 +156,9 @@ Each item should has the same identifier name as the one you defined in storyboa
     ];
 }
 ```
-After you finished UI design in storyboard, now it's much easy to add them in code.
-##### Where CellForRowAtIndexPath method goes?
+After you finished UI design in storyboard, now it's much easy to add them in code.     
+
+**Where CellForRowAtIndexPath method goes?**
 As you may guess, the item itself has a block to fulfill the logic which usually be done in CellForRowAtIndexPath(**I love blocks**), the usage is like:
 
 ```
@@ -221,7 +223,7 @@ The complete version of above sample would be:
 
 Smarty you may also realized that I have created subclass of UITableViewCell for each row(InputTvc, ButtonTvc), and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
 
-### XYOptionTvcItem
+**XYOptionTvcItem**
 XYOptionTvcItem is a subclass of XYBaseTvcItem, where you can addTarget for clicking event. E.g.
 
 ```
@@ -240,6 +242,33 @@ XYOptionTvcItem* option1 = [[XYOptionTvcItem alloc] initWithIdentifer:@"OptionTv
 The toChangePwd selector will be called when cell clicked.
 
 
+#### Pull down refreshing
+For refreshing data, put the logic in method below in view controller
 
+```
+-(void)refresh:(UIRefreshControl*)refreshControl;
+```
 
+You may customized to use apple refresh control by creating it in XYBaseTableVc viewDidLoad method
+
+```
+self.refreshControl = [UIRefreshControl new];
+[self.refreshControl addTarget:self action:@selector(baseRefresh:) forControlEvents:UIControlEventValueChanged];
+```
+
+or use a third party solution. E.g.
+
+```
+-(void)setEnableRefresh:(BOOL)enableRefresh{
+    /* enable refresh here */
+    _enableRefresh = enableRefresh;
+    if (self.enableRefresh){
+        self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            [self baseRefresh:self.refreshControl];
+        }];
+    } else {
+        self.tableView.mj_header = nil;
+    }
+}
+```
 
