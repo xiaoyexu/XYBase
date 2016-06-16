@@ -16,7 +16,9 @@ Contains a method to show common busy indicator
 ```
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block;
 ```
-In subclass, you can use it in any action that taking time, logic will be executed in background thread
+
+In subclass, you can use it in any action that taking time, logic will be executed in background thread.    
+
 ```
 -(void)click:(UIButton*)sender{
     [self performBusyProcess:^XYProcessResult *{
@@ -25,20 +27,24 @@ In subclass, you can use it in any action that taking time, logic will be execut
     }];
 }
 ```
+
 The block returns a XYProcessResult for view controller to handle.
 In the same class overwrite below method to do anything afterwards on main thread.
+
 ```
 -(void)handleCorrectResponse:(XYProcessResult *)result{
     
 }
 ```
 And
+
 ```
 -(void)handleErrorResponse:(XYProcessResult *)result{
     
 }
 ```
-What and how activity indicator is displayed controlled by method below
+What and how activity indicator is displayed controlled by method below:
+
 ```
 -(void)turnOnBusyFlag;
 ```
@@ -46,19 +52,20 @@ What and how activity indicator is displayed controlled by method below
 -(void)turnOffBusyFlag;
 ```
 A practical way is to implement the logic in base class in order to have consistent behavior across the app.
-E.g. You can have UIAlertController field ac in base class and
+E.g. You can have UIAlertController field ac in base class implement below:
+
 ```
 -(void)turnOnBusyFlag{
     ac = [UIAlertController alertControllerWithTitle:@"Busy" message:nil preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:ac animated:YES completion:nil];
 }
-```
-```
+
 -(void)turnOffBusyFlag{
     [ac dismissViewControllerAnimated:YES completion:nil];
 }
 ```
-Or use third party classes like
+Or use third party classes like:
+
 ```
 -(void)turnOnBusyFlag{
     if (self.navigationController != nil) {
@@ -85,6 +92,120 @@ Or use third party classes like
     self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 ```
+
+### BaseTableVc
+To add different style of table view cell in a table is not so convenient sometimes.
+You have to implement common method like ``numberOfSectionsInTableView:(UITableView *)tableView``
+``tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section``
+``tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath``
+in most cases. And for a new table view controller, repeat it again.    
+
+Therefore I tried to setup a mechanism in MarioLib, like Field, TableCell, TableSection, TableContainer class, put Field into TableCell, put TableCell into TableSection, put TableSection into TableContainer, then use a implemented delegate class to draw the data.
+In such case, to create a table view only limited cells is quite convenient, like:
+
+```
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    inputField = [XYTableCellFactory cellOfInputField:@"input3" label:@"Input3" ratio:0.3 placeHolder:@"Keyboard numpad" keyboardType:UIKeyboardTypeDecimalPad];
+    [self.tableDelegate.container addXYTableCell:inputField];
+    inputField = [XYTableCellFactory cellOfTextViewField:@"textView" label:@"Text View" ratio:0.3 placeHolder:@"with heigh changing" keyboardType:UIKeyboardTypeAlphabet minHeight:100 maxHeigh:300];
+    [self.tableDelegate.container addXYTableCell:inputField];
+    inputField = [XYTableCellFactory cellOfPicker:@"picker1" label:@"Pick" ratio:0.3 options:@"Option 1",@"value1",@"Option 2",@"value2",nil];
+    [self.tableDelegate.container addXYTableCell:inputField];
+   ...
+}
+```
+This allow me to focus on the main function of the app rather than how each component should be implemented, and of course make app easier to be changed.
+But this version is still too complex, I need a one more lightweighted version.
+
+BaseTableVc has a protected 2 dimensions NSArray field name ``sections`` to represent section and cells. 
+The item each each row is represented by class ``XYBaseTvcItem``.
+Each item should has the same identifier name as the one you defined in storyboard for table view cell, e.g.
+
+```
+-(void)viewDidLoad {
+    [super viewDidLoad];    
+    BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT]
+    BaseTvcItem* passwordItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    BaseTvcItem* buttonItem = [[BaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
+    sections = @[
+      @[
+       usernameItem,
+       passwordItem,
+       buttonItem
+       ]
+              ];
+}
+```
+After you finished UI design in storyboard, now it's much easy to add them in code.
+##### Where CellForRowAtIndexPath method goes?
+As you may guess, the item itself has a block to fulfill the logic which usually be done in CellForRowAtIndexPath(**I love blocks**), the usage is like:
+
+```
+item.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
+	return baseCell;
+}
+
+```
+You should render the cell here, one reason of such design is I put logic of creating cell and rendering cell in one place so that no need to seeking some other place in the context.
+
+The complete version of above sample would be:
+
+```
+-(void)viewDidLoad {
+    [super viewDidLoad];    
+    BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT]
+    usernameItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
+        InputTvc* cell = (InputTvc*)baseCell;
+        cell.label.text = NSLocalizedString(@"username", @"username");
+        cell.label.textColor = [UIColor whLabelColor];
+        cell.textField.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:NSLocalizedString(@"plsEnterUsername", @"plsEnterUsername") attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
+        [cell.textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
+        usernameTf = cell.textField;
+        cell.separatorLine.backgroundColor = [UIColor whTableCellSeparatorLineColor];
+        return cell;
+    };
+    
+    BaseTvcItem* passwordItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    passwordItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
+        InputTvc* cell = (InputTvc*)baseCell;
+        cell.label.text = NSLocalizedString(@"password", @"password");
+        cell.label.textColor = [UIColor whLabelColor];
+        cell.textField.secureTextEntry = YES;
+        cell.textField.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:NSLocalizedString(@"plsEnterPassword", @"plsEnterPassword") attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
+        [cell.textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
+        passwordTf = cell.textField;
+        cell.separatorLine.backgroundColor = [UIColor whTableCellSeparatorLineColor];
+        return cell;
+    };
+    
+    BaseTvcItem* buttonItem = [[BaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
+    buttonItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
+        ButtonTvc* cell = (ButtonTvc*) baseCell;
+        cell.button.backgroundColor = [UIColor whButtonColor];
+        [cell.button setTintColor:[UIColor whiteColor]];
+        [cell.button setTitle:NSLocalizedString(@"login", @"login") forState:UIControlStateNormal];
+        [cell.button addTarget:self action:@selector(loginBtnClicked:) forControlEvents:UIControlEventTouchDown];
+        cell.button.layer.cornerRadius = BUTTON_CORNER_RADIUS;
+        loginBtn = cell.button;
+        return cell;
+    };
+    
+    sections = @[
+      @[
+       usernameItem,
+       passwordItem,
+       buttonItem
+       ]
+              ];
+}
+```
+
+Smart you may also realized that I have created subclass of UITableViewCell for each row, and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
+
+
+
+
 
 
 
