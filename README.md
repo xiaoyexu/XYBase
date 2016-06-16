@@ -10,7 +10,7 @@ Why
 
 This should be a on-going project.
 
-### BaseVc/BaseTableVc
+### XYBaseVc/XYBaseTableVc
 Contains a method to execute business logic and show common busy indicator.
 
 ```
@@ -48,9 +48,9 @@ The result can be success or failure, be handled by method above separately. E.g
 
 ```
 if (responseCode == 0) {
-    return [ProcessResult success];
+    return [XYProcessResult success];
 } else {
-    return [ProcessResult failureWithError:@"Error string"];
+    return [XYProcessResult failureWithError:@"Error string"];
 }
 ```
 
@@ -144,11 +144,11 @@ Each item should has the same identifier name as the one you defined in storyboa
 -(void)viewDidLoad {
     [super viewDidLoad]; 
        
-    BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    XYBaseTvcItem* usernameItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
     
-    BaseTvcItem* passwordItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    XYBaseTvcItem* passwordItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
     
-    BaseTvcItem* buttonItem = [[BaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
+    XYBaseTvcItem* buttonItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
     
     sections = @[
       @[usernameItem, passwordItem, buttonItem]
@@ -172,7 +172,7 @@ The complete version of above sample would be:
 -(void)viewDidLoad {
     [super viewDidLoad]; 
        
-    BaseTvcItem* usernameItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT]
+    XYBaseTvcItem* usernameItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT]
     usernameItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         InputTvc* cell = (InputTvc*)baseCell;
         cell.label.text = NSLocalizedString(@"username", @"username");
@@ -184,7 +184,7 @@ The complete version of above sample would be:
         return cell;
     };
     
-    BaseTvcItem* passwordItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
+    XYBaseTvcItem* passwordItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
     passwordItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         InputTvc* cell = (InputTvc*)baseCell;
         cell.label.text = NSLocalizedString(@"password", @"password");
@@ -197,7 +197,7 @@ The complete version of above sample would be:
         return cell;
     };
     
-    BaseTvcItem* buttonItem = [[BaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
+    XYBaseTvcItem* buttonItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
     buttonItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         ButtonTvc* cell = (ButtonTvc*) baseCell;
         cell.button.backgroundColor = [UIColor whButtonColor];
@@ -219,9 +219,25 @@ The complete version of above sample would be:
 }
 ```
 
-Smart you may also realized that I have created subclass of UITableViewCell for each row(InputTvc, ButtonTvc), and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
+Smarty you may also realized that I have created subclass of UITableViewCell for each row(InputTvc, ButtonTvc), and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
 
+### XYOptionTvcItem
+XYOptionTvcItem is a subclass of XYBaseTvcItem, where you can addTarget for clicking event. E.g.
 
+```
+XYOptionTvcItem* option1 = [[XYOptionTvcItem alloc] initWithIdentifer:@"OptionTvc" view:nil height:ROW_HEIGHT];
+    option1.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
+        OptionTvc* cell = (OptionTvc*)baseCell;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [cell.optionIv setImage:[UIImage imageNamed:@"key"]];
+        cell.optionLb.text = NSLocalizedString(@"changePassword", @"changePassword");
+        cell.optionTextLb.text = @"";
+        return cell;
+    };
+    [option1 addTarget:self action:@selector(toChangePwd)];
+```
+
+The toChangePwd selector will be called when cell clicked.
 
 
 
