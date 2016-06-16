@@ -13,7 +13,9 @@
 @end
 
 @implementation ViewController
-
+{
+    UIAlertController* ac;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
@@ -24,6 +26,24 @@
         sleep(2);
         return [XYProcessResult success];
     }];
+}
+
+
+-(void)turnOnBusyFlag{
+    ac = [UIAlertController alertControllerWithTitle:@"Busy" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [self presentViewController:ac animated:YES completion:nil];
+}
+
+-(void)turnOffBusyFlag{
+    [ac dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)handleCorrectResponse:(XYProcessResult *)result{
+    
+}
+
+-(void)handleErrorResponse:(XYProcessResult *)result{
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -69,6 +69,11 @@
 
 // The flag whether alert need to be shown
 @property (nonatomic) BOOL showActivityIndicatorView;
+
+
+-(void)turnOnBusyFlag;
+-(void)turnOffBusyFlag;
+
 // Callback for any time consuming task
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block;
 
@@ -161,6 +166,10 @@
 // The flag whether alert need to be shown
 @property (nonatomic) BOOL showActivityIndicatorView;
 @property (nonatomic) BOOL enableRefresh;
+
+-(void)turnOnBusyFlag;
+-(void)turnOffBusyFlag;
+
 // Callback for any time consuming task
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block;
 -(void)refresh:(UIRefreshControl*)refreshControl;
