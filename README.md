@@ -2,16 +2,16 @@
 Simplified version of old MarioLib
 
 > I try to start this new work to simplify my previous work of MarioLib, to make it more easier to use.     
-> I'm thinking of to have only .h .m file to include all necessory classes.     
+> I'm thinking of having only 1 .h .m file to include all necessory classes.     
 
 Why    
 
-> The purpose is that I don't want to do repeat work when start a new app, there must be something in common like design pattern, functions, features, and I would like to figure them out.
+> The purpose is that I don't want to repeat the work when start a new app, there must be something in common like design pattern, functions, features, and I would like to figure them out.
 
-This should be a on-going project
+This should be a on-going project.
 
 ### BaseVc/BaseTableVc
-Contains a method to show common busy indicator
+Contains a method to execute business logic and show common busy indicator.
 
 ```
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block;
@@ -43,6 +43,17 @@ And
     
 }
 ```
+
+The result can be success or failure, be handled by method above separately. E.g.
+
+```
+if (responseCode == 0) {
+    return [ProcessResult success];
+} else {
+    return [ProcessResult failureWithError:@"Error string"];
+}
+```
+
 What and how activity indicator is displayed controlled by method below:
 
 ```
