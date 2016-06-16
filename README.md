@@ -3,6 +3,7 @@ Simplified version of old MarioLib
 
 > I try to start this new work to simplify my previous work of MarioLib, to make it more easier to use.     
 > I'm thinking of to have only .h .m file to include all necessory classes.     
+
 > The purpose is that I don't want to do repeat work when start a new app, there must be something in common like design pattern, functions, features, and I would like to figure them out.
 
 ### BaseVc/BaseTableVc
