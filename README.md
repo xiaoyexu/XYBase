@@ -153,7 +153,7 @@ item.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell*
 	return baseCell;
 }
 ```
-You should render the cell here, one reason of such design is I put logic of creating cell and rendering cell in one place so that no need to seeking some other place in the context.
+You should render the cell here, one reason of such design is I put logic of creating cell and rendering cell in one place so that no need to seeking in some other place in the context.
 
 The complete version of above sample would be:
 
