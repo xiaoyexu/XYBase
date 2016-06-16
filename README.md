@@ -52,7 +52,7 @@ What and how activity indicator is displayed controlled by method below:
 -(void)turnOffBusyFlag;
 ```
 A practical way is to implement the logic in base class in order to have consistent behavior across the app.
-E.g. You can have UIAlertController field ac in base class implement below:
+E.g. You can have an UIAlertController field ac in base class and implement like below:
 
 ```
 -(void)turnOnBusyFlag{
@@ -100,8 +100,8 @@ You have to implement common method like ``numberOfSectionsInTableView:(UITableV
 ``tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath``
 in most cases. And for a new table view controller, repeat it again.    
 
-Therefore I tried to setup a mechanism in MarioLib, like Field, TableCell, TableSection, TableContainer class, put Field into TableCell, put TableCell into TableSection, put TableSection into TableContainer, then use a implemented delegate class to draw the data.
-In such case, to create a table view only limited cells is quite convenient, like:
+Therefore I tried to setup a mechanism in MarioLib, like Field, TableCell, TableSection, TableContainer class, put Field into TableCell, put TableCell into TableSection, put TableSection into TableContainer, then use an implemented delegate class to draw the data.
+In such case, to create a table view with limited cells is quite convenient, like:
 
 ```
 - (void)viewDidLoad {
@@ -113,9 +113,13 @@ In such case, to create a table view only limited cells is quite convenient, lik
     inputField = [XYTableCellFactory cellOfPicker:@"picker1" label:@"Pick" ratio:0.3 options:@"Option 1",@"value1",@"Option 2",@"value2",nil];
     [self.tableDelegate.container addXYTableCell:inputField];
    ...
+   [self.tableView reloadData];
 }
 ```
-This allow me to focus on the main function of the app rather than how each component should be implemented, and of course make app easier to be changed.
+This allow me to focus on the main function of the app rather than how detail should be implemented, modulized each component, reduce duplicated code and of course make app easier to be changed.
+
+> Any logic should be appear only once in code, you should not found 2 pieces of code that looks similar, functioning similar, resulting similar. For any similarity, break it into different essences.
+
 But this version is still too complex, I need a one more lightweighted version.
 
 BaseTableVc has a protected 2 dimensions NSArray field name ``sections`` to represent section and cells. 
@@ -129,12 +133,8 @@ Each item should has the same identifier name as the one you defined in storyboa
     BaseTvcItem* passwordItem = [[BaseTvcItem alloc] initWithIdentifer:@"InputTvc" view:nil height:ROW_HEIGHT];
     BaseTvcItem* buttonItem = [[BaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
     sections = @[
-      @[
-       usernameItem,
-       passwordItem,
-       buttonItem
-       ]
-              ];
+      @[usernameItem, passwordItem, buttonItem]
+    ];
 }
 ```
 After you finished UI design in storyboard, now it's much easy to add them in code.
@@ -201,7 +201,7 @@ The complete version of above sample would be:
 }
 ```
 
-Smart you may also realized that I have created subclass of UITableViewCell for each row, and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
+Smart you may also realized that I have created subclass of UITableViewCell for each row(InputTvc, ButtonTvc), and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
 
 
 
