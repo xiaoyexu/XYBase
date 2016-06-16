@@ -95,8 +95,8 @@ Or use third party classes like:
 
 ### BaseTableVc
 To add different style of table view cell in a table is not so convenient sometimes.
-You have to implement common method like ``numberOfSectionsInTableView:(UITableView *)tableView``
-``tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section``
+You have to implement common method like ``numberOfSectionsInTableView:(UITableView *)tableView``, 
+``tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section`` and 
 ``tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath``
 in most cases. And for a new table view controller, repeat it again.    
 
@@ -106,7 +106,8 @@ In such case, to create a table view with limited cells is quite convenient, lik
 ```
 - (void)viewDidLoad {
     [super viewDidLoad];
-    inputField = [XYTableCellFactory cellOfInputField:@"input3" label:@"Input3" ratio:0.3 placeHolder:@"Keyboard numpad" keyboardType:UIKeyboardTypeDecimalPad];
+    
+    inputField = [XYTableCellFactory cellOfInputField:@"input" label:@"Input" ratio:0.3 placeHolder:@"Keyboard numpad" keyboardType:UIKeyboardTypeDecimalPad];
     [self.tableDelegate.container addXYTableCell:inputField];
     
     inputField = [XYTableCellFactory cellOfTextViewField:@"textView" label:@"Text View" ratio:0.3 placeHolder:@"with heigh changing" keyboardType:UIKeyboardTypeAlphabet minHeight:100 maxHeigh:300];
