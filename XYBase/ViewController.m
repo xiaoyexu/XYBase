@@ -22,7 +22,6 @@
     
     // Initialize core data
     [[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
-    
     [self deleteDB];
     [self showDB];
     [self addRecord];

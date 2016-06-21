@@ -281,6 +281,8 @@ To initialize the connection, for example
 ```
 Here, ``XYBase`` is the name of xcdatamodelId, that's to say you have a XYBase.xcdatamodelId file available.
 Store name ``xybase.sqlite`` refer to the file that will be created, and alias name ``xybasedb`` is used as a reference to the connect.
+**Notice even you call this method twice, it will not recreate sqlite file to cause any data loss**
+
 Anytime you need to access coredata, use ``XYCoreDataConnect`` instance, E.g.
 
 ```
@@ -322,6 +324,23 @@ Below are the methods to manipulate data(insert, delete, select). Assuming you a
 }
 ```
 
+If you have below code in viewDidLoad:
 
+```
+// Initialize core data
+[[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
+    
+[self deleteDB];
+[self showDB];
+[self addRecord];
+[self showDB];
+```
+The output will be:
+
+```
+2016-06-21 11:20:13.387 XYBase[51919:8487271] before saving (null) (null)
+2016-06-21 11:20:13.390 XYBase[51919:8487271] after saving Mario Developer
+2016-06-21 11:20:13.392 XYBase[51919:8487271] >Mario Developer
+```
 
 
