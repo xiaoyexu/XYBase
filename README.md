@@ -316,7 +316,6 @@ Below are the methods to manipulate data(insert, delete, select). Assuming you a
 
 -(void)showDB{
     XYCoreDataConnector* dc = [[XYCoreDataManager instance] connectorByAlias:@"xybasedb"];
-    
     NSArray* result = [dc getObjectsFromDatabase:[Worker class] WithPredicate:nil AndParameter:nil];
     for (Worker* worker in result) {
         NSLog(@">%@ %@", worker.name, worker.title);
