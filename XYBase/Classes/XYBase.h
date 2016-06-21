@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @interface XYBase : NSObject
 
@@ -186,10 +187,121 @@
 
 #pragma mark XYBaseNavigationVc
 @interface XYBaseNavigationVc : UINavigationController
-
 @end
 
 #pragma mark XYBaseTabBarVc
 @interface XYBaseTabBarVc : UITabBarController
-
 @end
+
+
+#pragma mark XYCoreDataConnector
+@interface XYCoreDataConnector : NSObject
+{
+    NSString* _modelName;
+    NSString* _storeName;
+}
+
+/**
+ Store file name. E.g somefile.sqlite
+ Do not include any path in store name
+ */
+@property (nonatomic,readonly) NSString* storeName;
+
+/**
+ The xcdatamodeld name, without extension
+ */
+@property (nonatomic,readonly) NSString* modelName;
+
+@property (nonatomic, readonly) NSPersistentStoreCoordinator*persistentStoreCoordinator;
+@property (nonatomic, readonly) NSManagedObjectContext*managedObjectContext;
+@property (nonatomic, readonly) NSManagedObjectModel*managedObjectModel;
+
+/**
+ Initialization method
+ */
+-(id)init;
+
+/**
+ Initialization method with model and file name
+ @param model Model name
+ @param name Store file name
+ */
+-(id)initWithModelName:(NSString*)model storeName:(NSString*) name;
+
+/**
+ @return document directory
+ */
+-(NSURL*)applicationDocumentsDirectory;
+
+/**
+ Method to save context for entities
+ */
+-(void)saveContext;
+
+/**
+ Method to reset data file
+ */
+-(void)resetPersistentStore;
+
+/**
+ Get list of entity by predicater, allow only one parameter
+ */
+-(NSArray*)getObjectsFromDatabase: (Class) className WithPredicate: (NSString *) predicateString AndParameter: (NSString*) predicateParameter;
+
+/**
+ Get single one entity by predicater, with one parameter
+ */
+-(NSManagedObject*)getSingleObjectFromDatabase: (Class) className WithPredicate: (NSString *) predicateString AndParameter: (NSString *) predicateParameter;
+
+/**
+ Get list of entity by predicater with multiply parameters
+ */
+-(NSArray*)getObjectsFromDatabase: (Class) className WithPredicate: (NSString *) predicateString AndParameterArray: (NSArray *) predicateParameterArr;
+
+/**
+ Get single one entity by predicater with multiply parameters
+ */
+-(NSManagedObject*)getSingleObjectFromDatabase: (Class) className WithPredicate: (NSString *) predicateString AndParameterArray: (NSArray *) predicateParameterArr;
+
+/**
+ Get new entity
+ */
+-(NSManagedObject*)getNewObjectForInsertByClass:(Class)className;
+@end
+
+#pragma mark XYCoreDataManager
+@interface XYCoreDataManager : NSObject
+/**
+ Static method to get instance
+ */
++(XYCoreDataManager*)instance;
+
+/**
+ Create and cache the core data connector
+ @param model Model name
+ @param name Store file name
+ @param alias Alias for the connector
+ */
+-(void)initCoreDataConnectorWithModel:(NSString*) model storeName:(NSString *)name asAlias:(NSString*)alias;
+
+/**
+ Get CoreDataConnector by alias name, always returnning a new instance/context
+ */
+-(XYCoreDataConnector*)connectorByAlias:(NSString*)alias;
+
+/**
+ Get XYCoreDataConnector by alias name
+ */
+-(XYCoreDataConnector*)connectorByAlias:(NSString*)alias newContext:(BOOL) newContext;
+
+/**
+ Remove connector
+ */
+-(void)removeConnectorByAlias:(NSString*)alias;
+
+/**
+ Remove all connectors
+ */
+-(void)removeAllConnectors;
+@end
+

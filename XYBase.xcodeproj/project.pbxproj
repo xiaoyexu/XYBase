@@ -17,6 +17,7 @@
 		F73F960D1D12434800CEE45C /* XYBaseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F960C1D12434800CEE45C /* XYBaseTests.m */; };
 		F73F96181D12434800CEE45C /* XYBaseUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F96171D12434800CEE45C /* XYBaseUITests.m */; };
 		F73F96281D1243B200CEE45C /* XYBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F96271D1243B200CEE45C /* XYBase.m */; };
+		F73F963F1D18E7B200CEE45C /* Worker.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F963E1D18E7B200CEE45C /* Worker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		F73F96191D12434800CEE45C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F73F96261D1243B200CEE45C /* XYBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYBase.h; sourceTree = "<group>"; };
 		F73F96271D1243B200CEE45C /* XYBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYBase.m; sourceTree = "<group>"; };
+		F73F963D1D18E7B200CEE45C /* Worker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Worker.h; sourceTree = "<group>"; };
+		F73F963E1D18E7B200CEE45C /* Worker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Worker.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,7 @@
 		F73F95EE1D12434800CEE45C /* XYBase */ = {
 			isa = PBXGroup;
 			children = (
+				F73F963C1D18E7A100CEE45C /* Model */,
 				F73F96251D12439000CEE45C /* Classes */,
 				F73F95F21D12434800CEE45C /* AppDelegate.h */,
 				F73F95F31D12434800CEE45C /* AppDelegate.m */,
@@ -154,6 +158,15 @@
 				F73F96271D1243B200CEE45C /* XYBase.m */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		F73F963C1D18E7A100CEE45C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F73F963D1D18E7B200CEE45C /* Worker.h */,
+				F73F963E1D18E7B200CEE45C /* Worker.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F73F95F71D12434800CEE45C /* ViewController.m in Sources */,
+				F73F963F1D18E7B200CEE45C /* Worker.m in Sources */,
 				F73F95F41D12434800CEE45C /* AppDelegate.m in Sources */,
 				F73F95F11D12434800CEE45C /* main.m in Sources */,
 				F73F95FD1D12434800CEE45C /* XYBase.xcdatamodeld in Sources */,
@@ -516,6 +530,7 @@
 				F73F961E1D12434800CEE45C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F73F961F1D12434800CEE45C /* Build configuration list for PBXNativeTarget "XYBaseTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +539,7 @@
 				F73F96211D12434800CEE45C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F73F96221D12434800CEE45C /* Build configuration list for PBXNativeTarget "XYBaseUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +548,7 @@
 				F73F96241D12434800CEE45C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Classes/XYBase.h"
+#import "Worker.h"
 
 @interface ViewController : XYBaseVc
 
