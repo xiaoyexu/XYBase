@@ -280,7 +280,7 @@ To initialize the connection, for example
 [[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
 ```
 Here, ``XYBase`` is the name of xcdatamodelId, that's to say you have a XYBase.xcdatamodelId file available.
-Store name ``xybase.sqlite`` refer to the file that will be created, and alias name ``xybasedb`` is used as a reference to the connect.
+Store name ``xybase.sqlite`` refer to the file that will be created, and alias name ``xybasedb`` is used as a reference to the connector.
 **Notice even you call this method twice, it will not recreate sqlite file to cause any data loss**
 
 Anytime you need to access coredata, use ``XYCoreDataConnect`` instance, E.g.
