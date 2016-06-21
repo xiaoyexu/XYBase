@@ -272,3 +272,56 @@ or use a third party solution. E.g.
 }
 ```
 
+### XYCoreDataConnector/XYCoreDataManager
+These classes are used for accessing coredata.
+To initialize the connection, for example
+
+```
+[[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
+```
+Here, ``XYBase`` is the name of xcdatamodelId, that's to say you have a XYBase.xcdatamodelId file available.
+Store name ``xybase.sqlite`` refer to the file that will be created, and alias name ``xybasedb`` is used as a reference to the connect.
+Anytime you need to access coredata, use ``XYCoreDataConnect`` instance, E.g.
+
+```
+XYCoreDataConnector* dc = [[XYCoreDataManager instance] connectorByAlias:@"xybasedb"];
+```
+Below are the methods to manipulate data(insert, delete, select). Assuming you already have a mangedObject class named Worker with name and title fields and defined in coredata model.
+
+```
+-(void)addRecord{
+    XYCoreDataConnector* dc = [[XYCoreDataManager instance] connectorByAlias:@"xybasedb"];
+    Worker* worker = (Worker*)[dc getSingleObjectFromDatabase:[Worker class] WithPredicate:@"(name = %@)" AndParameter:@"Mario"];
+    if (worker == nil) {
+        worker = (Worker*)[dc getNewObjectForInsertByClass:[Worker class]];
+    }
+    NSLog(@"before saving %@ %@", worker.name, worker.title);
+    worker.name = @"Mario";
+    worker.title = @"Developer";
+    [dc saveContext];
+    NSLog(@"after saving %@ %@", worker.name, worker.title);
+    
+}
+
+-(void)deleteDB{
+    XYCoreDataConnector* dc = [[XYCoreDataManager instance] connectorByAlias:@"xybasedb"];
+    NSArray* records = [dc getObjectsFromDatabase:[Worker class] WithPredicate:nil AndParameter:nil];
+    for (Worker* worker in records) {
+        [dc.managedObjectContext deleteObject:worker];
+    }
+    [dc saveContext];
+}
+
+-(void)showDB{
+    XYCoreDataConnector* dc = [[XYCoreDataManager instance] connectorByAlias:@"xybasedb"];
+    
+    NSArray* result = [dc getObjectsFromDatabase:[Worker class] WithPredicate:nil AndParameter:nil];
+    for (Worker* worker in result) {
+        NSLog(@">%@ %@", worker.name, worker.title);
+    }
+}
+```
+
+
+
+
