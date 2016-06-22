@@ -27,6 +27,21 @@ In subclass, you can use it in any action that taking time, logic will be execut
     }];
 }
 ```
+**Notice that do not call performBusyProcess more than once in same method like below**
+
+```
+-(void)click:(UIButton*)sender{
+    [self performBusyProcess:^XYProcessResult *{
+        // Do something
+        return [XYProcessResult success];
+    }];
+    [self performBusyProcess:^XYProcessResult *{
+        // Do something else
+        return [XYProcessResult success];
+    }];
+}
+```
+
 
 The block returns a XYProcessResult for view controller to handle.
 In the same class overwrite below method to do anything afterwards on main thread.
