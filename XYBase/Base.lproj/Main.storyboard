@@ -21,15 +21,12 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEh-xf-txm">
                                 <rect key="frame" x="277" y="248" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="177" y="256" width="46" height="30"/>
-                                </variation>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="uEh-xf-txm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="228" id="AOK-tR-k6U">
-                                <variation key="widthClass=compact" constant="236"/>
+                                <variation key="widthClass=compact" constant="192"/>
                             </constraint>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uEh-xf-txm" secondAttribute="bottom" constant="322" id="LNL-Hc-bXz">
                                 <variation key="widthClass=compact" constant="314"/>
