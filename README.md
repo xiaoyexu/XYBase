@@ -148,7 +148,7 @@ In such case, to create a table view with limited cells is quite convenient, lik
 ```
 This allow me to focus on the main function of the app rather than how detail should be implemented, modulized each component, reduce duplicated code and of course make app easier to be changed.
 
-> Logic should be appear only once in code, you should not found 2 pieces of code that looks similar, functioning similar, resulting similar. For any similarity, break it into different essences.
+> One kind of logic should be appear only once in code, you should not found 2 pieces of code that looks similar, functioning similar, resulting similar. For any similarity, break it into different essences.
 
 But this version is still too complex, I need a one more lightweighted version.
 
