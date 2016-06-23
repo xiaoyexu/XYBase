@@ -42,11 +42,7 @@
                             </constraint>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ASc-ZN-l3s">
-                        <barButtonItem key="rightBarButtonItem" image="alltraverslist_plane.png" width="15" id="z5F-FU-Kce">
-                            <inset key="imageInsets" minX="22" minY="10" maxX="0.0" maxY="16"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="ASc-ZN-l3s"/>
                     <connections>
                         <outlet property="button" destination="uEh-xf-txm" id="iwP-TH-Sfb"/>
                     </connections>
@@ -74,7 +70,4 @@
             <point key="canvasLocation" x="288" y="-551"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="alltraverslist_plane.png" width="62" height="62"/>
-    </resources>
 </document>
