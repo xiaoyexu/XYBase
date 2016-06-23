@@ -35,7 +35,7 @@
     mc.httpMethod = @"POST";
     [[XYMessageEngine instance] setConfig:mc forMessage:[TestRequest class]];
     
-    [XYMessageEngine instance].runningStage = MessageStageDevelopment;
+    [XYMessageEngine instance].runningStage = MessageStageDemo;
     return YES;
 }
 

@@ -359,7 +359,17 @@ The output will be:
 
 ### Messaging
 The design may be poor, but it works somehow.
-Assuming you are sending request and getting response in json format like
+Assuming you are sending request and getting response in json format like:
+
+Request:
+
+```
+{
+ 'key': 'some key'
+}
+```
+
+Response:
 
 ```
 {
@@ -378,9 +388,9 @@ Now,
 	* \<MessageName>Response
 	* \<MessageName>MessageAgent
 * Register url information when app started up
-* Use XYMessage instance to send mssage
+* Use XYMessageEngine instance to send mssage
 
-An example as below:
+A detail example as below:
 
 TestRequest.h
 
@@ -460,9 +470,18 @@ TestMessageAgent.m
     *response = (XYResponse*)res;
     [super deNormalize:responseObj to:&res];
 }
+
+-(XYResponse*)demoResponse{
+    TestResponse* res = [TestResponse new];
+    res.value = @"It's demo";
+    return res;
+}
 ```
 
-In the normalize method, you reformat data to json string, and in deNormalize method, you convert json string into response object.
+In the ``normalize`` method, you reformat data to json string, and in ``deNormalize`` method, you convert json string into response object.
+In another word, if you are not sending json data, you should implement logic here. 
+
+Method ``demoResponse`` will be explained short after.
 
 Demo backend logic in Python Django like:
 
@@ -504,6 +523,8 @@ mc.httpMethod = @"POST";
 [XYMessageEngine instance].runningStage = MessageStageDevelopment;
 ...
 ```
+
+If you set runningStage to MessageStageDemo, the demoResponse method will be called in MessageAgent, which cause all your messaging part to be working offline. This is mainly for you to demo the application when backend system is not ready or the product itself is in prototype stage.
 
 To trigger the sending, try do it in background thread like
 

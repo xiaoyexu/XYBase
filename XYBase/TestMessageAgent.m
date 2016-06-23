@@ -31,4 +31,10 @@
     *response = (XYResponse*)res;
     [super deNormalize:responseObj to:&res];
 }
+
+-(XYResponse*)demoResponse{
+    TestResponse* res = [TestResponse new];
+    res.value = @"It's demo";
+    return res;
+}
 @end
