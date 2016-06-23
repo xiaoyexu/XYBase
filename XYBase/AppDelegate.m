@@ -16,7 +16,26 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    XYConnector* connector = [[XYConnector alloc] initWithURL:@"http://127.0.0.1:8001/mytest"];
+    connector.connection = [XYConnection new];
+    
+    XYConnectorManager* cm = [XYConnectorManager instance];
+    [cm addConnector:connector asAlias:@"backend"];
+    
+    // Message engine manage multiple connectors
+    [[XYMessageEngine instance] setConnector:connector forStage:MessageStageDevelopment];
+    
+    // Message engine delegate
+//    [XYMessageEngine instance].delegate = self;
+    
+    // Register message configuration
+    XYMessageConfig* mc = [XYMessageConfig new];
+    mc.relativePath = @"test";
+    mc.httpMethod = @"POST";
+    [[XYMessageEngine instance] setConfig:mc forMessage:[TestRequest class]];
+    
+    [XYMessageEngine instance].runningStage = MessageStageDevelopment;
     return YES;
 }
 

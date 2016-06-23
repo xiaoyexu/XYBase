@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Classes/XYBase.h"
 #import "Worker.h"
+#import "TestRequest.h"
+#import "TestResponse.h"
 
 @interface ViewController : XYBaseVc
 

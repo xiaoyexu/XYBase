@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "Classes/XYBase.h"
+
+#import "TestRequest.h"
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

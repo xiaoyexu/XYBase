@@ -357,4 +357,170 @@ The output will be:
 2016-06-21 11:20:13.392 XYBase[51919:8487271] >Mario Developer
 ```
 
+### Messaging
+The design may be poor, but it works somehow.
+Assuming you are sending request and getting response in json format like
+
+```
+{
+ 'code': 0,
+ 'desc': 'ok',
+ 'value': 'some value'
+}
+```
+**Notice code and desc are required among all backend responses**
+
+Now,
+
+* To create a mesage, you first define the name, for example ``Test``
+* Then create class TestRequest, TestResponse, TestMessageAgent, naming convention as
+	* \<MessageName>Request
+	* \<MessageName>Response
+	* \<MessageName>MessageAgent
+* Register url information when app started up
+* Use XYMessage instance to send mssage
+
+An example as below:
+
+TestRequest.h
+
+```
+#import "XYBase.h"
+
+@interface TestRequest : XYRequest
+@property(nonatomic, strong) NSString* key;
+@end
+```
+TestRequest.m
+
+```
+#import "TestRequest.h"
+
+@implementation TestRequest
+@synthesize key;
+@end
+```
+
+TestResponse.h
+
+```
+#import "XYBase.h"
+
+@interface TestResponse : XYResponse
+@property(nonatomic, strong) NSString* value;
+@end
+```
+
+TestResponse.m
+
+```
+#import "TestResponse.h"
+
+@implementation TestResponse
+@synthesize value;
+@end
+```
+
+TestMessageAgent.h
+
+```
+#import "XYBase.h"
+#import "TestRequest.h"
+#import "TestResponse.h"
+
+@interface TestMessageAgent : XYMessageAgent
+
+@end
+```
+
+
+TestMessageAgent.m
+
+```
+#import "TestMessageAgent.h"
+
+@implementation TestMessageAgent
+-(void)normalize:(XYRequest*)request to:(XYHTTPRequestObject*) requestObj{
+    TestRequest* req = (TestRequest*)request;
+    [super normalize:req to:requestObj];
+    NSDictionary* dict = @{
+                           @"key":req.key
+                           };
+    [request.bodyDict addEntriesFromDictionary:dict];
+    NSError* error;
+    NSData *str = [NSJSONSerialization dataWithJSONObject:request.bodyDict options:kNilOptions error:&error];
+    NSString* json = [[NSString alloc]initWithData:str encoding:NSUTF8StringEncoding];
+    requestObj.body = [json dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+-(void)deNormalize:(XYHTTPResponseObject*)responseObj to:(XYResponse**)response{
+    TestResponse* res = [TestResponse new];
+    NSDictionary* repObj = [NSJSONSerialization JSONObjectWithData:responseObj.data options:NSJSONReadingMutableContainers error:nil];
+    res.value = [repObj objectForKey:@"value"];
+    *response = (XYResponse*)res;
+    [super deNormalize:responseObj to:&res];
+}
+```
+
+In the normalize method, you reformat data to json string, and in deNormalize method, you convert json string into response object.
+
+Demo backend logic in Python Django like:
+
+```
+@csrf_exempt
+def test(request):
+    body = json.loads(request.body)
+    return HttpResponse(json.dumps({'code' : 0, 'desc':'ok', 'value': "%s's value" % body.get('key', 'No key')}))
+
+```
+
+Register messages in didFinishLaunching method like
+
+```
+...
+// Connect represent one backend connection
+XYConnector* connector = [[XYConnector alloc] initWithURL:@"http://127.0.0.1:8001/mytest"];
+
+// Connection is more low level 
+// Implements how data should be sent and received
+connector.connection = [XYConnection new];
+
+// A Manager to hold all connectors
+XYConnectorManager* cm = [XYConnectorManager instance];
+    [cm addConnector:connector asAlias:@"backend"];
+    
+// Message engine can have multiple connectors. 
+// I.e. for different stage(dev, testing, production)
+[[XYMessageEngine instance] setConnector:connector forStage:MessageStageDevelopment];
+    
+// Register message configuration
+XYMessageConfig* mc = [XYMessageConfig new];
+mc.relativePath = @"test";
+mc.httpMethod = @"POST";
+[[XYMessageEngine instance] setConfig:mc forMessage:[TestRequest class]];
+
+// Set current running stage
+// You can shift between different stage on needs
+[XYMessageEngine instance].runningStage = MessageStageDevelopment;
+...
+```
+
+To trigger the sending, try do it in background thread like
+
+```
+-(void)click:(UIButton*)sender{
+    [self performBusyProcess:^XYProcessResult *{
+        TestRequest* request = [TestRequest new];
+        request.key = @"app";
+        TestResponse* response = (TestResponse*) [[XYMessageEngine instance] send:request];
+        if (response.responseCode == 0) {
+            NSLog(@"response: %@", response.value);
+            return [XYProcessResult success];
+        } else {
+            return [XYProcessResult failureWithError:response.responseDesc];
+        }
+  }];
+}
+```
+
 

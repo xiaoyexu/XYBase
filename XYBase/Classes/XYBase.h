@@ -9,9 +9,75 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "objc/runtime.h"
+#import <SystemConfiguration/SCNetworkReachability.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
+#import <sys/socket.h>
+#import <netinet/in.h>
+#import <arpa/inet.h>
+#import <netdb.h>
+#import <CommonCrypto/CommonCryptor.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface XYBase : NSObject
 
+@end
+
+#pragma mark XYUtility
+@interface XYUtility : NSObject
+
+/**
+ Check whether connect to network
+ */
++(BOOL)isConnectedToNetwork;
+
+/**
+ Check whether a NSString is nil or blank
+ */
++(BOOL)isBlank:(NSString*)field;
+
+/**
+ Return match string list of given regular expression
+ This method will return all matched string part
+ The express can be ".*(abc.*).*", string matched in group (abc...) will be saved in return list
+ */
++(NSArray*)matchStringListOfString:(NSString*)str matchRegularExpression:(NSString*)regStr;
+
+/**
+ Set title in navigation item
+ Font and color taken from XYSkinManager
+ navigationBarTitleFont and navigationBarTitleColor
+ */
++(void)setTitle:(NSString *)title inNavigationItem:(UINavigationItem*)navigationItem;
+
+/**
+ Parse date string from source format to target format
+ */
++(NSString*)convertDateFormatter:(NSString*)sourceFormatter targetFormatter:(NSString*)targetFormatter dateString:(NSString*)dateString;
+
+/**
+ Parse NSDate to NSString object
+ */
++(NSString*)dateToString:(NSString *)formatter date:(NSDate *)date;
+
+/**
+ Parse NSString object to NSDate
+ e.g.
+ [Utility stringToDate:@"yyyy-MM-dd'T00:00:00' 'PT'HH'H'mm'M'ss'S'" dateString:dateStr]
+ */
++(NSDate*)stringToDate:(NSString*)formatter dateString:(NSString*)dateStr;
+
+//+(NSString*)encrypt:(NSString*)plainText key:(NSString*)key initVect:(NSString*)iv;
+//+(NSString*)decrypt:(NSString*)encryptText key:(NSString*)key initVect:(NSString*)iv;
+
++(void)drawDashedLineOnView:(UIView*) view from:(CGPoint) from to:(CGPoint)to;
+
++(NSString*)maskPhoneNumber:(NSString*)phoneNumber;
+
+/**
+ Check if target string matches regular expression
+ */
++(BOOL)isString:(NSString*) str matchRegularExpression:(NSString*)regStr;
 @end
 
 #pragma mark XYProcessResult
@@ -303,5 +369,226 @@
  Remove all connectors
  */
 -(void)removeAllConnectors;
+@end
+
+
+#pragma mark XYRequest
+@interface XYRequest : NSObject
+@property (nonatomic, strong) NSString* userId;
+@property (nonatomic, strong) NSDate* requestTime;
+@property (nonatomic, strong) NSMutableDictionary* bodyDict;
+-(id)init;
+@end
+
+#pragma mark XYResponse
+@interface XYResponse : NSObject
+@property (nonatomic) NSUInteger responseCode;
+@property (nonatomic) NSString* responseDesc;
+@end
+
+#pragma mark XYHTTPRequestObject
+@interface XYHTTPRequestObject : NSObject
+@property(nonatomic, strong) NSURL* requestURL;
+@property(nonatomic) NSURLRequestCachePolicy policy;
+@property(nonatomic) NSTimeInterval timeout;
+@property(nonatomic) NSString* httpMethod;
+@property(nonatomic) NSDictionary* headers;
+@property(nonatomic) NSData* body;
+@end
+
+#pragma mark XYHTTPResponseObject
+@interface XYHTTPResponseObject : NSObject
+@property(nonatomic,strong, readonly) NSData* data;
+@property(nonatomic,strong, readonly) NSURLResponse* response;
+-(id)initWithData:(NSData*)data urlResponse:(NSURLResponse*)response;
+@end
+
+#pragma mark XYConnectionDelegate
+@protocol XYConnectionDelegate <NSObject>
+
+-(XYHTTPResponseObject*)sendRequest:(XYHTTPRequestObject*)reqObj;
+
+@end
+
+#pragma mark XYConnection
+@interface XYConnection : NSObject<XYConnectionDelegate,NSURLConnectionDataDelegate>
+/**
+ This is synchronous method
+ */
+-(XYHTTPResponseObject*)sendRequest:(XYHTTPRequestObject*)reqObj;
+@end
+
+#pragma mark XYConnector
+@interface XYConnector : NSObject
+@property (nonatomic, readonly) NSURL* url;
+@property (nonatomic, strong) XYConnection* connection;
+/**
+ Initialization method
+ */
+-(id)init;
+
+
+-(id)initWithConnector:(XYConnector*)connector;
+
+/**
+ Init method with URL. URL should be full path
+ The mode SALConnectorModeGateway will be set as default
+ @param url Full url string. E.g "https://server/services"
+ */
+-(id)initWithURL:(NSString*)url;
+
+/**
+ Init method with URL and flag for connection test
+ The mode SALConnectorModeGateway will be set as default
+ @param url Full url string. E.g "https://server/services"
+ @param connect If YES try connect immediately for service document and metadata
+ */
+//-(id)initWithURL:(NSString*)url connectNow:(BOOL) connect;
+
+/**
+ Refresh connector by url
+ @param url Full url string. E.g "https://server/services"
+ */
+-(void)refreshWithURL:(NSString *)url;
+
+/**
+ Connect now to get service document, metadata
+ */
+-(void)connectNow;
+@end
+
+#pragma mark XYConnectorManager
+@interface XYConnectorManager : NSObject
+/**
+ Singleton method to get ConnectorManager
+ */
++(XYConnectorManager*)instance;
+
+/**
+ Create the Connector
+ */
+-(void)initConnectorWithURL:(NSString *)url asAlias:(NSString*)alias;
+
+/**
+ Refresh gateway by url
+ */
+-(void)refreshConnectorWithURL:(NSString *)url forAlias:(NSString*)alias;
+/**
+ Get Connector by alias name
+ */
+-(XYConnector*)connectorByAlias:(NSString*)alias;
+
+/**
+ Get a new Connector by alias name
+ */
+-(XYConnector*)newConnectorByAlias:(NSString*)alias;
+
+/**
+ Add connector
+ */
+-(void)addConnector:(XYConnector*) connector asAlias:(NSString*) alias;
+/**
+ Remove connector
+ */
+-(void)removeConnectorByAlias:(NSString*)alias;
+
+/**
+ Remove all connectors
+ */
+-(void)removeAllConnectors;
+@end
+
+#pragma mark XYMessageAgent
+@protocol XYMessageAgent <NSObject>
+-(void)normalize:(XYRequest*)request to:(XYHTTPRequestObject*) requestObj;
+-(void)deNormalize:(XYHTTPResponseObject*)responseObj to:(XYResponse**)response;
+@optional
+-(XYResponse*)demoResponse;
+@end
+
+@interface XYMessageAgent : NSObject<XYMessageAgent>
+
+@end
+
+#pragma mark XYMessageEngineDelegate
+typedef enum {
+    MessageStageDemo,
+    MessageStageDevelopment,
+    MessageStageProduction,
+} MessageStage;
+
+@protocol XYMessageEngineDelegate<NSObject>
+
+@optional
+/**
+ If logging is turn on, this method will be called to log request/response information
+ */
+-(void)log:(NSString*)logString;
+
+@end
+
+/**
+ Message configuration for a single message
+ */
+#pragma mark XYMessageConfig
+@interface XYMessageConfig : NSObject
+@property (nonatomic, strong) NSString* relativePath;
+@property (nonatomic, strong) NSString* httpMethod;
+@end
+
+#pragma mark XYMessageEngine
+@protocol XYMessageEngine<NSObject>
+-(XYResponse*)send:(XYRequest*)request;
+@end
+
+@interface XYMessageEngine : NSObject<XYMessageEngine>
+/**
+ Indicator which stage message engine is running
+ */
+@property (nonatomic) MessageStage runningStage;
+
+/**
+ Message stage mapping
+ */
+@property (nonatomic, readonly) NSMutableDictionary* messageStage;
+
+/**
+ Message relative url mapping
+ Domain is defined by XYConnector, e.g. www.test.com
+ Relative url is defined by each message, e.g.
+ www.test.com/Login   <-> LoginRequest
+ 
+ */
+@property (nonatomic, readonly) NSMutableDictionary* messageConfigMapping;
+
+/**
+ Delegate
+ */
+@property (nonatomic, strong) id<XYMessageEngineDelegate> delegate;
+
+/**
+ Singleton instance
+ */
++(XYMessageEngine*)instance;
+
+/**
+ Set connector for stage
+ */
+-(void)setConnector:(XYConnector*)connector forStage:(MessageStage)stage;
+
+/**
+ Remove connector
+ */
+-(void)removeConnectorOfStage:(MessageStage)stage;
+
+/**
+ Set config for message
+ */
+-(void)setConfig:(XYMessageConfig*)config forMessage:(Class)messageClass;
+
+/**
+ Remove config
+ */
+-(void)removeConfigOfMessage:(Class)messageClass;
 @end
 
