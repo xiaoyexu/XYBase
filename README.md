@@ -544,4 +544,17 @@ To trigger the sending, try do it in background thread like
 }
 ```
 
+### NSString Category
+Provide methods to get sha1, md5 string. E.g.
+
+```
+-(NSString*)md5;
+-(NSString*)sha1;
+-(NSString*)sha1_base64; // Need GTMBase64.h 
+-(NSString*)md5_base64;  // Need GTMBase64.h 
+-(NSString*)base64;      // Need GTMBase64.h 
+-(NSString*)trim;
+```
+
+
 

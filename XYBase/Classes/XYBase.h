@@ -18,6 +18,8 @@
 #import <netdb.h>
 #import <CommonCrypto/CommonCryptor.h>
 #import <QuartzCore/QuartzCore.h>
+#import <CommonCrypto/CommonDigest.h>
+//#import "GTMBase64.h"
 
 @interface XYBase : NSObject
 
@@ -590,5 +592,16 @@ typedef enum {
  Remove config
  */
 -(void)removeConfigOfMessage:(Class)messageClass;
+@end
+
+#pragma mark NSString+category
+@interface NSString (category)
+-(NSString*)md5;
+-(NSString*)sha1;
+// Uncomment below if GTMBase64.h imported
+//-(NSString*)sha1_base64;
+//-(NSString*)md5_base64;
+//-(NSString*)base64;
+-(NSString*)trim;
 @end
 

@@ -17,6 +17,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [self print:@"123"];
+    return YES;
+}
+
+-(void)print:(NSString* _Nonnull)str{
+    NSLog(@"%@", [str md5]);
+}
+
+-(void)print2:(NSString* _Nullable)str{
+    NSLog(@"%@", str);
+}
+
+-(void)message{
     XYConnector* connector = [[XYConnector alloc] initWithURL:@"http://127.0.0.1:8001/mytest"];
     connector.connection = [XYConnection new];
     
@@ -27,7 +40,7 @@
     [[XYMessageEngine instance] setConnector:connector forStage:MessageStageDevelopment];
     
     // Message engine delegate
-//    [XYMessageEngine instance].delegate = self;
+    //    [XYMessageEngine instance].delegate = self;
     
     // Register message configuration
     XYMessageConfig* mc = [XYMessageConfig new];
@@ -36,7 +49,6 @@
     [[XYMessageEngine instance] setConfig:mc forMessage:[TestRequest class]];
     
     [XYMessageEngine instance].runningStage = MessageStageDemo;
-    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
