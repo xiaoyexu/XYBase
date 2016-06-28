@@ -63,15 +63,18 @@
 
 -(void)click:(UIButton*)sender{
     [self performBusyProcess:^XYProcessResult *{
-        TestRequest* request = [TestRequest new];
-        request.key = @"app";
-        TestResponse* response = (TestResponse*) [[XYMessageEngine instance] send:request];
-        if (response.responseCode == 0) {
-            NSLog(@"response: %@", response.value);
-            return [XYProcessResult success];
-        } else {
-            return [XYProcessResult failureWithError:response.responseDesc];
-        }
+        
+        sleep(5);
+        return [XYProcessResult success];
+//        TestRequest* request = [TestRequest new];
+//        request.key = @"app";
+//        TestResponse* response = (TestResponse*) [[XYMessageEngine instance] send:request];
+//        if (response.responseCode == 0) {
+//            NSLog(@"response: %@", response.value);
+//            return [XYProcessResult success];
+//        } else {
+//            return [XYProcessResult failureWithError:response.responseDesc];
+//        }
   }];
 }
 

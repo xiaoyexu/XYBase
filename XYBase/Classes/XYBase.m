@@ -361,62 +361,49 @@
         isStatusUpdaterEnabled = NO;
         [self turnOnBusyFlag];
     }
-    // Rune callback in background
-    [NSThread detachNewThreadSelector:@selector(performBusyProcessInBackground:) toTarget:self withObject:block];
-}
-
-/*
- Method of executing a callback block in background
- */
--(void)performBusyProcessInBackground:(XYProcessResult*(^)(void))block{
-    if (block == nil) {
-        return;
-    }
-    XYProcessResult* (^progressBlock)() = block;
-    XYProcessResult* processResult;
-    @try {
-        processResult = progressBlock();
-        if (processResult == nil) {
-            // If no process result return, end immediately
-            [self performSelectorOnMainThread:@selector(turnOffBusyFlag) withObject:nil waitUntilDone:YES];
+    // Run callback in background
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (block == nil) {
             return;
         }
-        if (processResult.success == YES) {
-            // For success result, call handleNormalCorrectResponse:
-            [self performSelectorOnMainThread:@selector(handleNormalCorrectResponse:) withObject:processResult waitUntilDone:NO];
-        } else {
-            // For error result, call handleNormalErrorResponse:
-            [self performSelectorOnMainThread:@selector(handleNormalErrorResponse:) withObject:processResult waitUntilDone:NO];
+        XYProcessResult* (^progressBlock)() = block;
+        XYProcessResult* processResult;
+        @try {
+            processResult = progressBlock();
+            if (processResult == nil) {
+                // If no process result return, end immediately
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self turnOffBusyFlag];
+                });
+            }
+            if (processResult.success == YES) {
+                // For success result, call handleNormalCorrectResponse:
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self turnOffBusyFlag];
+                    [self handleCorrectResponse:processResult];
+                });
+            } else {
+                // For error result, call handleNormalErrorResponse:
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self turnOffBusyFlag];
+                    [self handleErrorResponse:processResult];
+                });
+            }
         }
-    }
-    @catch (NSException *exception) {
-        // Populating any exception reason into dictionary with key "error" and call handleNormalErrorResponse:
-        NSString* errorStr;
-        errorStr = exception.reason;
-        if (processResult == nil) {
-            processResult = [XYProcessResult new];
+        @catch (NSException *exception) {
+            // Populating any exception reason into dictionary with key "error" and call handleNormalErrorResponse:
+            NSString* errorStr;
+            errorStr = exception.reason;
+            if (processResult == nil) {
+                processResult = [XYProcessResult new];
+            }
+            [processResult.params setValue:errorStr forKey:@"error"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self turnOffBusyFlag];
+                [self handleErrorResponse:processResult];
+            });
         }
-        [processResult.params setValue:errorStr forKey:@"error"];
-        [self performSelectorOnMainThread:@selector(handleNormalErrorResponse:) withObject:processResult waitUntilDone:NO];
-    }
-}
-
-/*
- Method to handle correct response.
- Do not overwrite it in subclasses, use handleCorrectResponse: instead
- */
--(void)handleNormalCorrectResponse:(XYProcessResult*) result{
-    [self turnOffBusyFlag];
-    [self handleCorrectResponse:result];
-}
-
-/*
- Method to handle error response
- Do not overwrite it in subclasses, use handleErrorResponse: instead
- */
--(void)handleNormalErrorResponse:(XYProcessResult*) result{
-    [self turnOffBusyFlag];
-    [self handleErrorResponse:result];
+    });
 }
 
 /*
@@ -683,62 +670,49 @@
         isStatusUpdaterEnabled = NO;
         [self turnOnBusyFlag];
     }
-    // Rune callback in background
-    [NSThread detachNewThreadSelector:@selector(performBusyProcessInBackground:) toTarget:self withObject:block];
-}
-
-/*
- Method of executing a callback block in background
- */
--(void)performBusyProcessInBackground:(XYProcessResult*(^)(void))block{
-    if (block == nil) {
-        return;
-    }
-    XYProcessResult* (^progressBlock)() = block;
-    XYProcessResult* processResult;
-    @try {
-        processResult = progressBlock();
-        if (processResult == nil) {
-            // If no process result return, end immediately
-            [self performSelectorOnMainThread:@selector(turnOffBusyFlag) withObject:nil waitUntilDone:YES];
+    // Run callback in background
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (block == nil) {
             return;
         }
-        if (processResult.success == YES) {
-            // For success result, call handleNormalCorrectResponse:
-            [self performSelectorOnMainThread:@selector(handleNormalCorrectResponse:) withObject:processResult waitUntilDone:NO];
-        } else {
-            // For error result, call handleNormalErrorResponse:
-            [self performSelectorOnMainThread:@selector(handleNormalErrorResponse:) withObject:processResult waitUntilDone:NO];
+        XYProcessResult* (^progressBlock)() = block;
+        XYProcessResult* processResult;
+        @try {
+            processResult = progressBlock();
+            if (processResult == nil) {
+                // If no process result return, end immediately
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self turnOffBusyFlag];
+                });
+            }
+            if (processResult.success == YES) {
+                // For success result, call handleNormalCorrectResponse:
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self turnOffBusyFlag];
+                    [self handleCorrectResponse:processResult];
+                });
+            } else {
+                // For error result, call handleNormalErrorResponse:
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self turnOffBusyFlag];
+                    [self handleErrorResponse:processResult];
+                });
+            }
         }
-    }
-    @catch (NSException *exception) {
-        // Populating any exception reason into dictionary with key "error" and call handleNormalErrorResponse:
-        NSString* errorStr;
-        errorStr = exception.reason;
-        if (processResult == nil) {
-            processResult = [XYProcessResult new];
+        @catch (NSException *exception) {
+            // Populating any exception reason into dictionary with key "error" and call handleNormalErrorResponse:
+            NSString* errorStr;
+            errorStr = exception.reason;
+            if (processResult == nil) {
+                processResult = [XYProcessResult new];
+            }
+            [processResult.params setValue:errorStr forKey:@"error"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self turnOffBusyFlag];
+                [self handleErrorResponse:processResult];
+            });
         }
-        [processResult.params setValue:errorStr forKey:@"error"];
-        [self performSelectorOnMainThread:@selector(handleNormalErrorResponse:) withObject:processResult waitUntilDone:NO];
-    }
-}
-
-/*
- Method to handle correct response.
- Do not overwrite it in subclasses, use handleCorrectResponse: instead
- */
--(void)handleNormalCorrectResponse:(XYProcessResult*) result{
-    [self turnOffBusyFlag];
-    [self handleCorrectResponse:result];
-}
-
-/*
- Method to handle error response
- Do not overwrite it in subclasses, use handleErrorResponse: instead
- */
--(void)handleNormalErrorResponse:(XYProcessResult*) result{
-    [self turnOffBusyFlag];
-    [self handleErrorResponse:result];
+    });
 }
 
 /*
