@@ -8,6 +8,26 @@
 
 #import "ViewController.h"
 
+
+@implementation TestOperation {
+    NSString* _name;
+}
+-(id)initWithName:(NSString*)name{
+    if (self = [super init]) {
+        _name = name;
+    }
+    return self;
+}
+-(void)main{
+    for(int i = 0; i<10 ; i++ ) {
+        NSLog(@"%@ %d",
+              _name, i);
+        sleep(1);
+    }
+}
+
+@end
+
 @interface ViewController ()
 
 @end
@@ -15,9 +35,16 @@
 @implementation ViewController
 {
     UIAlertController* ac;
+    UIImagePickerController *imagePickerController;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    
+    imagePickerController.allowsEditing = YES;
+    
     [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
     
     // Initialize core data
@@ -62,10 +89,46 @@
 
 
 -(void)click:(UIButton*)sender{
-    [self performBusyProcess:^XYProcessResult *{
+    
+    
+//    UIActionSheet *sheet;
+    // 判断是否支持相机
+    UIAlertController* alertController;
+    alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"choose", @"choose") message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
         
-        sleep(5);
-        return [XYProcessResult success];
+    {
+        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"photo", @"photo") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+        
+            imagePickerController.allowsEditing = YES;
+            
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+            
+            [self presentViewController:imagePickerController animated:YES completion:^{}];
+            
+            
+            
+        }]];
+        
+    }
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"from album", @"album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        
+        [self presentViewController:imagePickerController animated:YES completion:^{}];
+        
+    }]];
+    
+   [self presentViewController:alertController animated:YES completion:nil];
+    
+    //    [self performBusyProcess:^XYProcessResult *{
+    
+//        sleep(5);
+//        return [XYProcessResult success];
 //        TestRequest* request = [TestRequest new];
 //        request.key = @"app";
 //        TestResponse* response = (TestResponse*) [[XYMessageEngine instance] send:request];
@@ -75,7 +138,58 @@
 //        } else {
 //            return [XYProcessResult failureWithError:response.responseDesc];
 //        }
-  }];
+//  }];
+    
+//    dispatch_time_t t = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*5);
+//    
+//    dispatch_after(t, dispatch_get_main_queue(), ^{
+//        // UI线程逻辑
+//        ac = [UIAlertController alertControllerWithTitle:@"Busy2" message:nil preferredStyle:UIAlertControllerStyleAlert];
+//        [self presentViewController:ac animated:YES completion:nil];
+//    });
+    
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        NSLog(@"Done");
+//    });
+//    dispatch_once(&onceToken, ^{
+//        NSLog(@"Done");
+//    });
+
+//    dispatch_group_t g = dispatch_group_create();
+//    dispatch_queue_t q = dispatch_get_main_queue();
+//    dispatch_group_async(g, q, ^{
+//        NSLog(@"g1");
+//    });
+//    dispatch_group_async(g, q, ^{
+//        NSLog(@"g2");
+//    });
+//    dispatch_group_async(g, q, ^{
+//        NSLog(@"g3");
+//    });
+//    dispatch_group_notify(g, q, ^{
+//        NSLog(@"All done");
+//    });
+    
+//    NSOperationQueue* queue = [NSOperationQueue mainQueue];
+    
+//    NSOperationQueue* queue = [NSOperationQueue new];
+//    TestOperation* o = [[TestOperation alloc] initWithName:@"t"];
+//    TestOperation* o2 = [[TestOperation alloc] initWithName:@"t2"];
+//    [o2 addDependency:o];
+//    [queue addOperation:o];
+//    [queue addOperation:o2];
+//    TestOperation* o3 = [[TestOperation alloc] initWithName:@"t3"];
+//    [queue addOperation:o3];
+    
+    
+//    NSBlockOperation* op = [NSBlockOperation blockOperationWithBlock:^{
+//        NSLog(@"block executed");
+//    }];
+    
+//    [queue addOperation:op];
+//    [queue addOperation:[TestOperation new]];
+    
 }
 
 
@@ -101,4 +215,91 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    
+    NSLog(@"cancelled");
+     [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    for (NSString* key in info.keyEnumerator) {
+        NSLog(@"%@ %@", key, [info objectForKey:key]);
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    /* 此处info 有六个值
+     * UIImagePickerControllerMediaType; // an NSString UTTypeImage)
+     * UIImagePickerControllerOriginalImage;  // a UIImage 原始图片
+     * UIImagePickerControllerEditedImage;    // a UIImage 裁剪后图片
+     * UIImagePickerControllerCropRect;       // an NSValue (CGRect)
+     * UIImagePickerControllerMediaURL;       // an NSURL
+     * UIImagePickerControllerReferenceURL    // an NSURL that references an asset in the AssetsLibrary framework
+     * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
+     */
+    // 保存图片至本地，方法见下文
+    [self saveImage:image withName:@"currentImage.png"];
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
+    
+    UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+    
+//    isFullScreen = NO;
+    [self.imageView setImage:savedImage];
+    
+    self.imageView.tag = 100;
+    
+    [imagePickerController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) saveImage:(UIImage *)currentImage withName:(NSString *)imageName
+{
+    
+    NSData *imageData = UIImageJPEGRepresentation(currentImage, 0.5);
+    // 获取沙盒目录
+    
+    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:imageName];
+    // 将图片写入文件
+    
+    [imageData writeToFile:fullPath atomically:NO];
+}
+
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    [picker dismissViewControllerAnimated:YES completion:^{}];
+//    
+//    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+//    /* 此处info 有六个值
+//     * UIImagePickerControllerMediaType; // an NSString UTTypeImage)
+//     * UIImagePickerControllerOriginalImage;  // a UIImage 原始图片
+//     * UIImagePickerControllerEditedImage;    // a UIImage 裁剪后图片
+//     * UIImagePickerControllerCropRect;       // an NSValue (CGRect)
+//     * UIImagePickerControllerMediaURL;       // an NSURL
+//     * UIImagePickerControllerReferenceURL    // an NSURL that references an asset in the AssetsLibrary framework
+//     * UIImagePickerControllerMediaMetadata    // an NSDictionary containing metadata from a captured photo
+//     */
+//    // 保存图片至本地，方法见下文
+//    [self saveImage:image withName:@"currentImage.png"];
+//    
+//    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"currentImage.png"];
+//    
+//    UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:fullPath];
+//    
+//    isFullScreen = NO;
+//    [self.imageView setImage:savedImage];
+//    
+//    self.imageView.tag = 100;
+//    
+//}
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+//{
+//    [self dismissViewControllerAnimated:YES completion:^{}];
+//}
+
+
 @end
+
+

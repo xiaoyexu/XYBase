@@ -193,11 +193,11 @@ The complete version of above sample would be:
     usernameItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         InputTvc* cell = (InputTvc*)baseCell;
         cell.label.text = NSLocalizedString(@"username", @"username");
-        cell.label.textColor = [UIColor whLabelColor];
+        cell.label.textColor = [UIColor blackColor];
         cell.textField.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:NSLocalizedString(@"plsEnterUsername", @"plsEnterUsername") attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
         [cell.textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
         usernameTf = cell.textField;
-        cell.separatorLine.backgroundColor = [UIColor whTableCellSeparatorLineColor];
+        cell.separatorLine.backgroundColor = [UIColor blackColor];
         return cell;
     };
     
@@ -205,19 +205,19 @@ The complete version of above sample would be:
     passwordItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         InputTvc* cell = (InputTvc*)baseCell;
         cell.label.text = NSLocalizedString(@"password", @"password");
-        cell.label.textColor = [UIColor whLabelColor];
+        cell.label.textColor = [UIColor blackColor];
         cell.textField.secureTextEntry = YES;
         cell.textField.attributedPlaceholder =  [[NSAttributedString alloc] initWithString:NSLocalizedString(@"plsEnterPassword", @"plsEnterPassword") attributes:@{NSForegroundColorAttributeName: [UIColor lightGrayColor]}];
         [cell.textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
         passwordTf = cell.textField;
-        cell.separatorLine.backgroundColor = [UIColor whTableCellSeparatorLineColor];
+        cell.separatorLine.backgroundColor = [UIColor blackColor];
         return cell;
     };
     
     XYBaseTvcItem* buttonItem = [[XYBaseTvcItem alloc] initWithIdentifer:@"ButtonTvc" view:nil height:BUTTON_ROW_HEIGHT];
     buttonItem.tableViewCellForRowAtIndexPath = ^(UITableView* tableView, UITableViewCell* baseCell, NSIndexPath* indexPath){
         ButtonTvc* cell = (ButtonTvc*) baseCell;
-        cell.button.backgroundColor = [UIColor whButtonColor];
+        cell.button.backgroundColor = [UIColor blackColor];
         [cell.button setTintColor:[UIColor whiteColor]];
         [cell.button setTitle:NSLocalizedString(@"login", @"login") forState:UIControlStateNormal];
         [cell.button addTarget:self action:@selector(loginBtnClicked:) forControlEvents:UIControlEventTouchDown];

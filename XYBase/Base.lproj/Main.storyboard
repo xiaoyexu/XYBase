@@ -20,14 +20,19 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uEh-xf-txm">
                                 <rect key="frame" x="277" y="248" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="test"/>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nSg-b3-u7z">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nSg-b3-u7z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="84" id="ABJ-de-UVr"/>
                             <constraint firstItem="uEh-xf-txm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="228" id="AOK-tR-k6U">
                                 <variation key="widthClass=compact" constant="192"/>
                             </constraint>
+                            <constraint firstItem="nSg-b3-u7z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="130" id="Cww-Mf-Ahd"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uEh-xf-txm" secondAttribute="bottom" constant="322" id="LNL-Hc-bXz">
                                 <variation key="widthClass=compact" constant="314"/>
                             </constraint>
@@ -37,11 +42,36 @@
                             <constraint firstItem="uEh-xf-txm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="257" id="RGV-XN-UUK">
                                 <variation key="widthClass=compact" constant="157"/>
                             </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="nSg-b3-u7z" secondAttribute="trailing" constant="130" id="b0y-2F-J8b"/>
+                            <constraint firstItem="uEh-xf-txm" firstAttribute="top" secondItem="nSg-b3-u7z" secondAttribute="bottom" constant="8" id="smp-X9-lAW"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="nSg-b3-u7z"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="ABJ-de-UVr"/>
+                                <exclude reference="Cww-Mf-Ahd"/>
+                                <exclude reference="b0y-2F-J8b"/>
+                                <exclude reference="smp-X9-lAW"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="nSg-b3-u7z"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="ABJ-de-UVr"/>
+                                <include reference="Cww-Mf-Ahd"/>
+                                <include reference="b0y-2F-J8b"/>
+                                <include reference="smp-X9-lAW"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="ASc-ZN-l3s"/>
                     <connections>
                         <outlet property="button" destination="uEh-xf-txm" id="iwP-TH-Sfb"/>
+                        <outlet property="imageView" destination="nSg-b3-u7z" id="G5b-yr-gJW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

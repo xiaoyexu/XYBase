@@ -12,9 +12,13 @@
 #import "TestRequest.h"
 #import "TestResponse.h"
 
-@interface ViewController : XYBaseVc
+@interface ViewController : XYBaseVc<UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 @end
 
+@interface TestOperation : NSOperation
+-(id)initWithName:(NSString*)name;
+@end

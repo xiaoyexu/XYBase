@@ -70,6 +70,8 @@
 		F73F96481D1B834F00CEE45C /* TestResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestResponse.m; sourceTree = "<group>"; };
 		F73F964A1D1B836B00CEE45C /* TestMessageAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMessageAgent.h; sourceTree = "<group>"; };
 		F73F964B1D1B836B00CEE45C /* TestMessageAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMessageAgent.m; sourceTree = "<group>"; };
+		F7B07D6A1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		F7B07D6B1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F73F95F91D12434800CEE45C /* Base */,
+				F7B07D6A1D26387C003CEA82 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				F73F96011D12434800CEE45C /* Base */,
+				F7B07D6B1D26387C003CEA82 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -487,7 +491,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = XYBase/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = xiaoyexu.XYBase;
+				PRODUCT_BUNDLE_IDENTIFIER = xiaoye.xu.Test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -498,7 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = XYBase/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = xiaoyexu.XYBase;
+				PRODUCT_BUNDLE_IDENTIFIER = xiaoye.xu.Test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
