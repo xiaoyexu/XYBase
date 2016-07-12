@@ -556,5 +556,23 @@ Provide methods to get sha1, md5 string. E.g.
 -(NSString*)trim;
 ```
 
+### XYUISegmentedControl
+This is a sub class of UISegmentedControl, provide feature to customized the font size, color of the each item.
 
+An example as follows:
+
+```
+XYUISegmentedControl* sc = [[XYUISegmentedControl alloc] initWithItems:@[@"a",@"b",@"c"]];
+    sc.frame = CGRectMake(10, 10, 200, 30);
+    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 25, 30, 5)];
+    v.backgroundColor = [UIColor purpleColor];
+    sc.selectedView = v;
+    sc.selectedTitleFont = [UIFont systemFontOfSize:20];
+    sc.unSelectedTitleFont = [UIFont systemFontOfSize:10];
+    sc.selectedFontColor = [UIColor greenColor];
+    sc.tintColor = [UIColor clearColor];
+    sc.unSelectedFontColor = [UIColor redColor];
+    [sc renderView];
+    [self.view addSubview:sc];
+```
 

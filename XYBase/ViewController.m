@@ -40,19 +40,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
+//    imagePickerController = [[UIImagePickerController alloc] init];
+//    imagePickerController.delegate = self;
+//    
+//    imagePickerController.allowsEditing = YES;
+//    
+//    [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
+//    
+//    // Initialize core data
+//    [[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
+//    [self deleteDB];
+//    [self showDB];
+//    [self addRecord];
+//    [self showDB];
     
-    imagePickerController.allowsEditing = YES;
-    
-    [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
-    
-    // Initialize core data
-    [[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
-    [self deleteDB];
-    [self showDB];
-    [self addRecord];
-    [self showDB];
+    XYUISegmentedControl* sc = [[XYUISegmentedControl alloc] initWithItems:@[@"a",@"b",@"c"]];
+    sc.frame = CGRectMake(10, 10, 200, 30);
+    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 25, 30, 5)];
+    v.backgroundColor = [UIColor purpleColor];
+    sc.selectedView = v;
+    sc.selectedTitleFont = [UIFont systemFontOfSize:20];
+    sc.unSelectedTitleFont = [UIFont systemFontOfSize:10];
+    sc.selectedFontColor = [UIColor greenColor];
+    sc.tintColor = [UIColor clearColor];
+    sc.unSelectedFontColor = [UIColor redColor];
+    [sc renderView];
+    [self.view addSubview:sc];
 }
 
 -(void)addRecord{
