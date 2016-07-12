@@ -54,18 +54,51 @@
 //    [self addRecord];
 //    [self showDB];
     
-    XYUISegmentedControl* sc = [[XYUISegmentedControl alloc] initWithItems:@[@"a",@"b",@"c"]];
-    sc.frame = CGRectMake(10, 10, 200, 30);
-    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 25, 30, 5)];
-    v.backgroundColor = [UIColor purpleColor];
-    sc.selectedView = v;
-    sc.selectedTitleFont = [UIFont systemFontOfSize:20];
-    sc.unSelectedTitleFont = [UIFont systemFontOfSize:10];
-    sc.selectedFontColor = [UIColor greenColor];
-    sc.tintColor = [UIColor clearColor];
-    sc.unSelectedFontColor = [UIColor redColor];
-    [sc renderView];
-    [self.view addSubview:sc];
+//    XYUISegmentedControl* sc = [[XYUISegmentedControl alloc] initWithItems:@[@"a",@"b",@"c"]];
+//    sc.frame = CGRectMake(10, 10, 200, 30);
+//    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 25, 30, 5)];
+//    v.backgroundColor = [UIColor purpleColor];
+//    sc.selectedView = v;
+//    sc.selectedTitleFont = [UIFont systemFontOfSize:20];
+//    sc.unSelectedTitleFont = [UIFont systemFontOfSize:10];
+//    sc.selectedFontColor = [UIColor greenColor];
+//    sc.tintColor = [UIColor clearColor];
+//    sc.unSelectedFontColor = [UIColor redColor];
+//    [sc renderView];
+//    [self.view addSubview:sc];
+    
+    XYSortUIButton* button = [[XYSortUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
+    button.ascendingImg = [UIImage imageNamed:@"sort_up_green"];
+    button.descendingImg = [UIImage imageNamed:@"sort_down_green"];
+    button.noneSortImg = [UIImage imageNamed:@"sort_neutral"];
+    [button setTitle:@"Field" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.layer.borderColor = [UIColor redColor].CGColor;
+    button.layer.borderWidth = 1.f;
+    [button addTarget:self action:@selector(sortClicked:) forControlEvents:UIControlEventTouchDown];
+//    In case change title and image location
+//    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -80, 0, 0)];
+//    [button setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+    [button renderView];
+    [self.view addSubview:button];
+    
+    XYSelectUIButton* button2 = [[XYSelectUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
+    button2.selectedImg = [UIImage imageNamed:@"sort_up_green"];
+    button2.deselectedImg = [UIImage imageNamed:@"sort_down_green"];
+    [button2 addTarget:self action:@selector(selectClicked:) forControlEvents:UIControlEventTouchDown];
+    [button2 renderView];
+    [self.view addSubview:button2];
+    
+}
+
+-(void)sortClicked:(XYSortUIButton*)sender{
+    NSLog(@"%d", sender.sortType);
+}
+
+-(void)selectClicked:(XYSelectUIButton*)sender{
+    NSLog(@"%d", sender.selectType);
+    // Change status on needs
+    sender.selectType = SelectTypeSelected;
 }
 
 -(void)addRecord{
@@ -79,7 +112,6 @@
     worker.title = @"Developer";
     [dc saveContext];
     NSLog(@"after saving %@ %@", worker.name, worker.title);
-    
 }
 
 -(void)deleteDB{

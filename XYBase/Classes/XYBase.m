@@ -1574,13 +1574,76 @@ static XYMessageEngine* meinstance;
     NSData* viewData = [NSKeyedArchiver archivedDataWithRootObject:view];
     return [NSKeyedUnarchiver unarchiveObjectWithData:viewData];
 }
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
-
 @end
 
+@implementation XYSortUIButton
+@synthesize sortType = _sortType;
+@synthesize ascendingImg;
+@synthesize descendingImg;
+@synthesize noneSortImg;
+
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]){
+        [self addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
+        _sortType = SortTypeNone;
+    }
+    return self;
+}
+
+-(void)renderView{
+    if (_sortType == SortTypeNone) {
+        [self setImage:self.noneSortImg forState:UIControlStateNormal];
+    } else if (_sortType == SortTypeAscending) {
+        [self setImage:self.ascendingImg forState:UIControlStateNormal];
+    } else if (_sortType == SortTypeDescending) {
+        [self setImage:self.descendingImg forState:UIControlStateNormal];
+    }
+}
+
+-(void)btnClicked:(XYSortUIButton*)sender{
+    if (_sortType == SortTypeNone) {
+        _sortType = SortTypeAscending;
+    } else if (_sortType == SortTypeAscending) {
+        _sortType = SortTypeDescending;
+    } else if (_sortType == SortTypeDescending) {
+        _sortType = SortTypeNone;
+    }
+    [self renderView];
+}
+@end
+
+@implementation XYSelectUIButton
+@synthesize selectType = _selectType;
+@synthesize selectedImg;
+@synthesize deselectedImg;
+
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]){
+//        [self addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
+        _selectType = SelectTypeDeselected;
+    }
+    return self;
+}
+
+-(void)renderView{
+    if (_selectType == SelectTypeSelected) {
+        [self setImage:self.selectedImg forState:UIControlStateNormal];
+    } else if (_selectType == SelectTypeDeselected) {
+        [self setImage:self.deselectedImg forState:UIControlStateNormal];
+    }
+}
+
+-(void)setSelectType:(SelectType)selectType{
+    _selectType = selectType;
+    [self renderView];
+}
+
+//-(void)btnClicked:(XYSelectUIButton*)sender{
+//    if (_selectType == SelectTypeSelected) {
+//        _selectType = SelectTypeDeselected;
+//    } else if (_selectType == SelectTypeDeselected) {
+//        _selectType = SelectTypeSelected;
+//    }
+//    [self renderView];
+//}
+@end

@@ -13,7 +13,9 @@
 @end
 
 @implementation TableViewController
-
+{
+    NSArray* records;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     XYBaseTvcItem* item = [[XYBaseTvcItem alloc] initWithIdentifer:@"default" view:nil height:44];
@@ -39,27 +41,52 @@
     
 //    self.noDataView = view;
 //    [self.view addSubview:self.noDataView];
-    [self setNoDataViewHidden:NO];
+//    [self setNoDataViewHidden:NO];
     
-    
-    
+    records = @[@"a",@"b",@"c",@"d",@"e"];
 }
 
--(UIView*)noDataView{
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
-    view.backgroundColor = [UIColor greenColor];
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    return view;
-}
+//-(UIView*)noDataView{
+//    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+//    view.backgroundColor = [UIColor greenColor];
+//    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//    return view;
+//}
 
--(void)handleCorrectResponse:(XYProcessResult *)result{
-    NSArray* records = [result.params objectForKey:@"records"];
-    [self setNoDataViewHidden:records != 0];
-    [self.tableView reloadData];
-}
+//-(void)handleCorrectResponse:(XYProcessResult *)result{
+//    NSArray* records = [result.params objectForKey:@"records"];
+//    [self setNoDataViewHidden:records != 0];
+//    [self.tableView reloadData];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return records.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"default" forIndexPath:indexPath];
+    cell.textLabel.text = [records objectAtIndex:indexPath.row];
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    v.backgroundColor = [UIColor greenColor];
+    return v;
 }
 
 /*

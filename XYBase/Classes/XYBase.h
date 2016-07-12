@@ -618,3 +618,30 @@ typedef enum {
 -(id)initWithItems:(NSArray *)items;
 -(void)renderView;
 @end
+
+typedef enum {
+    SortTypeAscending,
+    SortTypeDescending,
+    SortTypeNone,
+} SortType;
+
+@interface XYSortUIButton : UIButton
+@property(nonatomic, readonly) SortType sortType;
+@property(nonatomic, strong) UIImage* ascendingImg;
+@property(nonatomic, strong) UIImage* descendingImg;
+@property(nonatomic, strong) UIImage* noneSortImg;
+-(void)renderView;
+@end
+
+typedef enum {
+    SelectTypeSelected,
+    SelectTypeDeselected
+} SelectType;
+
+@interface XYSelectUIButton : UIButton
+@property(nonatomic) SelectType selectType;
+@property(nonatomic, strong) UIImage* selectedImg;
+@property(nonatomic, strong) UIImage* deselectedImg;
+-(void)renderView;
+@end
+

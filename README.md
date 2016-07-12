@@ -604,3 +604,60 @@ XYUISegmentedControl* sc = [[XYUISegmentedControl alloc] initWithItems:@[@"a",@"
     [self.view addSubview:sc];
 ```
 
+### XYSortUIButton
+A subclass of UIButton, it provides 3 status ``SortTypeAscending``,``SortTypeDescending`` and ``SortTypeNone``.
+
+According to the status, 3 images can be added ``ascendingImg``,``descendingImg``,``noneSortImg``. 
+
+Each time the button is clicked, the status changed in such sequence SortTypeAscending-> SortTypeDescending->SortTypeNone-> SortTypeAscending.
+
+An example as follows:
+
+```
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    XYSortUIButton* button = [[XYSortUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
+    button.ascendingImg = [UIImage imageNamed:@"sort_up_green"];
+    button.descendingImg = [UIImage imageNamed:@"sort_down_green"];
+    button.noneSortImg = [UIImage imageNamed:@"sort_neutral"];
+    [button setTitle:@"Field" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    button.layer.borderColor = [UIColor redColor].CGColor;
+    button.layer.borderWidth = 1.f;
+    [button addTarget:self action:@selector(sortClicked:) forControlEvents:UIControlEventTouchDown];
+//    In case change title and image location
+//    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -80, 0, 0)];
+//    [button setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+    [button renderView];
+    [self.view addSubview:button];
+}
+
+-(void)sortClicked:(XYSortUIButton*)sender{
+    NSLog(@"%d", sender.sortType);
+}
+```
+
+
+### XYSelectUIButton
+A subclass of UIButton, provides 2 status, ``SelectTypeSelected``, ``SelectTypeDeselected``
+
+An example as follows:
+
+```
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    XYSelectUIButton* button2 = [[XYSelectUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
+    button2.selectedImg = [UIImage imageNamed:@"sort_up_green"];
+    button2.deselectedImg = [UIImage imageNamed:@"sort_down_green"];
+    [button2 addTarget:self action:@selector(selectClicked:) forControlEvents:UIControlEventTouchDown];
+    [button2 renderView];
+    [self.view addSubview:button2];
+}
+
+-(void)selectClicked:(XYSelectUIButton*)sender{
+    NSLog(@"%d", sender.selectType);
+    // Change status on needs
+    sender.selectType = SelectTypeSelected;
+}
+```
+
