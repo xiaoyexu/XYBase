@@ -294,10 +294,17 @@ For example, in subclass, override noDataView method to return a customized view
 
 ```
 -(UIView*)noDataView{
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
-    view.backgroundColor = [UIColor greenColor];
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    return view;
+    if (_noDataView == nil) {
+        UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 300)];
+        view.backgroundColor = [UIColor lightGrayColor];
+        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, self.view.frame.size.width, 40)];
+        view.autoresizingMask = label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        label.text = NSLocalizedString(@"noData", @"noData");
+        label.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:label];
+        _noDataView = view;
+    }
+    return _noDataView;
 }
 
 -(void)handleCorrectResponse:(XYProcessResult *)result{
