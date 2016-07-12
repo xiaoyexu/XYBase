@@ -229,13 +229,14 @@
 {
 @protected
     NSArray* sections;
+    UIView* _noDataView;
 }
 // The title of alert view
 @property (strong, nonatomic) NSString* busyProcessTitle;
 // The flag whether alert need to be shown
 @property (nonatomic) BOOL showActivityIndicatorView;
 @property (nonatomic) BOOL enableRefresh;
-@property(nonatomic, weak) IBOutlet UIView* noDataView;
+@property(nonatomic, strong) IBOutlet UIView* noDataView;
 -(void)setNoDataViewHidden:(BOOL)hidden;
 -(void)turnOnBusyFlag;
 -(void)turnOffBusyFlag;

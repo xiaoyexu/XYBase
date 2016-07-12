@@ -1637,13 +1637,4 @@ static XYMessageEngine* meinstance;
     _selectType = selectType;
     [self renderView];
 }
-
-//-(void)btnClicked:(XYSelectUIButton*)sender{
-//    if (_selectType == SelectTypeSelected) {
-//        _selectType = SelectTypeDeselected;
-//    } else if (_selectType == SelectTypeDeselected) {
-//        _selectType = SelectTypeSelected;
-//    }
-//    [self renderView];
-//}
 @end
