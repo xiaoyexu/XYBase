@@ -152,7 +152,7 @@ This allow me to focus on the main function of the app rather than how detail sh
 
 But this version is still too complex, I need a one more lightweighted version.
 
-BaseTableVc has a protected 2 dimensions NSArray field name ``sections`` to represent section and cells. 
+XYBaseTableVc has a protected 2 dimensions NSArray field name ``sections`` to represent section and cells. 
 The item each each row is represented by class ``XYBaseTvcItem``.
 Each item should has the same identifier name as the one you defined in storyboard for table view cell, e.g.
 
@@ -286,6 +286,27 @@ or use a third party solution. E.g.
     }
 }
 ```
+
+####No data view
+XYBaseTableVc has an IBOutlet UIView* noDataView to display anything if no data is available based on business needs.
+
+For example, in subclass, override noDataView method to return a customized view, and if no records return from server side(message sending logic omitted here), show this view
+
+```
+-(UIView*)noDataView{
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+    view.backgroundColor = [UIColor greenColor];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    return view;
+}
+
+-(void)handleCorrectResponse:(XYProcessResult *)result{
+    NSArray* records = [result.params objectForKey:@"records"];
+    [self setNoDataViewHidden:records != 0];
+    [self.tableView reloadData];
+}
+```
+
 
 ### XYCoreDataConnector/XYCoreDataManager
 These classes are used for accessing coredata.

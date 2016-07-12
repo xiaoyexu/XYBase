@@ -22,6 +22,7 @@
 		F73F96461D1B833D00CEE45C /* TestRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F96451D1B833D00CEE45C /* TestRequest.m */; };
 		F73F96491D1B834F00CEE45C /* TestResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F96481D1B834F00CEE45C /* TestResponse.m */; };
 		F73F964C1D1B836B00CEE45C /* TestMessageAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = F73F964B1D1B836B00CEE45C /* TestMessageAgent.m */; };
+		F7796C831D34A4480057A30D /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796C821D34A4480057A30D /* TableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		F73F96481D1B834F00CEE45C /* TestResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestResponse.m; sourceTree = "<group>"; };
 		F73F964A1D1B836B00CEE45C /* TestMessageAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMessageAgent.h; sourceTree = "<group>"; };
 		F73F964B1D1B836B00CEE45C /* TestMessageAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMessageAgent.m; sourceTree = "<group>"; };
+		F7796C811D34A4480057A30D /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		F7796C821D34A4480057A30D /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		F7B07D6A1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		F7B07D6B1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +133,8 @@
 				F73F95F31D12434800CEE45C /* AppDelegate.m */,
 				F73F95F51D12434800CEE45C /* ViewController.h */,
 				F73F95F61D12434800CEE45C /* ViewController.m */,
+				F7796C811D34A4480057A30D /* TableViewController.h */,
+				F7796C821D34A4480057A30D /* TableViewController.m */,
 				F73F95F81D12434800CEE45C /* Main.storyboard */,
 				F73F95FE1D12434800CEE45C /* Assets.xcassets */,
 				F73F96001D12434800CEE45C /* LaunchScreen.storyboard */,
@@ -339,6 +344,7 @@
 				F73F96491D1B834F00CEE45C /* TestResponse.m in Sources */,
 				F73F95F71D12434800CEE45C /* ViewController.m in Sources */,
 				F73F963F1D18E7B200CEE45C /* Worker.m in Sources */,
+				F7796C831D34A4480057A30D /* TableViewController.m in Sources */,
 				F73F95F41D12434800CEE45C /* AppDelegate.m in Sources */,
 				F73F95F11D12434800CEE45C /* main.m in Sources */,
 				F73F95FD1D12434800CEE45C /* XYBase.xcdatamodeld in Sources */,

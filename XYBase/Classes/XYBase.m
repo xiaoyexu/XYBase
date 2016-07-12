@@ -499,6 +499,7 @@
 @synthesize busyProcessTitle;
 @synthesize showActivityIndicatorView;
 @synthesize enableRefresh = _enableRefresh;
+@synthesize noDataView = _noDataView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // By default the alert view will be shown
@@ -515,6 +516,13 @@
     self.enableRefresh = YES;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"back", @"back") style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    
+    [self.view addSubview:self.noDataView];
+    [self setNoDataViewHidden:YES];
+}
+
+-(void)setNoDataViewHidden:(BOOL)hidden{
+    self.noDataView.hidden = hidden;
 }
 
 -(void)setEnableRefresh:(BOOL)enableRefresh{

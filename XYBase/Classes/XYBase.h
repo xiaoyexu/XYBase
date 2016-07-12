@@ -235,7 +235,8 @@
 // The flag whether alert need to be shown
 @property (nonatomic) BOOL showActivityIndicatorView;
 @property (nonatomic) BOOL enableRefresh;
-
+@property(nonatomic, weak) IBOutlet UIView* noDataView;
+-(void)setNoDataViewHidden:(BOOL)hidden;
 -(void)turnOnBusyFlag;
 -(void)turnOffBusyFlag;
 
