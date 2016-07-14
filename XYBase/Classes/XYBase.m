@@ -1497,6 +1497,21 @@ static XYMessageEngine* meinstance;
 }
 @end
 
+@implementation UIColor (Hex)
++ (UIColor*) colorWithHex:(long)hexColor;
+{
+    return [UIColor colorWithHex:hexColor alpha:1.];
+}
+
++ (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity
+{
+    float red = ((float)((hexColor & 0xFF0000) >> 16))/255.0;
+    float green = ((float)((hexColor & 0xFF00) >> 8))/255.0;
+    float blue = ((float)(hexColor & 0xFF))/255.0;
+    return [UIColor colorWithRed:red green:green blue:blue alpha:opacity];
+}
+@end
+
 @implementation XYUISegmentedControl
 @synthesize selectedView = _selectedView;
 @synthesize separateView = _separateView;
@@ -1590,6 +1605,14 @@ static XYMessageEngine* meinstance;
     return self;
 }
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
+        _sortType = SortTypeNone;
+    }
+    return self;
+}
+
 -(void)renderView{
     if (_sortType == SortTypeNone) {
         [self setImage:self.noneSortImg forState:UIControlStateNormal];
@@ -1620,6 +1643,13 @@ static XYMessageEngine* meinstance;
 -(id)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]){
 //        [self addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
+        _selectType = SelectTypeDeselected;
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
         _selectType = SelectTypeDeselected;
     }
     return self;

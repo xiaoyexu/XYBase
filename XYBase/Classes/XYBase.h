@@ -607,6 +607,11 @@ typedef enum {
 -(NSString*)trim;
 @end
 
+@interface UIColor (Hex)
++ (UIColor *)colorWithHex:(long)hexColor;
++ (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity;
+@end
+
 @interface XYUISegmentedControl : UISegmentedControl
 @property (nonatomic, strong) UIView* selectedView;
 @property (nonatomic, strong) UIView* separateView;

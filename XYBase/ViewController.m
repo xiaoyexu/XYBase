@@ -89,6 +89,9 @@
     [button2 renderView];
     [self.view addSubview:button2];
     
+//    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 200, 200)];
+//    v.backgroundColor = [UIColor colorWithHex:0xfafafa];
+//    [self.view addSubview:v];
 }
 
 -(void)sortClicked:(XYSortUIButton*)sender{
