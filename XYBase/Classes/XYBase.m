@@ -1623,6 +1623,11 @@ static XYMessageEngine* meinstance;
     }
 }
 
+-(void)setSortType:(SortType)sortType{
+    _sortType = sortType;
+    [self renderView];
+}
+
 -(void)btnClicked:(XYSortUIButton*)sender{
     if (_sortType == SortTypeNone) {
         _sortType = SortTypeAscending;

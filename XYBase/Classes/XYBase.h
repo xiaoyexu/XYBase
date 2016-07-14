@@ -632,7 +632,7 @@ typedef enum {
 } SortType;
 
 @interface XYSortUIButton : UIButton
-@property(nonatomic, readonly) SortType sortType;
+@property(nonatomic) SortType sortType;
 @property(nonatomic, strong) UIImage* ascendingImg;
 @property(nonatomic, strong) UIImage* descendingImg;
 @property(nonatomic, strong) UIImage* noneSortImg;
