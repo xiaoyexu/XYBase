@@ -21,6 +21,8 @@
 #import <CommonCrypto/CommonDigest.h>
 //#import "GTMBase64.h"
 
+#define LS(str) NSLocalizedString(str, str)
+
 @interface XYBase : NSObject
 
 @end
