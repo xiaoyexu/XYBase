@@ -152,6 +152,8 @@ This allow me to focus on the main function of the app rather than how detail sh
 
 But this version is still too complex, I need a one more lightweighted version.
 
+**Below solution is suitable for displaying a limited list. E.g for detail screen, settings screen etc.**
+
 XYBaseTableVc has a protected 2 dimensions NSArray field name ``sections`` to represent section and cells. 
 The item each each row is represented by class ``XYBaseTvcItem``.
 Each item should has the same identifier name as the one you defined in storyboard for table view cell, e.g.
