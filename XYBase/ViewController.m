@@ -142,13 +142,13 @@
 //    UIActionSheet *sheet;
     // 判断是否支持相机
     UIAlertController* alertController;
-    alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"choose", @"choose") message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    alertController = [UIAlertController alertControllerWithTitle:LS(@"choose") message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
     
 
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
         
     {
-        [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"photo", @"photo") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:LS(@"photo") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
         
             imagePickerController.allowsEditing = YES;
@@ -163,7 +163,7 @@
         
     }
     
-    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"from album", @"album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:LS(@"from album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         

@@ -307,7 +307,7 @@
     [self.navigationController.navigationBar setTranslucent:NO];
     UIImage* image = [UIImage imageNamed:@"whiteDot.png"];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"back", @"back") style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:LS(@"back") style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
 }
 
 -(void)backAction{
@@ -515,7 +515,7 @@
     
     self.enableRefresh = YES;
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"back", @"back") style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:LS(@"back") style:UIBarButtonItemStylePlain target:self action:@selector(backAction)];
     
     [self.view addSubview:self.noDataView];
     [self setNoDataViewHidden:YES];
@@ -1394,7 +1394,7 @@ static XYMessageEngine* meinstance;
     if (response == nil) {
         response = [XYResponse new];
         response.responseCode = 101;
-        response.responseDesc = NSLocalizedString(@"nilResponse", @"nilResponse");
+        response.responseDesc = LS(@"nilResponse");
     }
     return response;
 }
