@@ -67,31 +67,42 @@
 //    [sc renderView];
 //    [self.view addSubview:sc];
     
-    XYSortUIButton* button = [[XYSortUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
-    button.ascendingImg = [UIImage imageNamed:@"sort_up_green"];
-    button.descendingImg = [UIImage imageNamed:@"sort_down_green"];
-    button.noneSortImg = [UIImage imageNamed:@"sort_neutral"];
-    [button setTitle:@"Field" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    button.layer.borderColor = [UIColor redColor].CGColor;
-    button.layer.borderWidth = 1.f;
-    [button addTarget:self action:@selector(sortClicked:) forControlEvents:UIControlEventTouchDown];
-//    In case change title and image location
-//    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -80, 0, 0)];
-//    [button setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
-    [button renderView];
-    [self.view addSubview:button];
+//    XYSortUIButton* button = [[XYSortUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
+//    button.ascendingImg = [UIImage imageNamed:@"sort_up_green"];
+//    button.descendingImg = [UIImage imageNamed:@"sort_down_green"];
+//    button.noneSortImg = [UIImage imageNamed:@"sort_neutral"];
+//    [button setTitle:@"Field" forState:UIControlStateNormal];
+//    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    button.layer.borderColor = [UIColor redColor].CGColor;
+//    button.layer.borderWidth = 1.f;
+//    [button addTarget:self action:@selector(sortClicked:) forControlEvents:UIControlEventTouchDown];
+////    In case change title and image location
+////    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -80, 0, 0)];
+////    [button setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+//    [button renderView];
+//    [self.view addSubview:button];
     
-    XYSelectUIButton* button2 = [[XYSelectUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
-    button2.selectedImg = [UIImage imageNamed:@"sort_up_green"];
-    button2.deselectedImg = [UIImage imageNamed:@"sort_down_green"];
-    [button2 addTarget:self action:@selector(selectClicked:) forControlEvents:UIControlEventTouchDown];
-    [button2 renderView];
-    [self.view addSubview:button2];
+//    XYSelectUIButton* button2 = [[XYSelectUIButton alloc] initWithFrame:CGRectMake(0, 0, 90, 25)];
+//    button2.selectedImg = [UIImage imageNamed:@"sort_up_green"];
+//    button2.deselectedImg = [UIImage imageNamed:@"sort_down_green"];
+//    [button2 addTarget:self action:@selector(selectClicked:) forControlEvents:UIControlEventTouchDown];
+//    [button2 renderView];
+//    [self.view addSubview:button2];
     
 //    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 200, 200)];
 //    v.backgroundColor = [UIColor colorWithHex:0xfafafa];
 //    [self.view addSubview:v];
+    
+    
+    XYSearchBuilder* builder = [XYSearchBuilder new];
+    XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name" andSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"a" highValue:@""];
+    [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"b" highValue:@""];
+    [builder addFieldSelectOption:fso];
+    fso = [[XYFieldSelectOption alloc] initWithProperty:@"age" andSelectOptionSign:SignTypeInclude option:OptionTypeBT lowValue:@"19" highValue:@"30"];
+//    [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"b" highValue:@""];
+    [builder addFieldSelectOption:fso];
+    NSDictionary* dic = [builder dictionaryRepresentation];
+    
 }
 
 -(void)sortClicked:(XYSortUIButton*)sender{
@@ -156,11 +167,7 @@
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
             
             [self presentViewController:imagePickerController animated:YES completion:^{}];
-            
-            
-            
         }]];
-        
     }
     
     [alertController addAction:[UIAlertAction actionWithTitle:LS(@"from album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

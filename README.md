@@ -663,3 +663,75 @@ An example as follows:
 }
 ```
 
+###XYSelectOption/XYFieldSelectOption/XYSearchBuilder
+These classes are used to add search criteria in message sending to host who will parse the dicationary(json string) for SQL selection.
+
+**(I will give a python parsing version later).**
+
+XYSelectOption contains 4 properties ``sign``, ``option``, ``low``, ``high`` to describe search option for a single field.
+ 
+XYFieldSelectOption provides the field name and a list of XYSelectOption as a completed search criteria. For example, a criteria for name equals "Mario" is represented in:
+
+```
+XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name" andSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"Mario" highValue:@""];
+```
+
+Adding another XYSelectOption for same field, logically means they are in relationship "Or".
+For example, name equals "Mario" or "Luigi" is represented in:
+
+```
+XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name" andSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"Mario" highValue:@""];
+[fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"Luigi" highValue:@""];
+```
+
+XYSearchBuilder is used to build whole search criteria by adding more XYFieldSelectOption objects. 
+
+For example, criteria name eqauls "Mario" or "Luigi" and age between 20 and 30 can be represented in:
+
+```
+XYSearchBuilder* builder = [XYSearchBuilder new];
+XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name" andSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"Mario" highValue:@""];
+[fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"Luigi" highValue:@""];
+[builder addFieldSelectOption:fso];
+fso = [[XYFieldSelectOption alloc] initWithProperty:@"age" andSelectOptionSign:SignTypeInclude option:OptionTypeBT lowValue:@"20" highValue:@"30"];
+[builder addFieldSelectOption:fso];
+NSDictionary* dictionary = [builder dictionaryRepresentation];
+```
+
+The final dictionary in json format is as follows:
+
+```
+{
+  "and":[
+    {
+      "field":"name",
+      "options":[
+        {
+          "sign":"I",
+          "option":"eq",
+          "low":"Mario",
+          "high":""
+        },{
+          "sign":"I",
+          "option":"eq",
+          "low":"Luigi",
+          "high":""
+        }
+      ]
+    },
+    {
+      "field":"age",
+      "options":[
+        {
+          "sign":"I",
+          "option":"bt",
+          "low":"20",
+          "high":"30"
+        }
+      ]
+    }
+  ]
+}
+```
+
+

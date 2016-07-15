@@ -211,18 +211,6 @@
 -(void)addTarget:(id)target action:(SEL) selector;
 @end
 
-
-/*
- The class represent a option item, contains image view, option name and text
- */
-#pragma mark XYOptionTvcItem
-@interface XYOptionTvcItem : XYBaseTvcItem
-@property(nonatomic, strong) NSString* imgName;
-@property(nonatomic, strong) NSString* optionName;
-@property(nonatomic, strong) NSString* optionText;
-@end
-
-
 /*
  All table view controller in this app should inherit this base class
  */
@@ -653,3 +641,192 @@ typedef enum {
 -(void)renderView;
 @end
 
+
+
+typedef enum {
+    SignTypeInclude,
+    SignTypeExclude,
+} SignType;
+
+
+typedef enum {
+    OptionTypeEQ,
+    OptionTypeNE,
+    OptionTypeCS,
+    OptionTypeNC,
+    OptionTypeGT,
+    OptionTypeGE,
+    OptionTypeLT,
+    OptionTypeLE,
+    OptionTypeBT,
+} OptionType;
+
+/**
+ This class represents a selection which has sign, option, low value and high value
+ */
+@interface XYSelectOption : NSObject <NSCoding>
+
+/**
+ Sign field. E.g. I or E
+ */
+@property (nonatomic) SignType sign;
+
+/**
+ Option field. E.g BT or EQ
+ */
+@property (nonatomic) OptionType option;
+
+/**
+ Low value
+ */
+@property (nonatomic,strong) NSString* lowValue;
+
+/**
+ High value
+ */
+@property (nonatomic,strong) NSString* highValue;
+
+/**
+ Initialization method with sign,option,low value and high value
+ @param sign Sign to set
+ @param option Option to set
+ @param lowValue Low value to set
+ @param highValue High value to set
+ */
+-(id)initWithSign:(SignType)sign option:(OptionType) option lowValue:(NSString*)lowValue highValue:(NSString*)highValue;
+
+/**
+ isEqual method is overriden in order to compare 2 selection
+ XYSelectOption object is equal only when sign,option,low value and high value are all eqal
+ */
+-(BOOL)isEqual:(id)object;
+
+/**
+ hash method is overriden in order to compare 2 XYSelectOption objects
+ */
+-(NSUInteger)hash;
+@end
+
+/**
+ This class represents a single field selection options
+ E.g.
+ Name     I   EQ  Tom
+ I   EQ  Jerry
+ ...
+ Or
+ Birthday  I   EQ  2000.1.1
+ I   BT  2002.2.2   2004.4.4
+ I   LE  1990.1.1
+ ...
+ */
+@interface XYFieldSelectOption : NSObject <NSCoding>
+{
+    NSMutableSet* _selectOptions;
+}
+/**
+ Field name
+ */
+@property (nonatomic,strong) NSString* property;
+
+/**
+ NSSet of XYSelectOption object
+ */
+@property (nonatomic,strong) NSSet* selectOptions;
+
+/**
+ Initialization method
+ */
+-(id)init;
+
+/**
+ Initialization method with property and initial selection
+ */
+-(id)initWithProperty:(NSString*) property andSelectOption:(XYSelectOption*)option;
+
+/**
+ Initialization method with property and initial sign, option, low value, high value
+ */
+-(id)initWithProperty:(NSString*) property andSelectOptionSign:(SignType)sign option:(OptionType) option lowValue:(NSString*)lowValue highValue:(NSString*)highValue;
+
+/**
+ Initialization method with property and selection set
+ The set should contain XYSelectOption instance
+ */
+-(id)initWithProperty:(NSString*) property andSelectOptionSet:(NSSet*)options;
+
+/**
+ Add selection object
+ @param so Selection option to add
+ */
+-(void)addSelectOption:(XYSelectOption*)so;
+
+/**
+ Add selection object
+ */
+-(void)addSelectOptionSign:(SignType)sign option:(OptionType) option lowValue:(NSString*)lowValue highValue:(NSString*)highValue;
+
+/**
+ Set single selection object
+ @param so Selection option to set
+ */
+-(void)setSingleSelectOption:(XYSelectOption*)so;
+
+/**
+ Remove selection object
+ @param so Selection option to remove
+ */
+-(void)removeSelectOption:(XYSelectOption*)so;
+
+/**
+ Remove all selection object
+ */
+-(void)clearSelectOption;
+
+/**
+ Return in dictionary
+ Format as follows:
+ {
+  "field": "<property name>",
+  "options": [
+    {
+       "sign":"I",
+       "option":"eq",
+       "low": "<low value>",
+       "high": "<high value>"
+    },
+    {...},...
+  ]
+ }
+ Notice, multiple entries in options means "or"
+ */
+-(NSDictionary*)dictionaryRepresentation;
+@end
+
+
+@interface XYSearchBuilder : NSObject
+@property (nonatomic, strong) NSString* orderBy;
+@property (nonatomic) SortType sortType;
+-(void)addFieldSelectOption:(XYFieldSelectOption*)so;
+
+/**
+ Return in dictionary 
+ Format as follows:
+ {
+   "and" : [
+     {
+       "field": "<property name>",
+        "options": [
+        {
+        "sign":"I",
+        "option":"eq",
+        "low": "<low value>",
+        "high": "<high value>"
+        },
+        {...},...
+        ]
+      },{...},...
+   ]
+ }
+ */
+-(NSDictionary*)dictionaryRepresentation;
+@end

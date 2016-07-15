@@ -482,13 +482,6 @@
 }
 @end
 
-#pragma mark XYOptionTvcItem
-@implementation XYOptionTvcItem
-@synthesize imgName;
-@synthesize optionName;
-@synthesize optionText;
-@end
-
 #pragma mark XYBaseTableVc
 @implementation XYBaseTableVc
 {
@@ -592,12 +585,10 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSArray* views = [sections objectAtIndex:indexPath.section];
     XYBaseTvcItem* item = [views objectAtIndex:indexPath.row];
-    if ([item isKindOfClass:[XYOptionTvcItem class]]){
-        XYOptionTvcItem* opt = (XYOptionTvcItem*)item;
-        if (opt.onClickSelector != nil) {
-            [opt.onClickSelector performSelector];
-        }
+    if (item.onClickSelector != nil) {
+        [item.onClickSelector performSelector];
     }
+    
 }
 
 /*
@@ -1673,3 +1664,220 @@ static XYMessageEngine* meinstance;
     [self renderView];
 }
 @end
+
+@implementation XYSelectOption
+@synthesize sign = _sign;
+@synthesize option = _option;
+@synthesize lowValue = _lowValue;
+@synthesize highValue = _highValue;
+-(id)initWithSign:(SignType)sign option:(OptionType) option lowValue:(NSString*)lowValue highValue:(NSString*)highValue{
+    if (self = [super init]) {
+        _sign = sign;
+        _option = option;
+        _lowValue = lowValue;
+        _highValue = highValue;
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super init]) {
+        self.sign = [[aDecoder decodeObjectForKey:@"sign"] intValue];
+        self.option = [[aDecoder decodeObjectForKey:@"option"] intValue];
+        self.lowValue = [aDecoder decodeObjectForKey:@"lowValue"];
+        self.highValue = [aDecoder decodeObjectForKey:@"highValue"];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:@(self.sign) forKey:@"sign"];
+    [aCoder encodeObject:@(self.option) forKey:@"option"];
+    [aCoder encodeObject:self.lowValue forKey:@"lowValue"];
+    [aCoder encodeObject:self.highValue forKey:@"highValue"];
+}
+
+-(BOOL)isEqual:(id)object{
+    if ([object isKindOfClass:[XYSelectOption class]]) {
+        XYSelectOption* so = (XYSelectOption*)object;
+        if (self.sign == so.sign && self.option == so.option && [self.lowValue isEqualToString:so.lowValue] && [self.highValue isEqualToString:so.highValue] ) {
+            return YES;
+        } else {
+            return NO;
+        }
+    }
+    return [self isEqual:object];
+}
+
+-(NSUInteger)hash{
+    return self.sign + self.option * 2 + self.lowValue.hash * 3 + self.highValue.hash * 4;
+}
+@end
+
+@implementation XYFieldSelectOption
+@synthesize property = _property;
+@synthesize selectOptions = _selectOptions;
+
+-(id)init{
+    if (self = [super init]) {
+        
+    }
+    return self;
+}
+
+-(id)initWithProperty:(NSString*) property andSelectOption:(XYSelectOption*)option{
+    if (self = [super init]) {
+        _property = property;
+        _selectOptions = [NSMutableSet setWithObject:option];
+    }
+    return self;
+}
+
+-(id)initWithProperty:(NSString*) property andSelectOptionSign:(SignType)sign option:(OptionType) option lowValue:(NSString*)lowValue highValue:(NSString*)highValue{
+    if (self = [super init]) {
+        _property = property;
+        XYSelectOption* so = [[XYSelectOption alloc] initWithSign:sign option:option lowValue:lowValue highValue:highValue];
+        _selectOptions = [NSMutableSet setWithObject:so];
+    }
+    return self;
+}
+
+-(id)initWithProperty:(NSString*) property andSelectOptionSet:(NSSet*)options{
+    if (self = [super init]) {
+        _property = property;
+        _selectOptions = [NSMutableSet setWithSet:options];
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super init]) {
+        self.property = [aDecoder decodeObjectForKey:@"property"];
+        self.selectOptions = [aDecoder decodeObjectForKey:@"selectOptions"];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.property forKey:@"property"];
+    [aCoder encodeObject:self.selectOptions forKey:@"selectOptions"];
+}
+
+-(void)addSelectOption:(XYSelectOption*)so{
+    if (_selectOptions == nil) {
+        _selectOptions = [NSMutableSet new];
+    }
+    [_selectOptions addObject:so];
+}
+
+-(void)addSelectOptionSign:(SignType)sign option:(OptionType) option lowValue:(NSString*)lowValue highValue:(NSString*)highValue{
+    XYSelectOption* so = [[XYSelectOption alloc] initWithSign:sign option:option lowValue:lowValue highValue:highValue];
+    [_selectOptions addObject:so];
+}
+
+-(void)setSingleSelectOption:(XYSelectOption*)so{
+    _selectOptions = [NSMutableSet setWithObject:so];
+}
+
+-(void)removeSelectOption:(XYSelectOption*)so{
+    [_selectOptions removeObject:so];
+}
+
+-(void)clearSelectOption{
+    [_selectOptions removeAllObjects];
+}
+
+-(NSDictionary*)dictionaryRepresentation{
+    NSMutableArray* soArr = [NSMutableArray new];
+    for (XYSelectOption* so in _selectOptions) {
+        NSDictionary* soDict = @{
+           @"sign":[self parseSignType:so.sign],
+           @"option":[self parseOptionType:so.option],
+           @"low":so.lowValue,
+           @"high":so.highValue
+           };
+        [soArr addObject:soDict];
+    }
+    return @{
+            @"field":self.property,
+            @"options":soArr
+            };
+}
+
+-(NSString*)parseSignType:(SignType)st{
+    NSString* result = @"I";
+    switch (st) {
+        case SignTypeExclude:
+            result = @"E";
+            break;
+        case SignTypeInclude:
+            result = @"I";
+        default:
+            break;
+    }
+    return result;
+}
+
+-(NSString*)parseOptionType:(OptionType)ot{
+    NSString* result = @"eq";
+    switch (ot) {
+        case OptionTypeEQ:
+            result = @"eq";
+            break;
+        case OptionTypeNE:
+            result = @"ne";
+            break;
+        case OptionTypeCS:
+            result = @"cs";
+            break;
+        case OptionTypeNC:
+            result = @"nc";
+            break;
+        case OptionTypeGT:
+            result = @"gt";
+            break;
+        case OptionTypeGE:
+            result = @"ge";
+            break;
+        case OptionTypeLT:
+            result = @"lt";
+            break;
+        case OptionTypeLE:
+            result = @"le";
+            break;
+        case OptionTypeBT:
+            result = @"bt";
+            break;
+        default:
+            break;
+    }
+    return result;
+}
+@end
+
+
+@implementation XYSearchBuilder
+{
+    NSMutableArray* fieldSelectOptions;
+}
+-(id)init{
+    if (self = [super init]) {
+        fieldSelectOptions = [NSMutableArray new];
+    }
+    return self;
+}
+-(void)addFieldSelectOption:(XYFieldSelectOption*)so{
+    [fieldSelectOptions addObject:so];
+}
+
+-(NSDictionary*)dictionaryRepresentation{
+    NSMutableArray* result = [NSMutableArray new];
+    for (XYFieldSelectOption* fso in fieldSelectOptions) {
+        [result addObject:[fso dictionaryRepresentation]];
+    }
+    return @{
+             @"and":result
+             };
+}
+@end
+

@@ -26,6 +26,7 @@
 		F7796C8E1D34C8430057A30D /* sort_down_green.png in Resources */ = {isa = PBXBuildFile; fileRef = F7796C8A1D34C8430057A30D /* sort_down_green.png */; };
 		F7796C8F1D34C8430057A30D /* sort_neutral.png in Resources */ = {isa = PBXBuildFile; fileRef = F7796C8B1D34C8430057A30D /* sort_neutral.png */; };
 		F7796C901D34C8430057A30D /* sort_up_green.png in Resources */ = {isa = PBXBuildFile; fileRef = F7796C8C1D34C8430057A30D /* sort_up_green.png */; };
+		F7796CD51D387AF80057A30D /* TestDev.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796CD41D387AF80057A30D /* TestDev.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		F7796C8A1D34C8430057A30D /* sort_down_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_down_green.png; sourceTree = "<group>"; };
 		F7796C8B1D34C8430057A30D /* sort_neutral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_neutral.png; sourceTree = "<group>"; };
 		F7796C8C1D34C8430057A30D /* sort_up_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_up_green.png; sourceTree = "<group>"; };
+		F7796CD31D387AF80057A30D /* TestDev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDev.h; sourceTree = "<group>"; };
+		F7796CD41D387AF80057A30D /* TestDev.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDev.m; sourceTree = "<group>"; };
 		F7B07D6A1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		F7B07D6B1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -212,6 +215,8 @@
 		F7796C841D34BFDD0057A30D /* NewFeatureDev */ = {
 			isa = PBXGroup;
 			children = (
+				F7796CD31D387AF80057A30D /* TestDev.h */,
+				F7796CD41D387AF80057A30D /* TestDev.m */,
 			);
 			path = NewFeatureDev;
 			sourceTree = "<group>";
@@ -370,6 +375,7 @@
 				F73F95FD1D12434800CEE45C /* XYBase.xcdatamodeld in Sources */,
 				F73F96461D1B833D00CEE45C /* TestRequest.m in Sources */,
 				F73F96281D1243B200CEE45C /* XYBase.m in Sources */,
+				F7796CD51D387AF80057A30D /* TestDev.m in Sources */,
 				F73F964C1D1B836B00CEE45C /* TestMessageAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
