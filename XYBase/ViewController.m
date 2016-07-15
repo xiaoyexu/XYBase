@@ -101,6 +101,8 @@
     fso = [[XYFieldSelectOption alloc] initWithProperty:@"age" andSelectOptionSign:SignTypeInclude option:OptionTypeBT lowValue:@"19" highValue:@"30"];
 //    [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"b" highValue:@""];
     [builder addFieldSelectOption:fso];
+    builder.orderBy = @[@"age"];
+    builder.sortType = SortTypeAscending;
     NSDictionary* dic = [builder dictionaryRepresentation];
     
 }

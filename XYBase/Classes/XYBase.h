@@ -804,7 +804,7 @@ typedef enum {
 
 
 @interface XYSearchBuilder : NSObject
-@property (nonatomic, strong) NSString* orderBy;
+@property (nonatomic, strong) NSArray* orderBy;
 @property (nonatomic) SortType sortType;
 -(void)addFieldSelectOption:(XYFieldSelectOption*)so;
 

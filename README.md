@@ -684,9 +684,17 @@ XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name"
 [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"Luigi" highValue:@""];
 ```
 
-XYSearchBuilder is used to build whole search criteria by adding more XYFieldSelectOption objects. 
+XYSearchBuilder is used to build whole search criteria by adding more XYFieldSelectOption objects with relationship "And". 
 
-For example, criteria name eqauls "Mario" or "Luigi" and age between 20 and 30 can be represented in:
+Addtional property ``orderBy``, ``sortType`` are also provided.
+
+For example, criteria
+ 
+```
+name eqauls "Mario" or "Luigi" and age between 20 and 30 order by age descendingly
+```
+
+can be represented in:
 
 ```
 XYSearchBuilder* builder = [XYSearchBuilder new];
@@ -695,6 +703,8 @@ XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name"
 [builder addFieldSelectOption:fso];
 fso = [[XYFieldSelectOption alloc] initWithProperty:@"age" andSelectOptionSign:SignTypeInclude option:OptionTypeBT lowValue:@"20" highValue:@"30"];
 [builder addFieldSelectOption:fso];
+builder.orderBy = @[@"age"];
+builder.sortType = SortTypeDescending;
 NSDictionary* dictionary = [builder dictionaryRepresentation];
 ```
 
@@ -730,7 +740,9 @@ The final dictionary in json format is as follows:
         }
       ]
     }
-  ]
+  ],
+  "orderBy":["age"],
+  "order":"asc"
 }
 ```
 

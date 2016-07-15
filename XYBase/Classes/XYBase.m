@@ -1875,9 +1875,30 @@ static XYMessageEngine* meinstance;
     for (XYFieldSelectOption* fso in fieldSelectOptions) {
         [result addObject:[fso dictionaryRepresentation]];
     }
+    
     return @{
-             @"and":result
+             @"and":result,
+             @"orderBy":self.orderBy,
+             @"order":[self parseSortType:self.sortType]
              };
+}
+
+-(NSString*)parseSortType:(SortType)SortType{
+    NSString* result = @"";
+    switch (SortType) {
+        case SortTypeNone:
+            result = @"";
+            break;
+        case SortTypeAscending:
+            result = @"asc";
+            break;
+        case SortTypeDescending:
+            result = @"desc";
+            break;
+        default:
+            break;
+    }
+    return result;
 }
 @end
 
