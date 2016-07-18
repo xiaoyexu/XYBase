@@ -747,7 +747,7 @@ The final dictionary in json format is as follows:
 ```
 
 #### Django parsing code
-The logic is quite simple here. For multiple entries in field options, use Q.OR, between different fields using Q.AND
+The logic is quite simple here. For multiple entries in field options, using Q.OR, between different fields using Q.AND
 
 ```
 def buildQobject(q, fieldname, opt, low, high, ao):
