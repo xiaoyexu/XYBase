@@ -27,6 +27,7 @@
 		F7796C8F1D34C8430057A30D /* sort_neutral.png in Resources */ = {isa = PBXBuildFile; fileRef = F7796C8B1D34C8430057A30D /* sort_neutral.png */; };
 		F7796C901D34C8430057A30D /* sort_up_green.png in Resources */ = {isa = PBXBuildFile; fileRef = F7796C8C1D34C8430057A30D /* sort_up_green.png */; };
 		F7796CD51D387AF80057A30D /* TestDev.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796CD41D387AF80057A30D /* TestDev.m */; };
+		F7796CD81D3C850B0057A30D /* XYBaseFW.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796CD71D3C850B0057A30D /* XYBaseFW.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		F7796C8C1D34C8430057A30D /* sort_up_green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sort_up_green.png; sourceTree = "<group>"; };
 		F7796CD31D387AF80057A30D /* TestDev.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDev.h; sourceTree = "<group>"; };
 		F7796CD41D387AF80057A30D /* TestDev.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDev.m; sourceTree = "<group>"; };
+		F7796CD61D3C850B0057A30D /* XYBaseFW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYBaseFW.h; sourceTree = "<group>"; };
+		F7796CD71D3C850B0057A30D /* XYBaseFW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYBaseFW.m; sourceTree = "<group>"; };
 		F7B07D6A1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		F7B07D6B1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,6 +189,8 @@
 			children = (
 				F73F96261D1243B200CEE45C /* XYBase.h */,
 				F73F96271D1243B200CEE45C /* XYBase.m */,
+				F7796CD61D3C850B0057A30D /* XYBaseFW.h */,
+				F7796CD71D3C850B0057A30D /* XYBaseFW.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -372,6 +377,7 @@
 				F7796C831D34A4480057A30D /* TableViewController.m in Sources */,
 				F73F95F41D12434800CEE45C /* AppDelegate.m in Sources */,
 				F73F95F11D12434800CEE45C /* main.m in Sources */,
+				F7796CD81D3C850B0057A30D /* XYBaseFW.m in Sources */,
 				F73F95FD1D12434800CEE45C /* XYBase.xcdatamodeld in Sources */,
 				F73F96461D1B833D00CEE45C /* TestRequest.m in Sources */,
 				F73F96281D1243B200CEE45C /* XYBase.m in Sources */,
