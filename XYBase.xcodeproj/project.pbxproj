@@ -28,6 +28,7 @@
 		F7796C901D34C8430057A30D /* sort_up_green.png in Resources */ = {isa = PBXBuildFile; fileRef = F7796C8C1D34C8430057A30D /* sort_up_green.png */; };
 		F7796CD51D387AF80057A30D /* TestDev.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796CD41D387AF80057A30D /* TestDev.m */; };
 		F7796CD81D3C850B0057A30D /* XYBaseFW.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796CD71D3C850B0057A30D /* XYBaseFW.m */; };
+		F7796CF01D3CD40D0057A30D /* HomeVc.m in Sources */ = {isa = PBXBuildFile; fileRef = F7796CEF1D3CD40D0057A30D /* HomeVc.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		F7796CD41D387AF80057A30D /* TestDev.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDev.m; sourceTree = "<group>"; };
 		F7796CD61D3C850B0057A30D /* XYBaseFW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYBaseFW.h; sourceTree = "<group>"; };
 		F7796CD71D3C850B0057A30D /* XYBaseFW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYBaseFW.m; sourceTree = "<group>"; };
+		F7796CEE1D3CD40D0057A30D /* HomeVc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeVc.h; sourceTree = "<group>"; };
+		F7796CEF1D3CD40D0057A30D /* HomeVc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeVc.m; sourceTree = "<group>"; };
 		F7B07D6A1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		F7B07D6B1D26387C003CEA82 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +149,8 @@
 				F73F95F31D12434800CEE45C /* AppDelegate.m */,
 				F73F95F51D12434800CEE45C /* ViewController.h */,
 				F73F95F61D12434800CEE45C /* ViewController.m */,
+				F7796CEE1D3CD40D0057A30D /* HomeVc.h */,
+				F7796CEF1D3CD40D0057A30D /* HomeVc.m */,
 				F7796C811D34A4480057A30D /* TableViewController.h */,
 				F7796C821D34A4480057A30D /* TableViewController.m */,
 				F73F95F81D12434800CEE45C /* Main.storyboard */,
@@ -382,6 +387,7 @@
 				F73F96461D1B833D00CEE45C /* TestRequest.m in Sources */,
 				F73F96281D1243B200CEE45C /* XYBase.m in Sources */,
 				F7796CD51D387AF80057A30D /* TestDev.m in Sources */,
+				F7796CF01D3CD40D0057A30D /* HomeVc.m in Sources */,
 				F73F964C1D1B836B00CEE45C /* TestMessageAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

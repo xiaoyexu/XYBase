@@ -77,10 +77,14 @@
 @property (strong, nonatomic) UIWindow *window;
 @property(nonatomic, strong) XYUser* user;
 -(NSString*)backendUrl;
+-(NSString*)mainStoryboardName;
+-(NSString*)startViewName;
+-(NSString*)homeViewName;
 -(void)initializeApp;
 -(void)checkAndAutoLogin;
 -(void)toHome;
 -(void)log:(NSString *)logString;
+-(void)logout;
 @end
 
 #pragma mark messaging classes

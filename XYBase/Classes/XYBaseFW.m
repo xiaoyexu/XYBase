@@ -107,22 +107,34 @@
     
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
     BOOL isIntroViewDisplayed = [userDefault boolForKey:@"isIntroViewDisplayed"];
-    if (!isIntroViewDisplayed) {
-        // Display introduction view
-//        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-//        UIViewController *myView = [story instantiateViewControllerWithIdentifier:@"introView"];
-//        self.window.rootViewController = myView;
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(introViewDismissed) name:INTROVIEW_DISMISSED  object:nil];
-    } else {
-        // Direct auto login
-        [self checkAndAutoLogin];
-    }
-//    [self checkAndAutoLogin];
+//    if (!isIntroViewDisplayed) {
+//        // Display introduction view
+////        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+////        UIViewController *myView = [story instantiateViewControllerWithIdentifier:@"introView"];
+////        self.window.rootViewController = myView;
+////        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(introViewDismissed) name:INTROVIEW_DISMISSED  object:nil];
+//    } else {
+//        // Direct auto login
+//        [self checkAndAutoLogin];
+//    }
+    [self checkAndAutoLogin];
     return YES;
 }
 
 -(NSString*)backendUrl{
     return @"http://127.0.0.1:8808/mobile";
+}
+
+-(NSString*)mainStoryboardName{
+    return @"Main";
+}
+
+-(NSString*)startViewName{
+    return @"initView";
+}
+
+-(NSString*)homeViewName{
+    return @"homeView";
 }
 
 -(void)initializeApp{
@@ -148,8 +160,8 @@
 }
 
 -(void)toHome{
-    UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UIViewController *myView = [story instantiateViewControllerWithIdentifier:@"homeView"];
+    UIStoryboard *story = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:[NSBundle mainBundle]];
+    UIViewController *myView = [story instantiateViewControllerWithIdentifier:self.homeViewName];
     XYBaseNavigationVc* rootView = [[XYBaseNavigationVc alloc] initWithRootViewController:myView];
     self.window.rootViewController = rootView;
 }
@@ -194,6 +206,19 @@
     NSLog(@"%@",logString);
 }
 
+-(void)logout{
+    // Clear credentials
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault removeObjectForKey:@"username"];
+    [userDefault removeObjectForKey:@"password"];
+    [userDefault synchronize];
+    UIStoryboard *story = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:[NSBundle mainBundle]];
+    UIViewController* initView = [story instantiateViewControllerWithIdentifier:self.startViewName];
+    [UIView animateWithDuration:1.0 animations:^{
+    } completion:^(BOOL finished) {
+        [UIApplication sharedApplication].delegate.window.rootViewController = initView;
+    }];
+}
 @end
 
 #pragma mark messagign classes

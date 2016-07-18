@@ -302,18 +302,62 @@
             </objects>
             <point key="canvasLocation" x="1206" y="944"/>
         </scene>
-        <!--View Controller-->
+        <!--Home Vc-->
         <scene sceneID="3XD-EG-KeK">
             <objects>
-                <viewController storyboardIdentifier="homeView" id="a6s-wi-VIi" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="homeView" id="a6s-wi-VIi" customClass="HomeVc" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="S0m-os-cXZ"/>
                         <viewControllerLayoutGuide type="bottom" id="De6-tf-aRX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pyC-id-xPh">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MKj-BV-pFp">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="109" id="jKL-Vo-bUV"/>
+                                </constraints>
+                                <state key="normal" title="Logoff"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="jKL-Vo-bUV"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="jKL-Vo-bUV"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MKj-BV-pFp" firstAttribute="centerX" secondItem="pyC-id-xPh" secondAttribute="centerX" id="uLh-qD-Dg2"/>
+                            <constraint firstItem="MKj-BV-pFp" firstAttribute="top" secondItem="S0m-os-cXZ" secondAttribute="bottom" constant="104" id="wGc-1n-SK1"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="MKj-BV-pFp"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="uLh-qD-Dg2"/>
+                                <exclude reference="wGc-1n-SK1"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="MKj-BV-pFp"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="uLh-qD-Dg2"/>
+                                <include reference="wGc-1n-SK1"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="logoffBtn" destination="MKj-BV-pFp" id="gyC-ja-P6W"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DCc-iW-OmX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
