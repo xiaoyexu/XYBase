@@ -666,7 +666,7 @@ An example as follows:
 ###XYSelectOption/XYFieldSelectOption/XYSearchBuilder
 These classes are used to add search criteria in message sending to host who will parse the dicationary(json string) for SQL selection.
 
-**(I will give a python parsing version later).**
+**A parsing version in django is provided at the end of this section**
 
 XYSelectOption contains 4 properties ``sign``, ``option``, ``low``, ``high`` to describe search option for a single field.
  
@@ -744,6 +744,71 @@ The final dictionary in json format is as follows:
   "orderBy":["age"],
   "order":"asc"
 }
+```
+
+#### Django parsing code
+The logic is quite simple here. For multiple entries in field options, use Q.OR, between different fields using Q.AND
+
+```
+def buildQobject(q, fieldname, opt, low, high, ao):
+    if opt == 'eq' and not low and not high:
+        return
+    conKey = fieldname
+    # Operator mapping
+    if opt == 'cs':
+        conKey = ''.join([fieldname, '__icontains'])
+        q.add(Q(**{conKey: low}), ao)
+    elif opt == 'nc':
+        conKey = ''.join([fieldname, '__icontains'])
+        q.add(~Q(**{conKey: low}), ao)
+    elif opt == 'eq':
+        q.add(Q(**{conKey: low}), ao)
+    elif opt == 'ne':
+        if low:
+            q.add(~Q(**{conKey: low}), ao)
+        else:
+            # For value '', check whether it's not None and not ''
+            innerQ = Q()
+            innerQ.add(~Q(**{conKey: None}), Q.AND)
+            innerQ.add(~Q(**{conKey: low}), Q.AND)
+            q.add(innerQ, ao)
+    elif opt == 'lt':
+        conKey = ''.join([fieldname, '__lt'])
+        q.add(Q(**{conKey: low}), ao)
+    elif opt == 'le':
+        conKey = ''.join([fieldname, '__lte'])
+        q.add(Q(**{conKey: low}), ao)
+    elif opt == 'gt':
+        conKey = ''.join([fieldname, '__gt'])
+        q.add(Q(**{conKey: low}), ao)
+    elif opt == 'ge':
+        conKey = ''.join([fieldname, '__gte'])
+        q.add(Q(**{conKey: low}), ao)
+    elif opt == 'bt':
+        conKey = ''.join([fieldname, '__gte'])
+        rq = Q()
+        q1 = Q(**{conKey: low})
+        conKey = ''.join([fieldname, '__lte'])
+        q2 = Q(**{conKey: high})
+        rq.add(q1, Q.AND)
+        rq.add(q2, Q.AND)
+        q.add(rq, ao)
+        
+        
+def getSomeList(request):
+    searchCriteria = body.get('searchCriteria', None)
+    ...
+    if searchCriteria:
+        andCriteria = searchCriteria.get('and', None)
+        if andCriteria:
+            q = Q()
+            for fieldCriteria in andCriteria:
+                fieldQ = Q()
+                fieldName = fieldCriteria.get('field')
+                for option in fieldCriteria.get('options', None):
+                    buildQobject(fieldQ, fieldName, option['option'], option['low'], option['high'], Q.OR)
+                q.add(fieldQ, Q.AND)
+        records = Table.objects.filter(q)
 ```
 
 
