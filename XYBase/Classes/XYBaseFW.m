@@ -97,8 +97,32 @@
 
 @implementation XYAppDelegate
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Initialize app parameters
+    [self initializeApp];
+    // Set Indicator color globally
+    [UIActivityIndicatorView appearance].color = [UIColor blackColor];
+    // Stay at start screen for 1 second
+    [NSThread sleepForTimeInterval:1.0];
+    
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    BOOL isIntroViewDisplayed = [userDefault boolForKey:@"isIntroViewDisplayed"];
+    if (!isIntroViewDisplayed) {
+        // Display introduction view
+//        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+//        UIViewController *myView = [story instantiateViewControllerWithIdentifier:@"introView"];
+//        self.window.rootViewController = myView;
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(introViewDismissed) name:INTROVIEW_DISMISSED  object:nil];
+    } else {
+        // Direct auto login
+        [self checkAndAutoLogin];
+    }
+//    [self checkAndAutoLogin];
+    return YES;
+}
+
 -(NSString*)backendUrl{
-    return @"http://127.0.0.1:8000";
+    return @"http://127.0.0.1:8808";
 }
 
 -(void)initializeApp{
@@ -121,7 +145,6 @@
     mc.relativePath = @"login";
     mc.httpMethod = @"POST";
     [[XYMessageEngine instance] setConfig:mc forMessage:[XYLoginRequest class]];
-    
 }
 
 -(void)toHome{

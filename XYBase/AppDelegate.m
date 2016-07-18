@@ -16,9 +16,11 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
-    [self print:@"123"];
-    return YES;
+    return [super application:application didFinishLaunchingWithOptions:launchOptions];
+}
+
+-(NSString*)backendUrl{
+    return @"http://127.0.0.1:8000/assets";
 }
 
 -(void)print:(NSString* _Nonnull)str{
