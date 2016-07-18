@@ -122,7 +122,7 @@
 }
 
 -(NSString*)backendUrl{
-    return @"http://127.0.0.1:8808";
+    return @"http://127.0.0.1:8808/mobile";
 }
 
 -(void)initializeApp{
