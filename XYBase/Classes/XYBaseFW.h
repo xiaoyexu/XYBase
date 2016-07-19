@@ -12,6 +12,8 @@
 #define ROW_HEIGHT 44
 #define BUTTON_ROW_HEIGHT 60
 #define BUTTON_CORNER_RADIUS 5
+#define INTROVIEW_DISMISSED @"IntroViewDismissed"
+#define ISINTROVIEWDISPLAYED_KEY @"isIntroViewDisplayed"
 
 @interface XYBaseFW : NSObject
 
@@ -77,6 +79,8 @@
 -(NSString*)mainStoryboardName;
 -(NSString*)startViewName;
 -(NSString*)homeViewName;
+-(NSString*)introViewName;
+-(BOOL)isIntroViewEnabled;
 -(void)initializeApp;
 -(void)checkAndAutoLogin;
 -(void)toHome;
@@ -102,4 +106,7 @@
 #pragma mark view controllers
 
 @interface XYLoginVc : XYBaseTableVc
+@end
+
+@interface XYIntroVc : XYBaseVc
 @end

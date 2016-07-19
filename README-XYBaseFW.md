@@ -77,6 +77,29 @@ Basic login view controller.
 
 6. Build and run, once login succeeded, username and password(sha1 processed) will be stored for automatical login next time.
 
+## Display introduction view for first time
 
+XYAppDelegate also provide you the feature to display a introduction view for the first time app is installed.
 
+Create the view controller in storyborad and return the storyboardID of it, and enable it.
+
+```
+-(NSString*)introViewName{
+    return @"introView";
+}
+
+-(BOOL)isIntroViewEnabled{
+    return YES;
+}
+```
+
+An example XYIntroVc is provided, or you can create your own view controller.
+
+To dismiss the view controller, post a INTROVIEW_DISMISSED notification. E.g.
+
+```
+-(void)tryNowClicked:(UIButton*)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:INTROVIEW_DISMISSED object:nil];
+}
+```
 

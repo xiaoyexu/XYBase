@@ -23,6 +23,10 @@
     return @"http://127.0.0.1:8000/assets";
 }
 
+-(BOOL)isIntroViewEnabled{
+    return YES;
+}
+
 -(void)print:(NSString* _Nonnull)str{
     NSLog(@"%@", [str md5]);
 }

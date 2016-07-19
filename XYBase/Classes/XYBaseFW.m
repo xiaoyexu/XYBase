@@ -96,7 +96,9 @@
 @end
 
 @implementation XYAppDelegate
-
+{
+    UIViewController* _initVc;
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Initialize app parameters
     [self initializeApp];
@@ -106,18 +108,24 @@
     [NSThread sleepForTimeInterval:1.0];
     
     NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
-    BOOL isIntroViewDisplayed = [userDefault boolForKey:@"isIntroViewDisplayed"];
-//    if (!isIntroViewDisplayed) {
-//        // Display introduction view
-////        UIStoryboard *story = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-////        UIViewController *myView = [story instantiateViewControllerWithIdentifier:@"introView"];
-////        self.window.rootViewController = myView;
-////        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(introViewDismissed) name:INTROVIEW_DISMISSED  object:nil];
-//    } else {
-//        // Direct auto login
-//        [self checkAndAutoLogin];
-//    }
-    [self checkAndAutoLogin];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(introViewDismissed) name:INTROVIEW_DISMISSED  object:nil];
+    
+    _initVc = self.window.rootViewController;
+    if (self.isIntroViewEnabled) {
+        BOOL isIntroViewDisplayed = [userDefault boolForKey:ISINTROVIEWDISPLAYED_KEY];
+        if (!isIntroViewDisplayed) {
+            // Display introduction view
+            UIStoryboard *story = [UIStoryboard storyboardWithName:self.mainStoryboardName bundle:[NSBundle mainBundle]];
+            UIViewController *myView = [story instantiateViewControllerWithIdentifier:self.introViewName];
+            self.window.rootViewController = myView;
+        } else {
+            // Direct auto login
+            [self checkAndAutoLogin];
+        }
+    } else {
+        [self checkAndAutoLogin];
+    }
     return YES;
 }
 
@@ -135,6 +143,22 @@
 
 -(NSString*)homeViewName{
     return @"homeView";
+}
+
+-(NSString*)introViewName{
+    return @"introView";
+}
+
+-(BOOL)isIntroViewEnabled{
+    return NO;
+}
+
+-(void)introViewDismissed{
+    NSUserDefaults* userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault setBool:YES forKey:ISINTROVIEWDISPLAYED_KEY];
+    [userDefault synchronize];
+    self.window.rootViewController = _initVc;
+    [self checkAndAutoLogin];
 }
 
 -(void)initializeApp{
@@ -416,5 +440,32 @@
     } else {
         [XYUtility enableButton:loginBtn];
     }
+}
+@end
+
+
+@implementation XYIntroVc
+{
+    UIButton* _tryNowBtn;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    _tryNowBtn = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 150)/2.0, self.view.frame.size.height - 100, 150, 60)];
+    _tryNowBtn.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+    _tryNowBtn.backgroundColor = [UIColor xyBlueColor];
+    [_tryNowBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_tryNowBtn setTitle:LS(@"tryNow") forState:UIControlStateNormal];
+    _tryNowBtn.layer.cornerRadius = 20;
+    [_tryNowBtn addTarget:self action:@selector(tryNowClicked:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:_tryNowBtn];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)tryNowClicked:(UIButton*)sender{
+    [[NSNotificationCenter defaultCenter] postNotificationName:INTROVIEW_DISMISSED object:nil];
 }
 @end
