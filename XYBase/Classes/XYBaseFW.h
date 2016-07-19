@@ -39,14 +39,11 @@
 @interface XYInputTvc : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIView *separatorLine;
 @end
 
 @interface XYButtonTvc : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIButton *button;
-@property (weak, nonatomic) IBOutlet UIView *sepLine1;
-@property (weak, nonatomic) IBOutlet UIView *sepLine2;
 @end
 
 @interface XYImageViewTvc : UITableViewCell

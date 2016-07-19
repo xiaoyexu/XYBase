@@ -294,7 +294,6 @@
         cell.textField.text = @"xxy";
         [cell.textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
         usernameTf = cell.textField;
-        cell.separatorLine.backgroundColor = [UIColor xyTableCellSeparatorLineColor];
         return cell;
     };
     
@@ -308,7 +307,6 @@
         cell.textField.text = @"123";
         [cell.textField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
         passwordTf = cell.textField;
-        cell.separatorLine.backgroundColor = [UIColor xyTableCellSeparatorLineColor];
         return cell;
     };
     

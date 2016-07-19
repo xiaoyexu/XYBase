@@ -182,18 +182,23 @@
             <objects>
                 <tableViewController id="v0z-GI-BUm" customClass="XYLoginVc" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xvp-BK-gft">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYImageViewTvc" id="7Kj-34-zTw" customClass="XYImageViewTvc">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Kj-34-zTw" id="Ntz-Hp-GoF">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYInputTvc" id="zVb-AW-xz6" customClass="XYInputTvc">
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zVb-AW-xz6" id="BI3-Os-LWc">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZBk-uh-EXZ">
@@ -221,11 +226,11 @@
                                             <exclude reference="Aj5-GH-s6M"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <exclude reference="3Gb-e9-cfk"/>
+                                            <exclude reference="VLc-0j-WN8"/>
                                             <exclude reference="LEk-W0-nUa"/>
                                             <exclude reference="VAX-cc-o0B"/>
                                             <exclude reference="Vmx-Rc-5g0"/>
-                                            <exclude reference="3Gb-e9-cfk"/>
-                                            <exclude reference="VLc-0j-WN8"/>
                                         </mask>
                                     </variation>
                                     <variation key="widthClass=compact">
@@ -234,11 +239,11 @@
                                             <include reference="Aj5-GH-s6M"/>
                                         </mask>
                                         <mask key="constraints">
+                                            <include reference="3Gb-e9-cfk"/>
+                                            <include reference="VLc-0j-WN8"/>
                                             <include reference="LEk-W0-nUa"/>
                                             <include reference="VAX-cc-o0B"/>
                                             <include reference="Vmx-Rc-5g0"/>
-                                            <include reference="3Gb-e9-cfk"/>
-                                            <include reference="VLc-0j-WN8"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -248,8 +253,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="XYButtonTvc" id="iAi-Nm-nDB" customClass="XYButtonTvc">
+                                <rect key="frame" x="0.0" y="180" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iAi-Nm-nDB" id="hrC-P6-eHS">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIc-WX-diW">
@@ -311,6 +318,7 @@
                         <viewControllerLayoutGuide type="bottom" id="De6-tf-aRX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pyC-id-xPh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MKj-BV-pFp">
