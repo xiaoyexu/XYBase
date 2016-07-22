@@ -69,6 +69,23 @@ if (responseCode == 0) {
 }
 ```
 
+Another way is to use a completion block to handle the result. E.g.
+
+```
+[self performBusyProcess:^XYProcessResult *{
+    sleep(5);
+    return [XYProcessResult failure];
+    } busyFlag:YES completion:^(XYProcessResult *result) {
+    if (result.success) {
+        self.view.backgroundColor = [UIColor greenColor];
+    } else {
+        self.view.backgroundColor = [UIColor grayColor];
+}}];
+
+```
+Parameter busyFlag indicates whether to freeze the screen or not, see below 2 methods.
+
+
 What and how activity indicator is displayed controlled by method below:
 
 ```

@@ -39,16 +39,21 @@
     
     [self performBusyProcess:^XYProcessResult *{
         sleep(5);
-        return [XYProcessResult success];
+        return [XYProcessResult failure];
     } busyFlag:YES completion:^(XYProcessResult *result) {
-        self.srv.backgroundColor = [UIColor greenColor];
+        if (result.success) {
+            self.srv.backgroundColor = [UIColor greenColor];
+        } else {
+            self.srv.backgroundColor = [UIColor grayColor];
+        }
+        
     }];
-    [self performBusyProcess:^XYProcessResult *{
-        sleep(3);
-        return [XYProcessResult success];
-    } busyFlag:YES completion:^(XYProcessResult *result) {
-        self.srv.backgroundColor = [UIColor blueColor];
-    }];
+//    [self performBusyProcess:^XYProcessResult *{
+//        sleep(3);
+//        return [XYProcessResult success];
+//    } busyFlag:YES completion:^(XYProcessResult *result) {
+//        self.srv.backgroundColor = [UIColor blueColor];
+//    }];
 
 //    [self performBusyProcess:nil busyFlag:YES completion:nil];
     
