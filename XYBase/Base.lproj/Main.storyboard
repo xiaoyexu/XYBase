@@ -338,6 +338,13 @@
                                     </mask>
                                 </variation>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQV-hv-dju" customClass="XYImageUIButton">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="177" y="206" width="46" height="30"/>
+                                </variation>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -347,6 +354,7 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="MKj-BV-pFp"/>
+                                <exclude reference="IQV-hv-dju"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="uLh-qD-Dg2"/>
@@ -356,6 +364,7 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="MKj-BV-pFp"/>
+                                <include reference="IQV-hv-dju"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="uLh-qD-Dg2"/>

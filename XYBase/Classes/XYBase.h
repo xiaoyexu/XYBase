@@ -642,6 +642,12 @@ typedef enum {
 @end
 
 
+@interface XYImageUIButton : UIButton
+@property(nonatomic, strong, readonly) UIImageView* buttonImageView;
+@property(nonatomic, strong, readonly) UILabel* buttonLabel;
+@property(nonatomic) CGSize buttonImageViewSize;
+@end
+
 
 typedef enum {
     SignTypeInclude,

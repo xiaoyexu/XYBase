@@ -1665,6 +1665,56 @@ static XYMessageEngine* meinstance;
 }
 @end
 
+@implementation XYImageUIButton
+{
+    UIImageView* _buttonImageView;
+    UILabel* _buttonLabel;
+}
+@synthesize buttonImageView = _buttonImageView;
+@synthesize buttonLabel = _buttonLabel;
+
+-(id)init{
+    if (self = [super init]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(void)renderView{
+    _buttonImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width - 20)/2.0, 10, 20, 20)];
+    _buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 40, self.frame.size.width, 30)];
+    _buttonLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    [self addSubview:_buttonImageView];
+    [self addSubview:_buttonLabel];
+}
+
+-(void)setButtonImageViewSize:(CGSize)buttonImageViewSize{
+    CGRect f = CGRectMake((self.frame.size.width - buttonImageViewSize.width)/2.0, 10, buttonImageViewSize.width, buttonImageViewSize.height);
+    _buttonImageView.frame = f;
+}
+
+-(CGSize)buttonImageViewSize{
+    return _buttonImageView.bounds.size;
+}
+
+@end
+
+
+
 @implementation XYSelectOption
 @synthesize sign = _sign;
 @synthesize option = _option;
