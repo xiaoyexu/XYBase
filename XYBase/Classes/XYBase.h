@@ -531,6 +531,8 @@ typedef enum {
 @interface XYMessageConfig : NSObject
 @property (nonatomic, strong) NSString* relativePath;
 @property (nonatomic, strong) NSString* httpMethod;
+
+-(id)initWithPath:(NSString*)path method:(NSString*)method;
 @end
 
 #pragma mark XYMessageEngine
@@ -583,6 +585,7 @@ typedef enum {
  */
 -(void)setConfig:(XYMessageConfig*)config forMessage:(Class)messageClass;
 
+-(void)setConfigPath:(NSString*)path method:(NSString*)method forMessage:(Class)messageClass;
 /**
  Remove config
  */

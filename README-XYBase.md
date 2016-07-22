@@ -548,6 +548,9 @@ mc.relativePath = @"test";
 mc.httpMethod = @"POST";
 [[XYMessageEngine instance] setConfig:mc forMessage:[TestRequest class]];
 
+// Alternative registration
+//[[XYMessageEngine instance] setConfigPath:@"test" method:@"POST" forMessage:[TestRequest class]];
+
 // Set current running stage
 // You can shift between different stage on needs
 [XYMessageEngine instance].runningStage = MessageStageDevelopment;

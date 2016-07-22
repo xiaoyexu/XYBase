@@ -1260,6 +1260,14 @@ static XYConnectorManager* cminstance;
 @implementation XYMessageConfig
 @synthesize relativePath;
 @synthesize httpMethod;
+
+-(id)initWithPath:(NSString*)path method:(NSString*)method{
+    if (self = [super init]){
+        self.relativePath = path;
+        self.httpMethod = method;
+    }
+    return self;
+}
 @end
 
 #pragma mark XYMessageEngine
@@ -1300,6 +1308,11 @@ static XYMessageEngine* meinstance;
 
 -(void)setConfig:(XYMessageConfig*)config forMessage:(Class)messageClass{
     [_messageConfigMapping setObject:config forKey:NSStringFromClass(messageClass)];
+}
+
+-(void)setConfigPath:(NSString*)path method:(NSString*)method forMessage:(Class)messageClass{
+    XYMessageConfig* config = [[XYMessageConfig alloc] initWithPath:path method:method];
+    [self setConfig:config forMessage:messageClass];
 }
 
 -(void)removeConfigOfMessage:(Class)messageClass{
