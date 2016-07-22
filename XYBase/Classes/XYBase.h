@@ -406,6 +406,9 @@
 
 #pragma mark XYConnection
 @interface XYConnection : NSObject<XYConnectionDelegate,NSURLConnectionDataDelegate>
+@property(nonatomic) BOOL enableEncryptionBy3DES;
+@property(nonatomic, strong) NSString* key24;
+@property(nonatomic, strong) NSString* vector8;
 /**
  This is synchronous method
  */

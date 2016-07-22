@@ -129,14 +129,11 @@
 //    
 //    NSData *myData = [NSData dataWithBytes:(const void *)bufferPtr length:(NSUInteger)movedBytes];
 //    
-//    //    NSString* tmp = [[NSString alloc] initWithData:myData encoding:NSUTF8StringEncoding];
-//    //NSLog(@"--> %@ enrypted string[%@]",myData, tmp);
-//    
-////    NSString *result = [GTMBase64 stringByEncodingData:myData];
+//    NSString *result = [GTMBase64 stringByEncodingData:myData];
 //    return result;
 //}
-
-
+//
+//
 //+(NSString*)decrypt:(NSString*)encryptText key:(NSString *)key initVect:(NSString *)iv{
 //    NSData *encryptData = [GTMBase64 decodeData:[encryptText dataUsingEncoding:NSUTF8StringEncoding]];
 //    
@@ -1041,6 +1038,10 @@ static XYCoreDataManager* dminstance;
     NSMutableData* _data;
     BOOL _finished;
 }
+@synthesize enableEncryptionBy3DES;
+@synthesize key24;
+@synthesize vector8;
+
 -(id)init{
     if (self = [super init]) {
         _data = [NSMutableData new];
@@ -1059,7 +1060,11 @@ static XYCoreDataManager* dminstance;
     // Request data
     // Encrypt body
     NSString* dataStr = [[NSString alloc] initWithData:reqObj.body encoding:NSUTF8StringEncoding];
-//    dataStr = [Utility encrypt:dataStr key:APP_KEY initVect:APP_IV];
+    
+    if (enableEncryptionBy3DES) {
+//        dataStr = [XYUtility encrypt:dataStr key:key24 initVect:vector8];
+    }
+    
     NSData* encryptedData = [dataStr dataUsingEncoding:NSUTF8StringEncoding];
     [urlRequest setHTTPBody:encryptedData];
     
@@ -1695,7 +1700,7 @@ static XYMessageEngine* meinstance;
 }
 
 -(void)renderView{
-    _buttonImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width - 20)/2.0, 10, 20, 20)];
+    _buttonImageView = [[UIImageView alloc] initWithFrame:CGRectMake((self.frame.size.width - 20)/2.0, 30, 20, 20)];
     _buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 40, self.frame.size.width, 30)];
     _buttonLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:_buttonImageView];
@@ -1703,7 +1708,7 @@ static XYMessageEngine* meinstance;
 }
 
 -(void)setButtonImageViewSize:(CGSize)buttonImageViewSize{
-    CGRect f = CGRectMake((self.frame.size.width - buttonImageViewSize.width)/2.0, 10, buttonImageViewSize.width, buttonImageViewSize.height);
+    CGRect f = CGRectMake((self.frame.size.width - buttonImageViewSize.width)/2.0, 30, buttonImageViewSize.width, buttonImageViewSize.height);
     _buttonImageView.frame = f;
 }
 

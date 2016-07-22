@@ -21,11 +21,12 @@
     [self.logoffBtn addTarget:self action:@selector(logoffClicked:) forControlEvents:UIControlEventTouchDown];
     
     XYImageUIButton* btn = [[XYImageUIButton alloc] initWithFrame:CGRectMake(10, 300, 200, 100)];
+    btn.backgroundColor = [UIColor grayColor];
     btn.buttonImageView.image = [UIImage imageNamed:@"sort_up_green"];
     btn.buttonLabel.text = @"Test";
     btn.buttonLabel.textAlignment = NSTextAlignmentCenter;
     btn.buttonLabel.font = [UIFont systemFontOfSize:12];
-    btn.buttonImageViewSize = CGSizeMake(40, 40);
+    btn.buttonImageViewSize = CGSizeMake(20, 20);
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:btn];
 
