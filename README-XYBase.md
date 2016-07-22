@@ -663,6 +663,32 @@ An example as follows:
 }
 ```
 
+### XYImageUIButton
+A button extends from UIButton whicch contains an image view and a label. The image view is located above the label like a tab item.
+
+Example
+
+```
+-(void)viewDidLoad {
+    XYImageUIButton* btn = [[XYImageUIButton alloc] initWithFrame:CGRectMake(10, 300, 200, 100)];
+    btn.buttonImageView.image = [UIImage imageNamed:@"icon"];
+    btn.buttonImageViewSize = CGSizeMake(40, 40);
+    btn.buttonLabel.text = @"Test";
+    btn.buttonLabel.textAlignment = NSTextAlignmentCenter;
+    btn.buttonLabel.font = [UIFont systemFontOfSize:12];
+    
+    [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:btn];
+}
+
+-(void)btnClicked:(UIButton*)sender{
+    NSLog(@"clicked");
+}
+```
+
+
+
+
 ###XYSelectOption/XYFieldSelectOption/XYSearchBuilder
 These classes are used to add search criteria in message sending to host who will parse the dicationary(json string) for SQL selection.
 

@@ -14,16 +14,14 @@
 
 @implementation HomeVc
 {
-    XYImageUIButton* btn;
+   
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.logoffBtn addTarget:self action:@selector(logoffClicked:) forControlEvents:UIControlEventTouchDown];
     
-    btn = [[XYImageUIButton alloc] initWithFrame:CGRectMake(10, 300, 200, 100)];
+    XYImageUIButton* btn = [[XYImageUIButton alloc] initWithFrame:CGRectMake(10, 300, 200, 100)];
     btn.buttonImageView.image = [UIImage imageNamed:@"sort_up_green"];
-    btn.backgroundColor = [UIColor grayColor];
-    
     btn.buttonLabel.text = @"Test";
     btn.buttonLabel.textAlignment = NSTextAlignmentCenter;
     btn.buttonLabel.font = [UIFont systemFontOfSize:12];
