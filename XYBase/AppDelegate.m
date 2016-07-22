@@ -19,6 +19,12 @@
     return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
+-(void)initializeApp{
+    [super initializeApp];
+    [[XYMessageEngine instance] setConfigPath:@"web/login" method:@"POST" forMessage:[XYLoginRequest class]];
+    
+}
+
 -(NSString*)backendUrl{
     return @"http://127.0.0.1:8000/assets";
 }

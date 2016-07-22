@@ -354,7 +354,12 @@
  Method of executing a callback block
  */
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block{
-    if (showActivityIndicatorView == YES) {
+    [self performBusyProcess:block busyFlag:YES completion:nil];
+}
+
+-(void)performBusyProcess:(XYProcessResult*(^)(void))block busyFlag:(BOOL)flag completion:(void (^)(XYProcessResult* result))completion{
+    
+    if (showActivityIndicatorView == YES && flag) {
         isStatusUpdaterEnabled = NO;
         [self turnOnBusyFlag];
     }
@@ -370,20 +375,34 @@
             if (processResult == nil) {
                 // If no process result return, end immediately
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self turnOffBusyFlag];
+                    if (flag) {
+                        [self turnOffBusyFlag];
+                    }
                 });
             }
             if (processResult.success == YES) {
                 // For success result, call handleNormalCorrectResponse:
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self turnOffBusyFlag];
-                    [self handleCorrectResponse:processResult];
+                    if (flag) {
+                        [self turnOffBusyFlag];
+                    }
+                    if (completion==nil) {
+                        [self handleCorrectResponse:processResult];
+                    } else {
+                        completion(processResult);
+                    }
                 });
             } else {
                 // For error result, call handleNormalErrorResponse:
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self turnOffBusyFlag];
-                    [self handleErrorResponse:processResult];
+                    if (flag) {
+                        [self turnOffBusyFlag];
+                    }
+                    if (completion==nil) {
+                        [self handleErrorResponse:processResult];
+                    } else {
+                        completion(processResult);
+                    }
                 });
             }
         }
@@ -396,8 +415,14 @@
             }
             [processResult.params setValue:errorStr forKey:@"error"];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self turnOffBusyFlag];
-                [self handleErrorResponse:processResult];
+                if (flag) {
+                    [self turnOffBusyFlag];
+                }
+                if (completion==nil) {
+                    [self handleErrorResponse:processResult];
+                } else {
+                    completion(processResult);
+                }
             });
         }
     });
@@ -662,7 +687,12 @@
  Method of executing a callback block
  */
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block{
-    if (showActivityIndicatorView == YES) {
+    [self performBusyProcess:block busyFlag:YES completion:nil];
+}
+
+-(void)performBusyProcess:(XYProcessResult*(^)(void))block busyFlag:(BOOL)flag completion:(void (^)(XYProcessResult* result))completion{
+    
+    if (showActivityIndicatorView == YES && flag) {
         isStatusUpdaterEnabled = NO;
         [self turnOnBusyFlag];
     }
@@ -678,20 +708,34 @@
             if (processResult == nil) {
                 // If no process result return, end immediately
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self turnOffBusyFlag];
+                    if (flag) {
+                        [self turnOffBusyFlag];
+                    }
                 });
             }
             if (processResult.success == YES) {
                 // For success result, call handleNormalCorrectResponse:
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self turnOffBusyFlag];
-                    [self handleCorrectResponse:processResult];
+                    if (flag) {
+                        [self turnOffBusyFlag];
+                    }
+                    if (completion==nil) {
+                        [self handleCorrectResponse:processResult];
+                    } else {
+                        completion(processResult);
+                    }
                 });
             } else {
                 // For error result, call handleNormalErrorResponse:
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [self turnOffBusyFlag];
-                    [self handleErrorResponse:processResult];
+                    if (flag) {
+                        [self turnOffBusyFlag];
+                    }
+                    if (completion==nil) {
+                        [self handleErrorResponse:processResult];
+                    } else {
+                        completion(processResult);
+                    }
                 });
             }
         }
@@ -704,12 +748,19 @@
             }
             [processResult.params setValue:errorStr forKey:@"error"];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self turnOffBusyFlag];
-                [self handleErrorResponse:processResult];
+                if (flag) {
+                    [self turnOffBusyFlag];
+                }
+                if (completion==nil) {
+                    [self handleErrorResponse:processResult];
+                } else {
+                    completion(processResult);
+                }
             });
         }
     });
 }
+
 
 /*
  Customizing method for correct response returned
@@ -1731,7 +1782,53 @@ static XYMessageEngine* meinstance;
 
 @end
 
+@implementation XYStarRatingView
+@synthesize imageSize;
+@synthesize selectedImage;
+@synthesize unSelectedImage;
+@synthesize totalNumber;
+@synthesize currentNumber;
 
+-(id)init{
+    if (self = [super init]) {
+        
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        
+    }
+    return self;
+}
+
+
+-(void)renderView{
+    for (UIView* view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    CGPoint p = CGPointZero;
+    for (int i = 0 ; i<self.totalNumber; i++) {
+        UIImageView* imageView;
+        if (i < self.currentNumber) {
+            imageView = [[UIImageView alloc] initWithImage:self.selectedImage];
+        } else {
+            imageView = [[UIImageView alloc] initWithImage:self.unSelectedImage];
+        }
+        imageView.frame = CGRectMake(p.x, p.y, self.imageSize.width, imageSize.height);
+        [self addSubview:imageView];
+        p.x+=self.imageSize.width;
+    }
+}
+@end
 
 @implementation XYSelectOption
 @synthesize sign = _sign;

@@ -52,7 +52,7 @@
  Font and color taken from XYSkinManager
  navigationBarTitleFont and navigationBarTitleColor
  */
-+(void)setTitle:(NSString *)title inNavigationItem:(UINavigationItem*)navigationItem;
++(void)setTitle:(NSString*)title inNavigationItem:(UINavigationItem*)navigationItem;
 
 /**
  Parse date string from source format to target format
@@ -62,7 +62,7 @@
 /**
  Parse NSDate to NSString object
  */
-+(NSString*)dateToString:(NSString *)formatter date:(NSDate *)date;
++(NSString*)dateToString:(NSString*)formatter date:(NSDate*)date;
 
 /**
  Parse NSString object to NSDate
@@ -126,7 +126,7 @@
 
 +(XYProcessResult*)failureWithError:(NSString*) error;
 
-+(XYProcessResult*)failureWithType:(NSString*)type andError:(NSString*)error;
++(XYProcessResult*)failureWithType:(NSString*)type andError:(NSString* )error;
 
 @end
 
@@ -148,10 +148,13 @@
 // Callback for any time consuming task
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block;
 
+
+-(void)performBusyProcess:(XYProcessResult*(^)(void))block busyFlag:(BOOL)flag completion:(void (^)(XYProcessResult* result))completion;
+
 /*
  Customizing method for correct response returned
  */
--(void)handleCorrectResponse:(XYProcessResult*) result;
+-(void)handleCorrectResponse:(XYProcessResult*)result;
 
 /*
  Customizing method for error response returned
@@ -233,6 +236,9 @@
 
 // Callback for any time consuming task
 -(void)performBusyProcess:(XYProcessResult*(^)(void))block;
+
+-(void)performBusyProcess:(XYProcessResult*(^)(void))block busyFlag:(BOOL)flag completion:(void (^)(XYProcessResult* result))completion;
+
 -(void)refresh:(UIRefreshControl*)refreshControl;
 /*
  Customizing method for correct response returned
@@ -608,6 +614,7 @@ typedef enum {
 + (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity;
 @end
 
+#pragma mark UIView controllers
 @interface XYUISegmentedControl : UISegmentedControl
 @property (nonatomic, strong) UIView* selectedView;
 @property (nonatomic, strong) UIView* separateView;
@@ -655,6 +662,16 @@ typedef enum {
 @end
 
 
+@interface XYStarRatingView : UIView
+@property(nonatomic) CGSize imageSize;
+@property(nonatomic, strong) UIImage* selectedImage;
+@property(nonatomic, strong) UIImage* unSelectedImage;
+@property(nonatomic) NSInteger totalNumber;
+@property(nonatomic) NSInteger currentNumber;
+-(void)renderView;
+@end
+
+#pragma mark Select options
 typedef enum {
     SignTypeInclude,
     SignTypeExclude,

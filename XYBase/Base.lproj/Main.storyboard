@@ -338,13 +338,13 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQV-hv-dju" customClass="XYImageUIButton">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0UL-2i-U81" customClass="XYStarRatingView">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="177" y="206" width="46" height="30"/>
+                                    <rect key="frame" x="80" y="236" width="240" height="128"/>
                                 </variation>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -354,7 +354,7 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="MKj-BV-pFp"/>
-                                <exclude reference="IQV-hv-dju"/>
+                                <exclude reference="0UL-2i-U81"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="uLh-qD-Dg2"/>
@@ -364,7 +364,7 @@
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="MKj-BV-pFp"/>
-                                <include reference="IQV-hv-dju"/>
+                                <include reference="0UL-2i-U81"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="uLh-qD-Dg2"/>
@@ -374,6 +374,7 @@
                     </view>
                     <connections>
                         <outlet property="logoffBtn" destination="MKj-BV-pFp" id="gyC-ja-P6W"/>
+                        <outlet property="srv" destination="0UL-2i-U81" id="xS7-ww-x49"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DCc-iW-OmX" userLabel="First Responder" sceneMemberID="firstResponder"/>

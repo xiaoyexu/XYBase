@@ -29,7 +29,29 @@
     btn.buttonImageViewSize = CGSizeMake(20, 20);
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:btn];
+    self.srv.selectedImage = [UIImage imageNamed:@"sort_down_green"];
+    self.srv.unSelectedImage = [UIImage imageNamed:@"sort_up_green"];
+    self.srv.imageSize = CGSizeMake(40, 40);
+    self.srv.totalNumber=4;
+    self.srv.currentNumber = 3;
+    self.srv.backgroundColor = [UIColor redColor];
+    [self.srv renderView];
+    
+    [self performBusyProcess:^XYProcessResult *{
+        sleep(5);
+        return [XYProcessResult success];
+    } busyFlag:YES completion:^(XYProcessResult *result) {
+        self.srv.backgroundColor = [UIColor greenColor];
+    }];
+    [self performBusyProcess:^XYProcessResult *{
+        sleep(3);
+        return [XYProcessResult success];
+    } busyFlag:YES completion:^(XYProcessResult *result) {
+        self.srv.backgroundColor = [UIColor blueColor];
+    }];
 
+//    [self performBusyProcess:nil busyFlag:YES completion:nil];
+    
 }
 
 -(void)btnClicked:(UIButton*)sender{

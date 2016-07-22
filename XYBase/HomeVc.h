@@ -10,5 +10,6 @@
 
 @interface HomeVc : XYBaseVc
 @property (weak, nonatomic) IBOutlet UIButton *logoffBtn;
+@property (weak, nonatomic) IBOutlet XYStarRatingView *srv;
 
 @end
