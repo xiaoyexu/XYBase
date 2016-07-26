@@ -674,6 +674,7 @@ typedef enum {
 @interface XYRotatingView : UIView
 @property (nonatomic, readonly,getter = isAnimating) BOOL animating;
 @property(nonatomic, strong, readonly) UIView* spinningView;
+@property(nonatomic) CGFloat rotateDuration;
 -(void)startAnimating;
 -(void)stopAnimating;
 @end

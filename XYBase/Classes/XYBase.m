@@ -1833,24 +1833,32 @@ static XYMessageEngine* meinstance;
 @implementation XYRotatingView
 @synthesize animating = _animating;
 @synthesize spinningView = _spinningView;
+@synthesize rotateDuration = _rotateDuration;
 
--(id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
+-(id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
         _spinningView = [[UIView alloc] initWithFrame:frame];
+        _rotateDuration = 0.3f;
         [self addSubview:_spinningView];
     }
     return self;
 }
 
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        _spinningView = [[UIView alloc] initWithFrame:self.frame];
+        _rotateDuration = 0.3f;
+        [self addSubview:_spinningView];
+    }
+    return self;
+}
 -(void)updateView{
     
 }
 
 -(void)rotateSpinningView{
     
-    [UIView animateKeyframesWithDuration:0.3 delay:0 options:
+    [UIView animateKeyframesWithDuration:_rotateDuration delay:0 options:
      //UIViewAnimationOptionRepeat |
      UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowAnimatedContent animations:^{
          _spinningView.transform = CGAffineTransformRotate(_spinningView.transform, M_PI_2);

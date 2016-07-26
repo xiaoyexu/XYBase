@@ -29,6 +29,8 @@
     btn.buttonImageViewSize = CGSizeMake(20, 20);
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
 //    [self.view addSubview:btn];
+    
+    
     self.srv.selectedImage = [UIImage imageNamed:@"sort_down_green"];
     self.srv.unSelectedImage = [UIImage imageNamed:@"sort_up_green"];
     self.srv.imageSize = CGSizeMake(40, 40);
@@ -38,11 +40,21 @@
     [self.srv renderView];
     
     
-    XYRotatingView* rv = [[XYRotatingView alloc] initWithFrame:CGRectMake(100, 200, 50, 50)];
-    rv.backgroundColor = [UIColor grayColor];
+    XYStarRatingView* ratingView = [[XYStarRatingView alloc] initWithFrame:CGRectMake(20, 50, 200, 40)];
+    ratingView.selectedImage = [UIImage imageNamed:@"sort_down_green"];
+    ratingView.unSelectedImage = [UIImage imageNamed:@"sort_up_green"];
+    ratingView.imageSize = CGSizeMake(40, 40);
+    ratingView.totalNumber=4;
+    ratingView.currentNumber = 3;
+    [ratingView renderView];
+    [self.view addSubview:ratingView];
     
-    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(5, 5, 40, 40)];
-    v.backgroundColor = [UIColor redColor];
+    
+    
+    XYRotatingView* rv = [[XYRotatingView alloc] initWithFrame:CGRectMake(100, 200, 50, 50)];
+    rv.rotateDuration = 1.0f;
+    UIImageView* v = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"alltraverslist_plane"]];
+    v.frame = CGRectMake(5, 5, 40, 40);
     [rv.spinningView addSubview:v];
     [self.view addSubview:rv];
     [rv startAnimating];

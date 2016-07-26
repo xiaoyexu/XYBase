@@ -706,7 +706,42 @@ Example
 }
 ```
 
+### XYStarRatingView
+Used to show a star rating bar.
+ 
+Example
 
+```
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    XYStarRatingView* ratingView = [[XYStarRatingView alloc] initWithFrame:CGRectMake(20, 50, 200, 40)];
+    ratingView.selectedImage = [UIImage imageNamed:@"yellowStar"];
+    ratingView.unSelectedImage = [UIImage imageNamed:@"grayStar"];
+    ratingView.imageSize = CGSizeMake(40, 40);
+    ratingView.totalNumber = 4;
+    ratingView.currentNumber = 3;
+    [ratingView renderView];
+    [self.view addSubview:ratingView];
+}
+``` 
+
+### XYRotatingView
+Rotating view can be used as a loading indicator.
+
+Example
+
+```
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    XYRotatingView* rv = [[XYRotatingView alloc] initWithFrame:CGRectMake(100, 200, 50, 50)];
+    rv.rotateDuration = 1.0f;
+    UIImageView* v = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"loadingIcon"]];
+    v.frame = CGRectMake(5, 5, 40, 40);
+    [rv.spinningView addSubview:v];
+    [self.view addSubview:rv];
+    [rv startAnimating];
+}
+```
 
 
 ###XYSelectOption/XYFieldSelectOption/XYSearchBuilder
