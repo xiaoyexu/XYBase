@@ -1830,6 +1830,47 @@ static XYMessageEngine* meinstance;
 }
 @end
 
+@implementation XYRotatingView
+@synthesize animating = _animating;
+@synthesize spinningView = _spinningView;
+
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _spinningView = [[UIView alloc] initWithFrame:frame];
+        [self addSubview:_spinningView];
+    }
+    return self;
+}
+
+-(void)updateView{
+    
+}
+
+-(void)rotateSpinningView{
+    
+    [UIView animateKeyframesWithDuration:0.3 delay:0 options:
+     //UIViewAnimationOptionRepeat |
+     UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowAnimatedContent animations:^{
+         _spinningView.transform = CGAffineTransformRotate(_spinningView.transform, M_PI_2);
+     } completion:^(BOOL finished) {
+         if (_animating) {
+             [self rotateSpinningView];
+         }
+     }];
+}
+
+-(void)startAnimating{
+    _animating = YES;
+    [self rotateSpinningView];
+}
+
+-(void)stopAnimating{
+    _animating = NO;
+}
+@end
+
 @implementation XYSelectOption
 @synthesize sign = _sign;
 @synthesize option = _option;

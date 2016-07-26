@@ -28,7 +28,7 @@
     btn.buttonLabel.font = [UIFont systemFontOfSize:12];
     btn.buttonImageViewSize = CGSizeMake(20, 20);
     [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:btn];
+//    [self.view addSubview:btn];
     self.srv.selectedImage = [UIImage imageNamed:@"sort_down_green"];
     self.srv.unSelectedImage = [UIImage imageNamed:@"sort_up_green"];
     self.srv.imageSize = CGSizeMake(40, 40);
@@ -37,17 +37,29 @@
     self.srv.backgroundColor = [UIColor redColor];
     [self.srv renderView];
     
-    [self performBusyProcess:^XYProcessResult *{
-        sleep(5);
-        return [XYProcessResult failure];
-    } busyFlag:YES completion:^(XYProcessResult *result) {
-        if (result.success) {
-            self.srv.backgroundColor = [UIColor greenColor];
-        } else {
-            self.srv.backgroundColor = [UIColor grayColor];
-        }
-        
-    }];
+    
+    XYRotatingView* rv = [[XYRotatingView alloc] initWithFrame:CGRectMake(100, 200, 50, 50)];
+    rv.backgroundColor = [UIColor grayColor];
+    
+    UIView* v = [[UIView alloc] initWithFrame:CGRectMake(5, 5, 40, 40)];
+    v.backgroundColor = [UIColor redColor];
+    [rv.spinningView addSubview:v];
+    [self.view addSubview:rv];
+    [rv startAnimating];
+    
+    
+    
+//    [self performBusyProcess:^XYProcessResult *{
+//        sleep(5);
+//        return [XYProcessResult failure];
+//    } busyFlag:YES completion:^(XYProcessResult *result) {
+//        if (result.success) {
+//            self.srv.backgroundColor = [UIColor greenColor];
+//        } else {
+//            self.srv.backgroundColor = [UIColor grayColor];
+//        }
+//        
+//    }];
 //    [self performBusyProcess:^XYProcessResult *{
 //        sleep(3);
 //        return [XYProcessResult success];

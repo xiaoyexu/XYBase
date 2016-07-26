@@ -671,6 +671,13 @@ typedef enum {
 -(void)renderView;
 @end
 
+@interface XYRotatingView : UIView
+@property (nonatomic, readonly,getter = isAnimating) BOOL animating;
+@property(nonatomic, strong, readonly) UIView* spinningView;
+-(void)startAnimating;
+-(void)stopAnimating;
+@end
+
 #pragma mark Select options
 typedef enum {
     SignTypeInclude,
