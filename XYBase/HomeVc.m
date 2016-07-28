@@ -72,14 +72,17 @@
 //        }
 //        
 //    }];
-//    [self performBusyProcess:^XYProcessResult *{
-//        sleep(3);
-//        return [XYProcessResult success];
-//    } busyFlag:YES completion:^(XYProcessResult *result) {
-//        self.srv.backgroundColor = [UIColor blueColor];
-//    }];
+    [self performBusyProcess:^XYProcessResult *{
+        sleep(3);
+        return [XYProcessResult success];
+    } busyFlag:YES completion:^(XYProcessResult *result) {
+        self.srv.backgroundColor = [UIColor blueColor];
+    }];
 
-//    [self performBusyProcess:nil busyFlag:YES completion:nil];
+    [self performBusyProcess:^XYProcessResult *{
+        sleep(3);
+        return [XYProcessResult success];
+    } busyFlag:YES completion:nil];
     
 }
 

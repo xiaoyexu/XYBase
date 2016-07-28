@@ -10,6 +10,9 @@ Why
 
 This should be a on-going project.
 
+To use it in your project, just add 
+> \#import "XYBase.h"
+
 ### XYBaseVc/XYBaseTableVc
 Contains a method to execute business logic and show common busy indicator.
 
@@ -83,6 +86,16 @@ Another way is to use a completion block to handle the result. E.g.
 }}];
 
 ```
+
+Or without completion block
+
+```
+[self performBusyProcess:^XYProcessResult *{
+    sleep(3);
+    return [XYProcessResult success];
+} busyFlag:NO completion:nil];
+```
+
 Parameter busyFlag indicates whether to freeze the screen or not, see below 2 methods.
 
 
@@ -95,7 +108,7 @@ What and how activity indicator is displayed controlled by method below:
 -(void)turnOffBusyFlag;
 ```
 A practical way is to implement the logic in base class in order to have consistent behavior across the app.
-E.g. You can have an UIAlertController field ac in base class and implement like below:
+E.g. You can have an UIAlertController field ac in base class and implementation like below:
 
 ```
 -(void)turnOnBusyFlag{
