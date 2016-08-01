@@ -45,8 +45,8 @@
 //    
 //    imagePickerController.allowsEditing = YES;
 //    
-//    [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
-//    
+    [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
+//
 //    // Initialize core data
 //    [[XYCoreDataManager instance] initCoreDataConnectorWithModel:@"XYBase" storeName:@"xybase.sqlite" asAlias:@"xybasedb"];
 //    [self deleteDB];
@@ -94,16 +94,17 @@
 //    [self.view addSubview:v];
     
     
-    XYSearchBuilder* builder = [XYSearchBuilder new];
-    XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name" andSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"a" highValue:@""];
-    [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"b" highValue:@""];
-    [builder addFieldSelectOption:fso];
-    fso = [[XYFieldSelectOption alloc] initWithProperty:@"age" andSelectOptionSign:SignTypeInclude option:OptionTypeBT lowValue:@"19" highValue:@"30"];
+//    XYSearchBuilder* builder = [XYSearchBuilder new];
+//    XYFieldSelectOption* fso = [[XYFieldSelectOption alloc] initWithProperty:@"name" andSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"a" highValue:@""];
 //    [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"b" highValue:@""];
-    [builder addFieldSelectOption:fso];
-    builder.orderBy = @[@"age"];
-    builder.sortType = SortTypeAscending;
-    NSDictionary* dic = [builder dictionaryRepresentation];
+//    [builder addFieldSelectOption:fso];
+//    fso = [[XYFieldSelectOption alloc] initWithProperty:@"age" andSelectOptionSign:SignTypeInclude option:OptionTypeBT lowValue:@"19" highValue:@"30"];
+////    [fso addSelectOptionSign:SignTypeInclude option:OptionTypeEQ lowValue:@"b" highValue:@""];
+//    [builder addFieldSelectOption:fso];
+//    builder.orderBy = @[@"age"];
+//    builder.sortType = SortTypeAscending;
+//    NSDictionary* dic = [builder dictionaryRepresentation];
+//
     
 }
 
@@ -151,36 +152,41 @@
 
 -(void)click:(UIButton*)sender{
     
+    XYNotificationView* nv = [[XYNotificationView alloc] initWithTitle:@"something is wrong" delegate:nil];
+    nv.backgroundColor = [UIColor redColor];
+//    nv.title = @"test";
+    [nv showInViewController:self waitUntilDone:YES];
     
-//    UIActionSheet *sheet;
-    // 判断是否支持相机
-    UIAlertController* alertController;
-    alertController = [UIAlertController alertControllerWithTitle:LS(@"choose") message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
-    
-
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-        
-    {
-        [alertController addAction:[UIAlertAction actionWithTitle:LS(@"photo") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
-        
-            imagePickerController.allowsEditing = YES;
-            
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-            
-            [self presentViewController:imagePickerController animated:YES completion:^{}];
-        }]];
-    }
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:LS(@"from album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        
-        [self presentViewController:imagePickerController animated:YES completion:^{}];
-        
-    }]];
-    
-   [self presentViewController:alertController animated:YES completion:nil];
+//    
+////    UIActionSheet *sheet;
+//    // 判断是否支持相机
+//    UIAlertController* alertController;
+//    alertController = [UIAlertController alertControllerWithTitle:LS(@"choose") message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+//    
+//
+//    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+//        
+//    {
+//        [alertController addAction:[UIAlertAction actionWithTitle:LS(@"photo") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            
+//        
+//            imagePickerController.allowsEditing = YES;
+//            
+//            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+//            
+//            [self presentViewController:imagePickerController animated:YES completion:^{}];
+//        }]];
+//    }
+//    
+//    [alertController addAction:[UIAlertAction actionWithTitle:LS(@"from album") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        
+//        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//        
+//        [self presentViewController:imagePickerController animated:YES completion:^{}];
+//        
+//    }]];
+//    
+//   [self presentViewController:alertController animated:YES completion:nil];
     
     //    [self performBusyProcess:^XYProcessResult *{
     

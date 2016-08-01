@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <CoreText/CoreText.h>
 #import "objc/runtime.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
@@ -45,6 +46,9 @@
  */
 +(BOOL)isNumber:(NSString*)field;
 
++(UIView*)mainWindowView;
+
++(CGSize)sizeOfText:(NSString*)text withFont:(UIFont*) font constrainedSize:(CGSize)constrainedSize;
 /**
  Return match string list of given regular expression
  This method will return all matched string part
@@ -682,6 +686,182 @@ typedef enum {
 @property(nonatomic) CGFloat rotateDuration;
 -(void)startAnimating;
 -(void)stopAnimating;
+@end
+
+@class XYAnimationView;
+
+/**
+ Delegate protocol for animations
+ */
+@protocol XYAnimationViewDelegate <NSObject>
+
+@optional
+/**
+ Delegate protocol for animations will appear
+ @param view XYAnimationView instance
+ */
+-(void)animationViewWillAppear:(XYAnimationView*)view;
+
+/**
+ Delegate protocol for animations did appear
+ @param view XYAnimationView instance
+ */
+-(void)animationViewDidAppear:(XYAnimationView*)view;
+
+/**
+ Delegate protocol for animations will disappear
+ @param view XYAnimationView instance
+ */
+-(void)animationViewWillDisappear:(XYAnimationView*)view;
+
+/**
+ Delegate protocol for animations did disappear
+ @param view XYAnimationView instance
+ */
+-(void)animationViewDidDisappear:(XYAnimationView*)view;
+
+/**
+ Delegate protocol for animation view event
+ @param view XYAnimationView instance
+ @param controlEvent UIControlEvents data
+ */
+-(void)animationView:(XYAnimationView*)view event:(UIControlEvents)controlEvent;
+@end
+
+/**
+ XYAnimationView is a subclass of XYBaseView which has animation for appearing/disappearing
+ */
+@interface XYAnimationView : UIView {
+@protected
+    BOOL _animating;
+    id<XYAnimationViewDelegate> _animationDelegate;
+    NSTimeInterval _showAnimationDuration;
+    NSTimeInterval _delayAnimationDuration;
+    NSTimeInterval _dismissAnimationDuration;
+}
+
+/**
+ Delegate for animation logic
+ */
+@property (nonatomic, strong) id<XYAnimationViewDelegate> animationDelegate;
+
+/**
+ Name of this view
+ */
+@property (nonatomic, strong) NSString* name;
+
+/**
+ Flag whether animation is on-going
+ */
+@property(nonatomic, readonly) BOOL animating;
+
+/**
+ NSTimeInterval for view to appear
+ */
+@property(nonatomic) NSTimeInterval showAnimationDuration;
+
+/**
+ NSTimeInterval for view to hold
+ If value is 0, you need to call dismiss method manually
+ */
+@property(nonatomic) NSTimeInterval delayAnimationDuration;
+
+/**
+ NSTimeInterval for view to disappear
+ */
+@property(nonatomic) NSTimeInterval dismissAnimationDuration;
+
+/**
+ Display animation view on main screen
+ */
+-(void)show;
+
+/**
+ Display animation view with in another view
+ @param view The view that holds animation view
+ */
+-(void)showInView:(UIView*)view;
+
+/**
+ Display animation view in view controller
+ @param view controller
+ */
+-(void)showInViewController:(UIViewController*)controller;
+/**
+ Dismiss animation view
+ */
+-(void)dismiss;
+@end
+
+/**
+ Delegate for status updater
+ */
+@protocol XYStatusUpdateDelegate <NSObject>
+@required
+/**
+ Log/Output string value
+ */
+-(void)log:(NSString*)status;
+
+/**
+ Log/Output progress value
+ */
+-(void)progress:(NSNumber*)progress;
+
+
+@optional
+/**
+ Log/Output substring value
+ */
+-(void)subLog:(NSString*)status;
+/**
+ Log/Output subprogress value
+ */
+-(void)subProgress:(NSNumber*)progress;
+@end
+
+
+/**
+ XYNotificationView is a subclass of XYAnimationView
+ Which work as a notification to be displayed on the top of screen
+ */
+@interface XYNotificationView : XYAnimationView<XYStatusUpdateDelegate>
+
+/**
+ The title of notification
+ */
+@property(nonatomic,strong) NSString* title;
+
+/**
+ The message of notification
+ */
+@property(nonatomic,strong) NSString* message;
+
+/**
+ 
+ */
+@property(nonatomic) CGFloat startAlpha;
+@property(nonatomic) CGFloat endAlpha;
+
+/**
+ Initialization method to create a notification view
+ */
+-(id)initWithTitle:(NSString*) title delegate:(id<XYAnimationViewDelegate>)delegate;
+
+/**
+ Display view on the screen
+ @param view The view holds notification view
+ @param b If YES, view won't reset during animation process
+ */
+-(void)showInView:(UIView*)view waitUntilDone:(BOOL)b;
+
+/**
+ Display view in view controller
+ @param controller View controller
+ @param b If YES, view won't reset during animation process
+ */
+-(void)showInViewController:(UIViewController*)controller waitUntilDone:(BOOL) b;
+
 @end
 
 #pragma mark Select options
