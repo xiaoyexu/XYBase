@@ -41,6 +41,11 @@
 +(BOOL)isBlank:(NSString*)field;
 
 /**
+ Check whether a NSString can be parse to number
+ */
++(BOOL)isNumber:(NSString*)field;
+
+/**
  Return match string list of given regular expression
  This method will return all matched string part
  The express can be ".*(abc.*).*", string matched in group (abc...) will be saved in return list

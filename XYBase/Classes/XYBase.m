@@ -43,6 +43,10 @@
     return field == nil ? YES : field.length == 0 ? YES : NO;
 }
 
++(BOOL)isNumber:(NSString*)field{
+    return [[NSNumberFormatter new] numberFromString:field] != nil;
+}
+
 +(NSArray*)matchStringListOfString:(NSString*)str matchRegularExpression:(NSString*)regStr{
     NSError *error = NULL;
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regStr options:NSRegularExpressionCaseInsensitive error:&error];
