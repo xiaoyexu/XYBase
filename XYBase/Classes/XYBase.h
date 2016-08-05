@@ -701,6 +701,15 @@ typedef enum {
 -(void)setCovers:(NSArray*)covers;
 @end
 
+@interface XYImageListView : UIView
+@property (nonatomic, strong) NSArray* imageList;
+@property (nonatomic) CGSize paddingSize;
+@property (nonatomic) CGSize imageSize;
+@property (nonatomic) CGFloat startX;
+-(id)init;
+-(id)initWithFrame:(CGRect)frame;
+-(void)renderView;
+@end
 
 @interface XYStarRatingView : UIView
 @property(nonatomic) CGSize imageSize;

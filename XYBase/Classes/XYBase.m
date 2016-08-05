@@ -1991,7 +1991,59 @@ static XYMessageEngine* meinstance;
 }
 @end
 
+@implementation XYImageListView
+{
+    CGFloat _startX;
+    CGSize _paddingSize;
+    CGSize _imageSize;
+}
+@synthesize imageList = _imageList;
+@synthesize startX = _startX;
+@synthesize paddingSize = _paddingSize;
+@synthesize imageSize = _imageSize;
+-(id)init{
+    if (self = [super init]) {
+        [self initView];
+    }
+    return self;
+}
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self initView];
+    }
+    return self;
+}
 
+-(void)initView{
+    _startX = 0;
+    _paddingSize = CGSizeMake(5, 5);
+    _imageSize = CGSizeMake(40, 40);
+}
+
+-(void)renderView{
+    CGPoint p = CGPointZero;
+    p.x = _startX == 0 ? _paddingSize.width : _startX;
+    p.y = _paddingSize.height;
+    for (UIView* view in _imageList) {
+        if (p.x + _imageSize.width + _paddingSize.width >= self.frame.size.width) {
+            p.x = _paddingSize.width;
+            p.y += _imageSize.height + _paddingSize.height;
+        }
+        view.frame = CGRectMake(p.x, p.y, _imageSize.width, _imageSize.height);
+        p.x += _imageSize.width + _paddingSize.width;
+        [self addSubview:view];
+    }
+    CGFloat height = p.y + _imageSize.height + _paddingSize.height;
+    CGRect f = self.frame;
+    f.size.height = height;
+    self.frame = f;
+}
+
+-(void)setImageList:(NSArray *)imageList{
+    _imageList = imageList;
+    [self renderView];
+}
+@end
 
 @implementation XYStarRatingView
 @synthesize imageSize;

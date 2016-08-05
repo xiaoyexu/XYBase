@@ -142,18 +142,34 @@
 //    [self.view addSubview:field];
     
     
-    XYPagedView* pv = [[XYPagedView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
-    pv.backgroundColor = [UIColor lightGrayColor];
+//    XYPagedView* pv = [[XYPagedView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
+//    pv.backgroundColor = [UIColor lightGrayColor];
+//    UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    a.backgroundColor = [UIColor redColor];
+//    UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    b.backgroundColor = [UIColor greenColor];
+//    UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    c.backgroundColor = [UIColor blueColor];
+//    [pv setCovers:@[a,b,c]];
+//    pv.pageController.currentPageIndicatorTintColor = [UIColor purpleColor];
+//    [self.view addSubview:pv];
+    
+    XYImageListView* ilv = [[XYImageListView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
+    ilv.paddingSize = CGSizeMake(2, 5);
+    ilv.imageSize = CGSizeMake(30, 20);
+    ilv.backgroundColor = [UIColor lightGrayColor];
     UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     a.backgroundColor = [UIColor redColor];
     UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     b.backgroundColor = [UIColor greenColor];
     UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     c.backgroundColor = [UIColor blueColor];
-    [pv setCovers:@[a,b,c]];
-    pv.pageController.currentPageIndicatorTintColor = [UIColor purpleColor];
-    [self.view addSubview:pv];
-    
+    UIView* d = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    d.backgroundColor = [UIColor purpleColor];
+    UIView* e = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    e.backgroundColor = [UIColor yellowColor];
+    [ilv setImageList:@[a,b,c,d,e]];
+    [self.view addSubview:ilv];
 }
 
 -(void)clearValue{

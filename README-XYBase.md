@@ -767,6 +767,33 @@ c.backgroundColor = [UIColor blueColor];
 [self.view addSubview:pv];
 ```
 
+### XYImageListView
+Arrange and display multiple subviews. E.g.
+
+```
+XYImageListView* ilv = [[XYImageListView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
+ilv.paddingSize = CGSizeMake(2, 5);
+ilv.imageSize = CGSizeMake(30, 20);
+ilv.backgroundColor = [UIColor lightGrayColor];
+
+UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+a.backgroundColor = [UIColor redColor];
+
+UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+b.backgroundColor = [UIColor greenColor];
+
+UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+c.backgroundColor = [UIColor blueColor];
+
+UIView* d = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+d.backgroundColor = [UIColor purpleColor];
+
+UIView* e = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+e.backgroundColor = [UIColor yellowColor];
+
+[ilv setImageList:@[a,b,c,d,e]];
+[self.view addSubview:ilv];
+```
 
 ### XYStarRatingView
 Used to show a star rating bar.
