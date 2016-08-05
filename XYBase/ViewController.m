@@ -130,16 +130,29 @@
 //
     
     
-    XYUITextField* field = [[XYUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
-    field.insetSize = CGSizeMake(15, 0);
-    field.backgroundColor = [UIColor redColor];
-    [self.view addSubview:field];
+//    XYUITextField* field = [[XYUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
+//    field.insetSize = CGSizeMake(15, 0);
+//    field.backgroundColor = [UIColor redColor];
+//    [self.view addSubview:field];
     
 //    XYDatePickerUITextField* field = [[XYDatePickerUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
 //    field.insetSize = CGSizeMake(5, 0);
 //    field.backgroundColor = [UIColor redColor];
 //    field.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 //    [self.view addSubview:field];
+    
+    
+    XYPagedView* pv = [[XYPagedView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
+    pv.backgroundColor = [UIColor lightGrayColor];
+    UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    a.backgroundColor = [UIColor redColor];
+    UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    b.backgroundColor = [UIColor greenColor];
+    UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    c.backgroundColor = [UIColor blueColor];
+    [pv setCovers:@[a,b,c]];
+    pv.pageController.currentPageIndicatorTintColor = [UIColor purpleColor];
+    [self.view addSubview:pv];
     
 }
 

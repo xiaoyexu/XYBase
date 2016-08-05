@@ -686,6 +686,21 @@ typedef enum {
 -(id)initWithCoder:(NSCoder *)aDecoder;
 @end
 
+@interface XYPagedView : UIView<UIScrollViewDelegate>
+{
+    NSArray* _covers;
+    UIPageControl* _pageController;
+    UIScrollView* _scrollView;
+}
+@property (nonatomic,readonly) UIScrollView* scrollView;
+@property (nonatomic,readonly) UIPageControl* pageController;
+-(id)init;
+-(id)initWithFrame:(CGRect)frame;
+-(id)initWithCoder:(NSCoder *)aDecoder;
+-(id)initWithFrame:(CGRect)frame covers:(NSArray*)covers;
+-(void)setCovers:(NSArray*)covers;
+@end
+
 
 @interface XYStarRatingView : UIView
 @property(nonatomic) CGSize imageSize;

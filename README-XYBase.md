@@ -746,6 +746,27 @@ field.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 [self.view addSubview:field];
 ```
 
+### XYPagedView
+Display multiple views with page controller.
+E.g.
+
+```
+XYPagedView* pv = [[XYPagedView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
+pv.backgroundColor = [UIColor lightGrayColor];
+
+UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+a.backgroundColor = [UIColor redColor];
+
+UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+b.backgroundColor = [UIColor greenColor];
+
+UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+c.backgroundColor = [UIColor blueColor];
+
+[pv setCovers:@[a,b,c]];  pv.pageController.currentPageIndicatorTintColor = [UIColor purpleColor];
+[self.view addSubview:pv];
+```
+
 
 ### XYStarRatingView
 Used to show a star rating bar.
