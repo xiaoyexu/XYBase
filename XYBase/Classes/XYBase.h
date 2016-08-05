@@ -71,14 +71,14 @@
 /**
  Parse NSDate to NSString object
  */
-+(NSString*)dateToString:(NSString*)formatter date:(NSDate*)date;
++(NSString*)dateToStringWithFormat:(NSString*)formatter date:(NSDate*)date;
 
 /**
  Parse NSString object to NSDate
  e.g.
  [Utility stringToDate:@"yyyy-MM-dd'T00:00:00' 'PT'HH'H'mm'M'ss'S'" dateString:dateStr]
  */
-+(NSDate*)stringToDate:(NSString*)formatter dateString:(NSString*)dateStr;
++(NSDate*)stringToDateWithFormat:(NSString*)formatter dateString:(NSString*)dateStr;
 
 //+(NSString*)encrypt:(NSString*)plainText key:(NSString*)key initVect:(NSString*)iv;
 //+(NSString*)decrypt:(NSString*)encryptText key:(NSString*)key initVect:(NSString*)iv;

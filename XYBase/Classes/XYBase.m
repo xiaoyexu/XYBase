@@ -118,13 +118,13 @@
     return[dateFormatter stringFromDate:date];
 }
 
-+(NSString*)dateToString:(NSString *)formatter date:(NSDate *)date{
++(NSString*)dateToStringWithFormat:(NSString *)formatter date:(NSDate *)date{
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:formatter];
     return [dateFormatter stringFromDate:date];
 }
 
-+(NSDate*)stringToDate:(NSString*)formatter dateString:(NSString*)dateStr{
++(NSDate*)stringToDateWithFormat:(NSString*)formatter dateString:(NSString*)dateStr{
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:formatter];
     return [dateFormatter dateFromString:dateStr];
