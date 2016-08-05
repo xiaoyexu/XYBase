@@ -567,6 +567,11 @@ typedef enum {
 @property (nonatomic, readonly) NSMutableDictionary* messageStage;
 
 /**
+ Request timeout
+ */
+@property(nonatomic) NSTimeInterval timeout;
+
+/**
  Message relative url mapping
  Domain is defined by XYConnector, e.g. www.test.com
  Relative url is defined by each message, e.g.

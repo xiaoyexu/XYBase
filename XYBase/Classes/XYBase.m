@@ -1366,6 +1366,7 @@ static XYMessageEngine* meinstance;
 }
 @synthesize runningStage = _runningStage;
 @synthesize messageStage = _messageStage;
+@synthesize timeout = _timeout;
 @synthesize messageConfigMapping = _messageConfigMapping;
 @synthesize delegate = _delegate;
 
@@ -1442,8 +1443,12 @@ static XYMessageEngine* meinstance;
     
     req.requestURL = [NSURL URLWithString:url];
     
-    // Default timeout
-    req.timeout = 5;
+    if (_timeout == 0) {
+        // Default timeout if no timeout given
+        req.timeout = 15;
+    } else {
+        req.timeout = _timeout;
+    }
     
     // Default method
     req.httpMethod = mc.httpMethod == nil ? @"GET" : mc.httpMethod;
