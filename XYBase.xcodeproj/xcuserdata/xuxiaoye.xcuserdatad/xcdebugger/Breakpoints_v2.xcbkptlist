@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYBase/ViewController.m"
-            timestampString = "491719405.044086"
+            timestampString = "492057971.84153"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
             landmarkType = "5">
             <Locations>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYBase/Classes/XYBase.m"
-            timestampString = "491720394.104822"
+            timestampString = "492055869.392705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2294"
-            endingLineNumber = "2294"
+            startingLineNumber = "2387"
+            endingLineNumber = "2387"
             landmarkName = "-dictionaryRepresentation"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XYBase/Classes/XYBase.m"
-            timestampString = "491720394.104822"
+            timestampString = "492055869.392705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2376"
-            endingLineNumber = "2376"
+            startingLineNumber = "2469"
+            endingLineNumber = "2469"
             landmarkName = "-dictionaryRepresentation"
             landmarkType = "5">
          </BreakpointContent>

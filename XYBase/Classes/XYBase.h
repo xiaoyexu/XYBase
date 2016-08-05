@@ -670,6 +670,17 @@ typedef enum {
 @property(nonatomic) CGSize buttonImageViewSize;
 @end
 
+@interface XYUITextField : UITextField
+@property(nonatomic) CGSize insetSize;
+@end
+
+@interface XYDatePickerUITextField : XYUITextField
+@property(nonatomic, strong, readonly) UIDatePicker* datePicker;
+-(id)init;
+-(id)initWithFrame:(CGRect)frame;
+-(id)initWithCoder:(NSCoder *)aDecoder;
+@end
+
 
 @interface XYStarRatingView : UIView
 @property(nonatomic) CGSize imageSize;

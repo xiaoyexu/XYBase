@@ -719,6 +719,34 @@ Example
 }
 ```
 
+### XYUITextField
+Subclass of UITextField, provides content inset. E.g.
+
+```
+XYUITextField* field = [[XYUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
+field.insetSize = CGSizeMake(15, 0);
+field.backgroundColor = [UIColor redColor];
+[self.view addSubview:field];
+```
+
+### XYDatePickerUITextField
+Subclass of XYUITextField, provides datepicker as input view.
+
+For date, format as yyyy-MM-dd
+For time, format as HH:mm:ss
+For datetime, format as yyyy-MM-dd HH:mm:ss
+
+E.g.
+
+```
+XYDatePickerUITextField* field = [[XYDatePickerUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
+field.insetSize = CGSizeMake(5, 0);
+field.backgroundColor = [UIColor redColor];
+field.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+[self.view addSubview:field];
+```
+
+
 ### XYStarRatingView
 Used to show a star rating bar.
  

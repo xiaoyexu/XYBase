@@ -36,6 +36,7 @@
 {
     UIAlertController* ac;
     UIImagePickerController *imagePickerController;
+    UIDatePicker* datePicker;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -105,6 +106,52 @@
 //    builder.sortType = SortTypeAscending;
 //    NSDictionary* dic = [builder dictionaryRepresentation];
 //
+    
+    
+    
+//    datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, 200-45)];
+//    datePicker.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//    datePicker.datePickerMode = UIDatePickerModeDate;
+//    [datePicker addTarget:self action:@selector(updateDateValue) forControlEvents:UIControlEventValueChanged];
+//    UIView* datePickerInputView;
+//    
+//    datePickerInputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
+//    datePickerInputView.backgroundColor = [UIColor greenColor];
+//    
+//    field.inputView = datePickerInputView;
+//    UIToolbar* bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 45)];
+//    UIBarButtonItem* clear = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStyleDone target:self action:@selector(clearValue)];
+//    UIBarButtonItem* space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+//    //UIBarButtonItem* done = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(done)];
+//    UIBarButtonItem* done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+//    bar.items = [NSArray arrayWithObjects:clear, space, done, nil];
+//    [datePickerInputView addSubview:bar];
+//    [datePickerInputView addSubview:datePicker];
+//
+    
+    
+    XYUITextField* field = [[XYUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
+    field.insetSize = CGSizeMake(15, 0);
+    field.backgroundColor = [UIColor redColor];
+    [self.view addSubview:field];
+    
+//    XYDatePickerUITextField* field = [[XYDatePickerUITextField alloc] initWithFrame:CGRectMake(20, 120, 250, 40)];
+//    field.insetSize = CGSizeMake(5, 0);
+//    field.backgroundColor = [UIColor redColor];
+//    field.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+//    [self.view addSubview:field];
+    
+}
+
+-(void)clearValue{
+    
+}
+
+-(void)done{
+    
+}
+
+-(void)updateDateValue{
     
 }
 

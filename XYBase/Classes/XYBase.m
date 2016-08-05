@@ -1814,7 +1814,101 @@ static XYMessageEngine* meinstance;
 -(CGSize)buttonImageViewSize{
     return _buttonImageView.bounds.size;
 }
+@end
 
+@implementation XYUITextField
+@synthesize insetSize;
+
+-(CGRect)textRectForBounds:(CGRect)bounds{
+    return CGRectInset(bounds, insetSize.width, insetSize.height);
+}
+
+-(CGRect)editingRectForBounds:(CGRect)bounds{
+    return CGRectInset(bounds, insetSize.width, insetSize.height);
+}
+@end
+
+@implementation XYDatePickerUITextField
+{
+    UIView* _inputView;
+    UIDatePicker* _datePicker;
+    UIToolbar* _toolBar;
+}
+@synthesize datePicker = _datePicker;
+-(id)init{
+    if (self = [super init]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(void)renderView{
+    if (_inputView == nil) {
+        _inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 250)];
+    }
+    if (_datePicker == nil) {
+        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 40, self.frame.size.width, 250-40)];
+        _datePicker.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _datePicker.datePickerMode = UIDatePickerModeDate;
+        [_datePicker addTarget:self action:@selector(updateDateValue) forControlEvents:UIControlEventValueChanged];
+        _datePicker.backgroundColor = [UIColor whiteColor];
+    }
+    if (_toolBar == nil) {
+        _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
+        _toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _toolBar.backgroundColor = [UIColor whiteColor];
+        UIBarButtonItem* clear = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(clearValue)];
+        UIBarButtonItem* space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem* done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+        _toolBar.items = [NSArray arrayWithObjects:clear, space, done, nil];
+        [_inputView addSubview:_toolBar];
+        [_inputView addSubview:_datePicker];
+    }
+    self.inputView = _inputView;
+}
+
+-(void)updateDateValue{
+    NSDateFormatter* nsdf = [NSDateFormatter new];
+    NSString* now = @"";
+    if (_datePicker.datePickerMode == UIDatePickerModeDate) {
+        [nsdf setDateStyle:NSDateFormatterShortStyle];
+        [nsdf setDateFormat:@"yyyy-MM-dd"];
+        now = [nsdf stringFromDate:_datePicker.date];
+    }  else if (_datePicker.datePickerMode == UIDatePickerModeTime) {
+        [nsdf setDateStyle:NSDateFormatterShortStyle];
+        [nsdf setDateFormat:@"HH:mm:ss"];
+        now = [nsdf stringFromDate:_datePicker.date];
+    } else if (_datePicker.datePickerMode == UIDatePickerModeDateAndTime) {
+        [nsdf setDateStyle:NSDateFormatterShortStyle];
+        [nsdf setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        now = [nsdf stringFromDate:_datePicker.date];
+    }
+    self.text = now;
+}
+
+-(void)clearValue{
+    self.text = @"";
+    _datePicker.date = [NSDate dateWithTimeIntervalSinceNow:0];
+    [self resignFirstResponder];
+}
+
+-(void)done{
+    [self resignFirstResponder];
+}
 @end
 
 @implementation XYStarRatingView
@@ -2138,7 +2232,6 @@ static XYMessageEngine* meinstance;
         self.alpha = _endAlpha;
     } completion:^(BOOL finished) {
         self.frame = oldFrame;
-        
         _animating = NO;
         if (_animationDelegate != nil) {
             [_animationDelegate animationViewDidDisappear:self];
