@@ -270,6 +270,20 @@ The complete version of above sample would be:
 
 Smarty you may also realized that I have created subclass of UITableViewCell for each row(InputTvc, ButtonTvc), and UITextField instance usernameTf, passwordTf, UIButton instance loginBtn as a reference in this view controller.
 
+Since the table view cell will be released when it's out of screen, you need to rebind it to a local object in order not to lose user inputs.
+
+For example, inputTf is a UITextField reference in view controller, if it's not binded, bind it and assign initial value, if it's binded, use local object instead.
+
+```
+if (inputTf) {
+    cell.textField = inputTf;
+} else {
+    cell.textField.text = <initial value>
+    inputTf = cell.textField;
+}
+```
+
+
 **XYOptionTvcItem**
 XYOptionTvcItem is a subclass of XYBaseTvcItem, where you can addTarget for clicking event. E.g.
 
