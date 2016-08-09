@@ -10,4 +10,5 @@
 
 @implementation TestRequest
 @synthesize key;
+@synthesize number;
 @end

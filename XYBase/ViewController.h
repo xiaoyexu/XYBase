@@ -20,3 +20,8 @@
 @interface TestOperation : NSOperation
 -(id)initWithName:(NSString*)name;
 @end
+
+@interface Person : NSObject
+@property(nonatomic, strong) NSString* name;
+@property(nonatomic) NSNumber* age;
+@end

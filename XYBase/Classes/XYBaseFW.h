@@ -20,7 +20,7 @@
 @end
 
 #pragma mark category
-@interface UIColor (xyPredefine)
+@interface UIColor (xybasefw)
 + (UIColor *)colorWithHex:(long)hexColor;
 + (UIColor *)colorWithHex:(long)hexColor alpha:(float)opacity;
 +(UIColor*)xyGreenColor;
@@ -32,7 +32,7 @@
 +(UIColor*)xyTextDarkGreyColor;
 @end
 
-@interface XYUtility(xyPredefine)
+@interface XYUtility(xybasefw)
 +(void)enableButton:(UIButton*)button;
 +(void)disableButton:(UIButton*)button;
 @end

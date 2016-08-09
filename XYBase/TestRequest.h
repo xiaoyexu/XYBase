@@ -10,4 +10,5 @@
 
 @interface TestRequest : XYRequest
 @property(nonatomic, strong) NSString* key;
+@property(nonatomic, strong) NSNumber* number;
 @end

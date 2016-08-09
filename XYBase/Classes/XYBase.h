@@ -395,6 +395,14 @@
 @property (nonatomic) NSString* responseDesc;
 @end
 
+@interface NSObject(xybase)
+-(NSDictionary*)toDictionary;
+@end
+
+@interface NSDictionary(xybase)
+-(id)toObjectAsClass:(Class)clazz;
+@end
+
 #pragma mark XYHTTPRequestObject
 @interface XYHTTPRequestObject : NSObject
 @property(nonatomic, strong) NSURL* requestURL;
@@ -612,8 +620,8 @@ typedef enum {
 -(void)removeConfigOfMessage:(Class)messageClass;
 @end
 
-#pragma mark NSString+category
-@interface NSString (category)
+#pragma mark NSString+xybase
+@interface NSString (xybase)
 -(NSString*)md5;
 -(NSString*)sha1;
 // Uncomment below if GTMBase64.h imported

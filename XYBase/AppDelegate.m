@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return [super application:application didFinishLaunchingWithOptions:launchOptions];
+//    return YES;
 }
 
 -(void)initializeApp{
@@ -60,7 +61,7 @@
     mc.httpMethod = @"POST";
     [[XYMessageEngine instance] setConfig:mc forMessage:[TestRequest class]];
     
-    [XYMessageEngine instance].runningStage = MessageStageDemo;
+    [XYMessageEngine instance].runningStage = MessageStageDevelopment;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

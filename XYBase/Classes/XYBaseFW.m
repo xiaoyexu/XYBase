@@ -13,7 +13,7 @@
 @end
 
 #pragma mark category
-@implementation UIColor (xyPredefine)
+@implementation UIColor (xybasefw)
 
 + (UIColor*) colorWithHex:(long)hexColor;
 {
@@ -59,7 +59,7 @@
 }
 @end
 
-@implementation XYUtility (xyPredefine)
+@implementation XYUtility (xybasefw)
 +(void)enableButton:(UIButton*)button{
     button.enabled = YES;
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

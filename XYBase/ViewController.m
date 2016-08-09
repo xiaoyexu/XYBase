@@ -45,7 +45,8 @@
 //    imagePickerController.delegate = self;
 //    
 //    imagePickerController.allowsEditing = YES;
-//    
+//
+    self.button.backgroundColor = [UIColor greenColor];
     [self.button addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchDown];
 //
 //    // Initialize core data
@@ -154,22 +155,22 @@
 //    pv.pageController.currentPageIndicatorTintColor = [UIColor purpleColor];
 //    [self.view addSubview:pv];
     
-    XYImageListView* ilv = [[XYImageListView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
-    ilv.paddingSize = CGSizeMake(2, 5);
-    ilv.imageSize = CGSizeMake(30, 20);
-    ilv.backgroundColor = [UIColor lightGrayColor];
-    UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    a.backgroundColor = [UIColor redColor];
-    UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    b.backgroundColor = [UIColor greenColor];
-    UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    c.backgroundColor = [UIColor blueColor];
-    UIView* d = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    d.backgroundColor = [UIColor purpleColor];
-    UIView* e = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    e.backgroundColor = [UIColor yellowColor];
-    [ilv setImageList:@[a,b,c,d,e]];
-    [self.view addSubview:ilv];
+//    XYImageListView* ilv = [[XYImageListView alloc] initWithFrame:CGRectMake(30, 50, 200, 150)];
+//    ilv.paddingSize = CGSizeMake(2, 5);
+//    ilv.imageSize = CGSizeMake(30, 20);
+//    ilv.backgroundColor = [UIColor lightGrayColor];
+//    UIView* a = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    a.backgroundColor = [UIColor redColor];
+//    UIView* b = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    b.backgroundColor = [UIColor greenColor];
+//    UIView* c = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    c.backgroundColor = [UIColor blueColor];
+//    UIView* d = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    d.backgroundColor = [UIColor purpleColor];
+//    UIView* e = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    e.backgroundColor = [UIColor yellowColor];
+//    [ilv setImageList:@[a,b,c,d,e]];
+//    [self.view addSubview:ilv];
 }
 
 -(void)clearValue{
@@ -225,13 +226,136 @@
     }
 }
 
+-(id)array:(NSArray*)array toObject:(Class)class{
+    NSMutableArray* result = [NSMutableArray new];
+    for (NSDictionary* dict in array) {
+        id obj = [self dict:dict toObject:class];
+        [result addObject:obj];
+    }
+    return result;
+}
+
+-(id)dict:(NSDictionary*)dict toObject:(Class)class{
+    NSString* className = NSStringFromClass(class);
+    id obj = [NSClassFromString(className) new];
+    unsigned int ivarsCnt = 0;
+    objc_property_t *properties = class_copyPropertyList(class,&ivarsCnt);
+    for (int i = 0 ; i < ivarsCnt ; i++) {
+        objc_property_t property = properties[i];
+        const char* propname = property_getName(property);
+        if (!propname) {
+            continue;
+        }
+        const char* type = property_getAttributes(property);
+        NSString *attr = [NSString stringWithCString:type encoding:NSUTF8StringEncoding];
+        NSString * typeString = [NSString stringWithUTF8String:type];
+        NSArray * attributes = [typeString componentsSeparatedByString:@","];
+        NSString * typeAttribute = [attributes objectAtIndex:0];
+        NSString * propertyType = [typeAttribute substringFromIndex:1];
+        const char* rawPropertyType = [propertyType UTF8String];
+        
+        if (strcmp(rawPropertyType, @encode(float)) == 0) {
+            //it's a float
+        } else if (strcmp(rawPropertyType, @encode(int)) == 0) {
+            //it's an int
+        } else if (strcmp(rawPropertyType, @encode(id)) == 0) {
+            //it's some sort of object
+        } else {
+            // According to Apples Documentation you can determine the corresponding encoding values
+        }
+        
+        if ([typeAttribute hasPrefix:@"T@"] && [typeAttribute length] > 1) {
+            NSString * typeClassName = [typeAttribute substringWithRange:NSMakeRange(3, [typeAttribute length]-4)];  //turns @"NSDate" into NSDate
+            Class typeClass = NSClassFromString(typeClassName);
+            if (typeClass != nil) {
+                // Here is the corresponding class even for nil values
+              
+                
+            }
+            
+            if ([typeClass isSubclassOfClass:[NSDictionary class]]){
+                
+            } else if ([typeClass isSubclassOfClass:[NSArray class]]) {
+                
+            }
+        }
+        NSString* propertyName = [NSString stringWithUTF8String:propname];
+        NSString* restName = [propertyName substringFromIndex:1];
+        NSString* getName = propertyName;
+        if ([dict.allKeys containsObject:getName]) {
+            id propertyValue = [dict objectForKey:propertyName];
+            //                if ([propertyValue isKindOfClass:[NSArray class]]) {
+            //
+            //                } else if ([propertyValue isKindOfClass:[NSDictionary class]]) {
+            //                    propertyValue = self dict:propertyValue toObject:<#(__unsafe_unretained Class)#>
+            //                }
+            
+            NSString* initLetter = [propertyName substringToIndex:1];
+            NSString* setName = [NSString stringWithFormat:@"set%@%@:",[initLetter uppercaseString],restName];
+            
+            if ([obj respondsToSelector:NSSelectorFromString(setName)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [obj performSelector:NSSelectorFromString(setName) withObject:propertyValue];
+#pragma clang diagnostic pop
+            }
+        }
+        
+    }
+    return obj;
+}
+
+-(void)testDictToObject{
+    NSDictionary* dict = @{@"name":@"mario",@"age":@(33), @"class":@"aaa"};
+    
+    Person* p = [self dict:dict toObject:[Person class]];
+    NSLog(@"%@, %ld", p.name, [p.age integerValue]);
+}
+
+-(void)testArrayToObject{
+    NSArray* array =@[@{@"name":@"mario",@"age":@(33), @"class":@"aaa"},@{@"name":@"jack",@"age":@(30), @"class":@"bbb"}];
+    NSArray* result = [self array:array toObject:[Person class]];
+    for (Person* p in result) {
+        NSLog(@"%@, %ld", p.name, [p.age integerValue]);
+    }
+}
 
 -(void)click:(UIButton*)sender{
     
-    XYNotificationView* nv = [[XYNotificationView alloc] initWithTitle:@"something is wrong" delegate:nil];
-    nv.backgroundColor = [UIColor redColor];
-//    nv.title = @"test";
-    [nv showInViewController:self waitUntilDone:YES];
+    TestRequest* request = [TestRequest new];
+    request.key = @"abcde";
+    request.number = @(2);
+    NSDictionary* d = [request toDictionary];
+    NSLog(@"%@ %ld",d[@"key"], [d[@"number"] integerValue]);
+    TestRequest* request2 = [d toObjectAsClass:[TestRequest class]];
+    NSLog(@"%@ %ld", request2.key, [request2.number integerValue]);
+    
+    
+//    [self performBusyProcess:^XYProcessResult *{
+//        
+////        sleep(5);
+////        return [XYProcessResult success];
+//        TestRequest* request = [TestRequest new];
+//        request.key = @"app";
+//        TestResponse* response = (TestResponse*) [[XYMessageEngine instance] send:request];
+//        if (response.responseCode == 0) {
+//            NSLog(@"response: %@", response.value);
+//            return [XYProcessResult success];
+//        } else {
+//            return [XYProcessResult failureWithError:response.responseDesc];
+//        }
+//    }];
+
+    
+    
+//    [self testDictToObject];
+//    [self testArrayToObject];
+    
+    
+//    XYNotificationView* nv = [[XYNotificationView alloc] initWithTitle:@"something is wrong" delegate:nil];
+//    nv.backgroundColor = [UIColor redColor];
+////    nv.title = @"test";
+//    [nv showInViewController:self waitUntilDone:YES];
     
 //    
 ////    UIActionSheet *sheet;
@@ -264,8 +388,8 @@
 //    
 //   [self presentViewController:alertController animated:YES completion:nil];
     
-    //    [self performBusyProcess:^XYProcessResult *{
-    
+//        [self performBusyProcess:^XYProcessResult *{
+//    
 //        sleep(5);
 //        return [XYProcessResult success];
 //        TestRequest* request = [TestRequest new];
@@ -438,7 +562,9 @@
 //    [self dismissViewControllerAnimated:YES completion:^{}];
 //}
 
-
 @end
 
-
+@implementation Person
+@synthesize name;
+@synthesize age;
+@end

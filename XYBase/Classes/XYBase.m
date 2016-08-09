@@ -1094,6 +1094,122 @@ static XYCoreDataManager* dminstance;
 @synthesize responseDesc;
 @end
 
+@implementation NSObject(xybase)
+-(NSDictionary*)toDictionary{
+    NSMutableDictionary* dictionary = [NSMutableDictionary new];
+    unsigned int ivarsCnt = 0;
+    objc_property_t *properties = class_copyPropertyList([self class],&ivarsCnt);
+    for (int i = 0 ; i < ivarsCnt ; i++) {
+        objc_property_t property = properties[i];
+        const char* propname = property_getName(property);
+        if (!propname) {
+            continue;
+        }
+        const char* type = property_getAttributes(property);
+        NSString *attr = [NSString stringWithCString:type encoding:NSUTF8StringEncoding];
+        NSString * typeString = [NSString stringWithUTF8String:type];
+        NSArray * attributes = [typeString componentsSeparatedByString:@","];
+        NSString * typeAttribute = [attributes objectAtIndex:0];
+        NSString * propertyType = [typeAttribute substringFromIndex:1];
+        const char* rawPropertyType = [propertyType UTF8String];
+        
+        if (strcmp(rawPropertyType, @encode(float)) == 0) {
+            //it's a float
+        } else if (strcmp(rawPropertyType, @encode(int)) == 0) {
+            //it's an int
+        } else if (strcmp(rawPropertyType, @encode(id)) == 0) {
+            //it's some sort of object
+        } else {
+            // According to Apples Documentation you can determine the corresponding encoding values
+        }
+        
+        if ([typeAttribute hasPrefix:@"T@"] && [typeAttribute length] > 1) {
+            NSString * typeClassName = [typeAttribute substringWithRange:NSMakeRange(3, [typeAttribute length]-4)];  //turns @"NSDate" into NSDate
+            Class typeClass = NSClassFromString(typeClassName);
+            if (typeClass != nil) {
+                // Here is the corresponding class even for nil values
+            }
+        }
+        NSString* propertyName = [NSString stringWithUTF8String:propname];
+        NSString* restName = [propertyName substringFromIndex:1];
+        NSString* getName = propertyName;
+        if ([self respondsToSelector:NSSelectorFromString(getName)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            id value = [self performSelector:NSSelectorFromString(getName)];
+#pragma clang diagnostic pop
+            [dictionary setValue:value forKey:propertyName];
+        }
+    }
+    return dictionary;
+}
+@end
+
+@implementation NSDictionary(xybase)
+-(id)toObjectAsClass:(Class)clazz{
+    NSString* className = NSStringFromClass(clazz);
+    id obj = [NSClassFromString(className) new];
+    unsigned int ivarsCnt = 0;
+    objc_property_t *properties = class_copyPropertyList(clazz,&ivarsCnt);
+    for (int i = 0 ; i < ivarsCnt ; i++) {
+        objc_property_t property = properties[i];
+        const char* propname = property_getName(property);
+        if (!propname) {
+            continue;
+        }
+        const char* type = property_getAttributes(property);
+        NSString *attr = [NSString stringWithCString:type encoding:NSUTF8StringEncoding];
+        NSString * typeString = [NSString stringWithUTF8String:type];
+        NSArray * attributes = [typeString componentsSeparatedByString:@","];
+        NSString * typeAttribute = [attributes objectAtIndex:0];
+        NSString * propertyType = [typeAttribute substringFromIndex:1];
+        const char* rawPropertyType = [propertyType UTF8String];
+        
+        if (strcmp(rawPropertyType, @encode(float)) == 0) {
+            //it's a float
+        } else if (strcmp(rawPropertyType, @encode(int)) == 0) {
+            //it's an int
+        } else if (strcmp(rawPropertyType, @encode(id)) == 0) {
+            //it's some sort of object
+        } else {
+            // According to Apples Documentation you can determine the corresponding encoding values
+        }
+        
+        if ([typeAttribute hasPrefix:@"T@"] && [typeAttribute length] > 1) {
+            NSString * typeClassName = [typeAttribute substringWithRange:NSMakeRange(3, [typeAttribute length]-4)];  //turns @"NSDate" into NSDate
+            Class typeClass = NSClassFromString(typeClassName);
+            if (typeClass != nil) {
+                // Here is the corresponding class even for nil values
+                
+                
+            }
+            
+            if ([typeClass isSubclassOfClass:[NSDictionary class]]){
+                
+            } else if ([typeClass isSubclassOfClass:[NSArray class]]) {
+                
+            }
+        }
+        NSString* propertyName = [NSString stringWithUTF8String:propname];
+        NSString* restName = [propertyName substringFromIndex:1];
+        NSString* getName = propertyName;
+        if ([self.allKeys containsObject:getName]) {
+            id propertyValue = [self objectForKey:propertyName];
+            NSString* initLetter = [propertyName substringToIndex:1];
+            NSString* setName = [NSString stringWithFormat:@"set%@%@:",[initLetter uppercaseString],restName];
+            
+            if ([obj respondsToSelector:NSSelectorFromString(setName)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                [obj performSelector:NSSelectorFromString(setName) withObject:propertyValue];
+#pragma clang diagnostic pop
+            }
+        }
+    }
+    return obj;
+}
+@end
+
 #pragma mark XYHTTPRequestObject
 @implementation XYHTTPRequestObject
 @synthesize requestURL = _requestURL;
@@ -1524,8 +1640,8 @@ static XYMessageEngine* meinstance;
 }
 @end
 
-#pragma mark NSString+category
-@implementation NSString(category)
+#pragma mark NSString+xybase
+@implementation NSString(xybase)
 -(NSString*)sha1 {
     const char *cstr = [self cStringUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [NSData dataWithBytes:cstr length:self.length];

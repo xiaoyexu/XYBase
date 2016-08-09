@@ -619,6 +619,51 @@ Provide methods to get sha1, md5 string. E.g.
 -(NSString*)trim;
 ```
 
+### NSObject Category
+To convert a NSObject into NSDictionary object. 
+
+***Currently only support property NSString and NSNumber.***
+
+```
+-(NSDictionary*)toDictionary;
+```
+
+### NSDictionary Category
+To convert a NSDictionary object into other class object.
+
+```
+-(id)toObjectAsClass:(Class)clazz;
+```
+
+E.g. A TestRequest class contains property key and number
+
+```
+@interface TestRequest : XYRequest
+@property(nonatomic, strong) NSString* key;
+@property(nonatomic, strong) NSNumber* number;
+@end
+
+@implementation TestRequest
+@synthesize key;
+@synthesize number;
+@end
+```
+To convert it into NSDictionary and back, use
+
+```
+TestRequest* request = [TestRequest new];
+request.key = @"abcde";
+request.number = @(2);
+NSDictionary* d = [request toDictionary];
+NSLog(@"%@ %ld",d[@"key"], [d[@"number"] integerValue]);
+TestRequest* request2 = [d toObjectAsClass:[TestRequest class]];
+NSLog(@"%@ %ld", request2.key, [request2.number integerValue]);
+```
+
+
+
+
+
 ### XYUISegmentedControl
 This is a sub class of UISegmentedControl, provide feature to customized the font size, color of the each item.
 

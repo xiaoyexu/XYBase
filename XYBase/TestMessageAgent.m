@@ -12,6 +12,7 @@
 -(void)normalize:(XYRequest*)request to:(XYHTTPRequestObject*) requestObj{
     TestRequest* req = (TestRequest*)request;
     [super normalize:req to:requestObj];
+    NSDictionary* d = [req toDictionary];
     NSDictionary* dict = @{
                            @"key":req.key
                            };
@@ -32,9 +33,9 @@
     [super deNormalize:responseObj to:&res];
 }
 
--(XYResponse*)demoResponse{
-    TestResponse* res = [TestResponse new];
-    res.value = @"It's demo";
-    return res;
-}
+//-(XYResponse*)demoResponse{
+//    TestResponse* res = [TestResponse new];
+//    res.value = @"It's demo";
+//    return res;
+//}
 @end
