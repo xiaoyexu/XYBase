@@ -139,6 +139,13 @@
 
 @end
 
+#pragma mark XYLabelValue
+@interface XYLabelValue : NSObject
+@property(nonatomic, strong) NSString* label;
+@property(nonatomic, strong) id value;
++(XYLabelValue*)label:(NSString*)label value:(id)value;
+@end
+
 /*
  All non-table view controller in this app should inherit this base class
  */
@@ -689,6 +696,16 @@ typedef enum {
 
 @interface XYDatePickerUITextField : XYUITextField
 @property(nonatomic, strong, readonly) UIDatePicker* datePicker;
+-(id)init;
+-(id)initWithFrame:(CGRect)frame;
+-(id)initWithCoder:(NSCoder *)aDecoder;
+@end
+
+@interface XYPickerUITextField : XYUITextField<UIPickerViewDataSource, UIPickerViewDelegate>
+@property(nonatomic, strong, readonly) UIPickerView* pickerView;
+@property(nonatomic, strong) NSArray<XYLabelValue *>* options;
+@property(nonatomic) NSInteger selectedIndex;
+@property(nonatomic, readonly) XYLabelValue* selectedLabelValue;
 -(id)init;
 -(id)initWithFrame:(CGRect)frame;
 -(id)initWithCoder:(NSCoder *)aDecoder;

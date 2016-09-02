@@ -1,10 +1,12 @@
-# XYBase
+#### Everything here is free, do whatever you like
+
+## XYBase
 Simplified version of old MarioLib.
 It provides foundamental classes.
 
 Please find readme at [here](https://github.com/xiaoyexu/XYBase/blob/master/README-XYBase.md)
 
-# XYBaseFW
+## XYBaseFW
 A small framework based on XYBase classes.
 Trying to provide a base framework for most applications, with basic function like login, logout, settings etc.
 

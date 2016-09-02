@@ -315,6 +315,17 @@
 }
 @end
 
+#pragma mark XYLabelValue
+@implementation XYLabelValue
+@synthesize label;
+@synthesize value;
++(XYLabelValue*)label:(NSString*)label value:(id)value{
+    XYLabelValue* lv = [XYLabelValue new];
+    lv.label = label;
+    lv.value = value;
+    return lv;
+}
+@end
 
 #pragma mark XYBaseVc
 @implementation XYBaseVc
@@ -2031,6 +2042,117 @@ static XYMessageEngine* meinstance;
     [self resignFirstResponder];
 }
 @end
+
+
+@implementation XYPickerUITextField
+{
+    UIView* _inputView;
+    UIPickerView* pickerView;
+    UIToolbar* _toolBar;
+    NSArray* _options;
+}
+@synthesize pickerView = _pickerView;
+@synthesize options = _options;
+@synthesize selectedIndex = _selectedIndex;
+@synthesize selectedLabelValue = _selectedLabelValue;
+
+-(id)init{
+    if (self = [super init]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame{
+    if (self = [super initWithFrame:frame]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self renderView];
+    }
+    return self;
+}
+
+-(void)renderView{
+    if (_pickerView == nil) {
+        _pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 40, self.frame.size.width, 210)];
+        _pickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _pickerView.delegate = self;
+        _pickerView.dataSource = self;
+    }
+    
+    if (_toolBar == nil) {
+        _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
+        _toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _toolBar.backgroundColor = [UIColor whiteColor];
+        UIBarButtonItem* clear = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(clearValue)];
+        UIBarButtonItem* space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem* done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+        _toolBar.items = [NSArray arrayWithObjects:clear, space, done, nil];
+    }
+    if (_inputView == nil) {
+        _inputView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 250)];
+    }
+    [_inputView addSubview:_toolBar];
+    [_inputView addSubview:_pickerView];
+    self.inputView = _inputView;
+}
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    NSInteger result = 0;
+    switch (component) {
+        case 0:
+            result = _options.count;
+            break;
+    }
+    return result;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    NSString * title = nil;
+    switch (component) {
+        case 0:
+            title = ((XYLabelValue*)_options[row]).label;
+            break;
+    }
+    return title;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    _selectedLabelValue = (XYLabelValue*)_options[row];
+    self.text = _selectedLabelValue.label;
+    _selectedIndex = row;
+}
+
+-(void)setSelectedIndex:(NSInteger)selectedIndex{
+    _selectedIndex = selectedIndex;
+    if (_selectedIndex >=0 ) {
+        [_pickerView selectRow:selectedIndex inComponent:0 animated:NO];
+        self.text = ((XYLabelValue*)_options[_selectedIndex]).label;
+    } else {
+        self.text = @"";
+        _selectedLabelValue = nil;
+    }
+}
+
+-(void)clearValue{
+    [self setSelectedIndex:-1];
+    [self resignFirstResponder];
+}
+
+-(void)done{
+    [self resignFirstResponder];
+}
+@end
+
 
 @implementation XYPagedView
 @synthesize scrollView = _scrollView;

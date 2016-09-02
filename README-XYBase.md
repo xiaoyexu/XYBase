@@ -805,6 +805,33 @@ field.datePicker.datePickerMode = UIDatePickerModeDateAndTime;
 [self.view addSubview:field];
 ```
 
+### XYPickerUITextField
+Subclass of XYUITextField, priveds a picker view as input view.
+
+Each option is a object of XYLabelValue.
+
+E.g.
+
+```
+pickerTf = [[XYPickerUITextField alloc] initWithFrame:CGRectMake(20, 20, 100, 40)];
+pickerTf.options = @[
+    [XYLabelValue label:@"1 day" value:@(1)],
+    [XYLabelValue label:@"2 days" value:@(2)],
+    [XYLabelValue label:@"3 days" value:@(3)],
+];
+[self.view addSubview:pickerTf];
+```
+
+To get the selected index and value use
+
+```
+NSInteger i = pickerTf.selectedIndex
+XYLabelValue* lv = pickerTf.selectedLabelValue
+```
+
+Negative number (-1) is used as selectedIndex when nothing selected, selectedLabelValue will be set to nil as well.
+
+
 ### XYPagedView
 Display multiple views with page controller.
 E.g.
