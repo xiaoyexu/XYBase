@@ -66,7 +66,7 @@
 
 -(void)changed{
     
-    pickerTf.selectedIndex
+    
     NSLog(@"%@ %@", pickerTf.selectedLabelValue.label, pickerTf.selectedLabelValue.value);
 }
 
